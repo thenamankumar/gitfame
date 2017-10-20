@@ -1,0 +1,6 @@
+{
+  "name": "gitfame",
+  "short_name": "gitfame",
+  "start_url": "/",
+  "display": "standalone"
+}
