@@ -1,20 +1,27 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>gitfame</title>
-    <meta name="description" content="gitfame description">
+    <title>gitfame | by hereisnaman</title>
+    <meta name="description" content="A PWA to analyse GitHub contributions.">
 
-    <!-- See https://goo.gl/OOhYW5 -->
     <link rel="manifest" href="/manifest.json">
 
     <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
+    <link rel="import" href="src/assets/theme/theme.html">
     <link rel="import" href="/src/app-main/app-main.html">
-  </head>
-  <body>
-    <app-main></app-main>
-  </body>
+    <style>
+        body {
+            padding: 0;
+            margin: -21px 0 0 0;
+            background-color: #2a363b;
+        }
+    </style>
+</head>
+<body>
+<app-main></app-main>
+</body>
 </html>

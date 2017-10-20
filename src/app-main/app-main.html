@@ -1,32 +1,51 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-
+<link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
+<link rel="import" href="nav-bar.html">
+<link rel="import" href="search-bar.html">
 <dom-module id="app-main">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
-  </template>
+    <template>
+        <style include="granite-bootstrap"></style>
+        <style>
+            .main-container {
+                margin: 0;
+                padding: 0;
+            }
 
-  <script>
-    /**
-     * @customElement
-     * @polymer
-     */
-    class AppMain extends Polymer.Element {
-      static get is() { return 'app-main'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'app-main'
-          }
-        };
-      }
-    }
+            section {
+                padding: 80px 0;
+            }
+        </style>
+        <div class="container-fluid main-container">
+            <nav-bar><span slot="brand">gitFame</span></nav-bar>
+            <section>
+                <search-bar id="searchBar" on-input="search"></search-bar>
+            </section>
+        </div>
+    </template>
 
-    window.customElements.define(AppMain.is, AppMain);
-  </script>
+    <script>
+        class appMain extends Polymer.Element {
+            static get is() {
+                return 'app-main';
+            }
+
+            static get properties() {
+                return {};
+            }
+
+            search(e) {
+                console.log(e.target.$.inputUsername.value);
+                fetch('https://api.github.com/users/'
+                    + e.target.$.inputUsername.value
+                    + '?client_ide=306bffb6acf1e4b78303&&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88',
+                    {method: 'get'})
+                    .then(function (response) {
+                        console.log(response);
+                    }).catch(function (err) {
+                })
+            }
+        }
+
+        window.customElements.define(appMain.is, appMain);
+    </script>
 </dom-module>
