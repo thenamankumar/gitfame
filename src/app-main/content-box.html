@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 <dom-module id="content-box">
     <template>
@@ -20,12 +21,74 @@
                 padding: 80px 0;
             }
 
+            .card {
+                color: #2a2a2a;
+                font-weight: 400;
+            }
+
+            .profile-card {
+                background: var(--default-primary-color);
+                padding: 20px 0;
+            }
+
+            .profile-card .name {
+                color: white;
+                margin-bottom: 5px;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .profile-card .username {
+                font-style: italic;
+            }
+
+            .profile-card .bio {
+                font-weight: 800;
+            }
+
+            .profile-card .icon {
+                height: 16px;
+                margin-right: 3px;
+            }
+
+            .profile-card .button-row {
+                margin-top: 10px;
+            }
+
+            .profile-card a, .profile-card a:hover, .profile-card a:active, .profile-card a:focus {
+                text-decoration: none;
+                color: #2a2a2a;
+            }
+
         </style>
 
         <section hidden$="{{hide}}">
-            <div class="row" hidden$="{{notFoundHide}}">
+            <div id="notFound" class="row" hidden$="{{notFoundHide}}">
                 <img src="/src/assets/images/error_outline.png">
                 <h2>User Not Found!</h2>
+            </div>
+            <div id="content" class="container" hidden$="{{contentHide}}">
+                <div class="row col-xs-12">
+                    <div class=" card col-xs-12 col-sm-6 col-md-4 profile-card">
+                        <div class="image-container col-xs-12">
+                            <img class="img-responsive img-circle col-xs-6 col-xs-offset-3 profile-img"
+                                 src="{{user.avatar_url}}">
+                        </div>
+                        <div class="details col-xs-12">
+                            <h3 class="name">{{user.name}}</h3>
+                            <p class="username">@{{user.login}}</p>
+                            <q class="bio">{{user.bio}}</q>
+                            <div class="row button-row">
+                                <paper-button><img class="icon" src="/src/assets/images/follower.png">Followers:
+                                    {{user.followers}}
+                                </paper-button>
+                                <paper-button><img class="icon" src="/src/assets/images/repos.png">Repos:
+                                    {{user.public_repos}}
+                                </paper-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </template>
@@ -45,24 +108,68 @@
                     notFoundHide: {
                         type: Boolean,
                         value: true
+                    },
+                    contentHide: {
+                        type: Boolean,
+                        value: true
+                    },
+                    user: {
+                        type: Object,
+                        notify: true
                     }
                 };
-            }
-
-            showNotFound() {
-                this.notFoundHide = false;
             }
 
             hideNotFound() {
                 this.notFoundHide = true;
             }
 
+            showNotFound() {
+                this.hideContent();
+                this.notFoundHide = false;
+            }
+
             hideBox() {
                 this.hide = true;
             }
 
-            show() {
+            showBox() {
                 this.hide = false;
+            }
+
+            hideContent() {
+                this.contentHide = true;
+            }
+
+            showContent() {
+                this.hideNotFound();
+                this.contentHide = false;
+            }
+
+            loadContent(data) {
+                this.user = data;
+                this.showContent();
+                this.user.data = {};
+                this.user.data.repos = [];
+                let repoPromises = [];
+                for (let repoCount = Math.floor(this.user.public_repos / 100) + 1, i = 0; repoCount > 0; repoCount--, i++) {
+                    repoPromises[i] = fetch(this.user.repos_url
+                        + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88&type=all&per_page=100&page="
+                        + repoCount
+                        , {method: 'get'})
+                        .then((response) => {
+                            if (response.ok)
+                                return response.text();
+                            else
+                                throw new Error("Error!");
+                        })
+                        .then((response) => {
+                            this.user.data.repos.concat(JSON.parse(response));
+                            return response;
+                        })
+                        .catch(err => console.log(err))
+                }
+                return new Promise.all(repoPromises);
             }
         }
 

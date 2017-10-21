@@ -86,7 +86,7 @@
 
             hideSpinner() {
                 this.$.spinner.active = false;
-                this.$.content.show();
+                this.$.content.showBox();
             }
 
             showSpinner() {
@@ -106,35 +106,34 @@
 
                 fetch('https://api.github.com/users/'
                     + event.target.$.inputUsername.value
-                    + '?client_id=306bffb6acf1e4b78303&&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88',
-                    {method: 'get'})
+                    + '?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88'
+                    , {method: 'get'})
                     .then((response) => {
-                        return new Promise((fulfill, reject) => {
-                            if (response.ok)
-                                fulfill(response.text());
-                            else
-                                reject(new Error("User Not Found!"));
-                        });
+                        if (response.ok)
+                            return response.text();
+                        else
+                            throw new Error("User Not Found!");
                     })
                     .then((response) => {
                         let user = JSON.parse(response);
-                        return new Promise((fulfill, reject) => {
-                            if (user.login !== this.$.searchBar.$.inputUsername.value)
-                                reject(new Error("Debounced"));
-                            else
-                                fulfill(user)
-                        });
-                    }, (response) => {
-                        this.hideSpinner();
+                        if (user.login !== this.$.searchBar.$.inputUsername.value)
+                            throw new Error("Debounced");
+                        else
+                            return user
+                    }, () => {
                         this.$.content.showNotFound();
-                        return response;
+                        this.hideSpinner();
+                        throw new Error("not found");
                     })
                     .then((user) => {
-                        console.log(user.login);
-                        this.hideSpinner();
+                        return this.$.content.loadContent(user);
                     })
-                    .catch((err) => {
-                    });
+                    .then((response) => {
+                        console.log('complested');
+                        this.hideSpinner();
+                        return Promise.resolve(response);
+                    })
+                    .catch((err) => console.log(err));
             }
         }
 
