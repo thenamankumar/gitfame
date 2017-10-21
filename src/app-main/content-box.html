@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<dom-module id="content-box">
+    <template>
+        <style include="granite-bootstrap"></style>
+        <link rel="stylesheet" href="/src/assets/theme/theme.css">
+        <style>
+            .row {
+                margin: 0;
+                text-align: center;
+            }
+
+            h2 {
+                color: white;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+        </style>
+
+        <section hidden$="{{hide}}">
+            <div class="row" hidden$="{{notFoundHide}}">
+                <img src="/src/assets/images/error_outline.png">
+                <h2>User Not Found!</h2>
+            </div>
+        </section>
+    </template>
+
+    <script>
+        class contentBox extends Polymer.Element {
+            static get is() {
+                return 'content-box';
+            }
+
+            static get properties() {
+                return {
+                    hide: {
+                        type: Boolean,
+                        value: false
+                    },
+                    notFoundHide: {
+                        type: Boolean,
+                        value: true
+                    }
+                };
+            }
+
+            showNotFound() {
+                this.notFoundHide = false;
+            }
+
+            hideNotFound() {
+                this.notFoundHide = true;
+            }
+
+            hideBox() {
+                this.hide = true;
+            }
+
+            show() {
+                this.hide = false;
+            }
+        }
+
+        window.customElements.define(contentBox.is, contentBox);
+    </script>
+</dom-module>

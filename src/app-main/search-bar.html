@@ -4,6 +4,7 @@
 <dom-module id="search-bar">
     <template>
         <style include="granite-bootstrap"></style>
+        <link rel="stylesheet" href="/src/assets/theme/theme.css">
         <style>
             .searchRow {
                 margin: 0;
@@ -13,8 +14,6 @@
             #inputUsername {
                 --paper-font-subhead_-_font-size: 34px;
                 padding: 15px 35px 35px 35px;
-                background-color: #3a474c;
-                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
             }
 
             .inputPrefix {
@@ -24,7 +23,7 @@
             }
         </style>
         <div class="row searchRow">
-            <paper-input id="inputUsername" value="{{username}}" on-input="search" label="username" type="search"
+            <paper-input id="inputUsername" value="{{username}}" label="username" type="search"
                          autofocus="true" class="col-xs-12 col-md-8 col-md-offset-2">
                 <div class="inputPrefix" slot="prefix">@</div>
             </paper-input>
@@ -45,11 +44,6 @@
                     }
                 };
             }
-
-            search(e) {
-               // console.log(e.target.value);
-            }
-
         }
 
         window.customElements.define(searchBar.is, searchBar);

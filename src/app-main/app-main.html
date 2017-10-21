@@ -1,11 +1,18 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="nav-bar.html">
 <link rel="import" href="search-bar.html">
+<link rel="import" href="content-box.html">
 <dom-module id="app-main">
     <template>
         <style include="granite-bootstrap"></style>
+        <link rel="stylesheet" href="/src/assets/theme/theme.css">
         <style>
+            :host(*) {
+                font-family: 'Open Sans', sans-serif;
+            }
+
             .main-container {
                 margin: 0;
                 padding: 0;
@@ -14,12 +21,42 @@
             section {
                 padding: 80px 0;
             }
+
+            section[hero]:not([style-scope]):not(.style-scope) {
+                text-align: center;
+            }
+
+            .row {
+                margin: 0;
+            }
+
+            #heading {
+                transition: 1s;
+            }
+
+            #searchSection {
+                padding-top: 10vh;
+                transition: 1s;
+            }
+
+            #spinner {
+                position: absolute;
+                top: calc(50vh - 14px);
+                left: calc(50vw - 14px);
+            }
         </style>
-        <div class="container-fluid main-container">
+
+        <div class="container-fluid main-container flex style-scope paper-header-panel">
             <nav-bar><span slot="brand">gitFame</span></nav-bar>
-            <section>
+            <section hero id="heading" hidden$="{{headingHide}}">
+                <h1 class="title">gitFame</h1>
+                <h2 class="title">Your GitHub Contributions Analyser</h2>
+            </section>
+            <section id="searchSection">
                 <search-bar id="searchBar" on-input="search"></search-bar>
             </section>
+            <paper-spinner id="spinner"></paper-spinner>
+            <content-box id="content"></content-box>
         </div>
     </template>
 
@@ -30,19 +67,74 @@
             }
 
             static get properties() {
-                return {};
+                return {
+                    headingHide: {
+                        type: Boolean,
+                        value: false
+                    }
+                };
             }
 
-            search(e) {
-                console.log(e.target.$.inputUsername.value);
+            hideHeading() {
+                this.headingHide = true;
+            }
+
+            showHeading() {
+                this.headingHide = false;
+                this.$.content.hideBox();
+            }
+
+            hideSpinner() {
+                this.$.spinner.active = false;
+                this.$.content.show();
+            }
+
+            showSpinner() {
+                this.$.spinner.active = true;
+                this.$.content.hideBox();
+            }
+
+            search(event) {
+                this.hideHeading();
+
+                if (event.target.$.inputUsername.value === '') {
+                    this.showHeading();
+                    return;
+                }
+
+                this.showSpinner();
+
                 fetch('https://api.github.com/users/'
-                    + e.target.$.inputUsername.value
-                    + '?client_ide=306bffb6acf1e4b78303&&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88',
+                    + event.target.$.inputUsername.value
+                    + '?client_id=306bffb6acf1e4b78303&&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88',
                     {method: 'get'})
-                    .then(function (response) {
-                        console.log(response);
-                    }).catch(function (err) {
-                })
+                    .then((response) => {
+                        return new Promise((fulfill, reject) => {
+                            if (response.ok)
+                                fulfill(response.text());
+                            else
+                                reject(new Error("User Not Found!"));
+                        });
+                    })
+                    .then((response) => {
+                        let user = JSON.parse(response);
+                        return new Promise((fulfill, reject) => {
+                            if (user.login !== this.$.searchBar.$.inputUsername.value)
+                                reject(new Error("Debounced"));
+                            else
+                                fulfill(user)
+                        });
+                    }, (response) => {
+                        this.hideSpinner();
+                        this.$.content.showNotFound();
+                        return response;
+                    })
+                    .then((user) => {
+                        console.log(user.login);
+                        this.hideSpinner();
+                    })
+                    .catch((err) => {
+                    });
             }
         }
 
