@@ -10,6 +10,7 @@ git config --local user.name "hereisnaman"
 git config --local user.email "naman@outlook.in"
 now=$(date)
 echo "Deployed on $now" >> "Deployed_$now".txt
+echo "gitfa.me" >> CNAME
 git add -A
 git commit -m "Deploy to Build"
 git push --force --quiet "https://${GH_USER}:${GH_TOKEN}@${GH_REF}" master:gh-pages
