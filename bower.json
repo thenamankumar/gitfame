@@ -2,7 +2,13 @@
   "name": "gitfame",
   "main": "index.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.0.0"
+    "polymer": "Polymer/polymer#^2.0.0",
+    "granite-bootstrap": "^3.3.7-5",
+    "paper-spinner": "^2.0.0",
+    "paper-toolbar": "^2.0.0",
+    "paper-icon-button": "^2.0.1",
+    "paper-input": "^2.0.2",
+    "paper-button": "^2.0.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
