@@ -4,7 +4,7 @@
 rm -rf build/
 polymer install
 polymer build
-cd build/
+cd build/default/
 git init .
 git config --local user.name "hereisnaman"
 git config --local user.email "naman@outlook.in"
