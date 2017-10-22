@@ -83,7 +83,7 @@
             <div id="content" class="container" hidden$="{{contentHide}}">
                 <div class="row col-xs-12">
                     <div class="flex-box">
-                        <div class="card col-xs-12 col-sm-4  col-md-4 profile-card">
+                        <div class="card col-xs-12 col-sm-4 profile-card">
                             <div class="image-container col-xs-12">
                                 <img class="img-responsive img-circle col-xs-6 col-xs-offset-3 profile-img"
                                      src="{{user.avatar_url}}">
@@ -99,14 +99,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card col-xs-12 col-sm-8  col-md-8 stats-card">
+                        <div class="card col-xs-12 col-sm-8 stats-card">
                             <count-box count="{{user.followers}}" name="Followers"></count-box>
                             <count-box count="{{stars}}" name="Stars"></count-box>
                             <count-box count="{{forks}}" name="Forks"></count-box>
                             <count-box count="{{user.public_repos}}" name="Repos"></count-box>
                             <count-box count="{{commits}}" name="Commits"></count-box>
-                            <count-box count="{{additions}}" name="Lines +"></count-box>
-                            <count-box count="{{deletions}}" name="Lines -"></count-box>
                             <count-box count="{{user.following}}" name="Following"></count-box>
                         </div>
                     </div>
@@ -225,45 +223,12 @@
                 return new Promise((resolve, reject) => {
                     Promise.all(repoPromises)
                         .then(() => {
-                            let statsPromises = []
-                                , particpationPromises = [];
+                            let particpationPromises = [];
                             this.repos.forEach((repo, index) => {
                                 if (repo.owner.login === this.user.login) {
                                     this.stars += repo.stargazers_count;
                                     this.forks += repo.forks_count;
                                 }
-                                statsPromises[index] = fetch(repo.url
-                                    + "/stats/contributors"
-                                    + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
-                                    , {method: 'get'})
-                                    .then((response) => {
-                                        if (response.ok)
-                                            return response.text();
-                                        else
-                                            throw new Error("Error!");
-                                    })
-                                    .then((data) => {
-                                        repo.commits = 0;
-                                        repo.additions = 0;
-                                        repo.deletions = 0;
-                                        if (!data)
-                                            return data;
-                                        repo.contributors = JSON.parse(data);
-                                        repo.contributors.forEach((contributor, index) => {
-                                            if (contributor.author.login === this.user.login) {
-                                                repo.commits += contributor.total;
-                                                contributor.weeks.forEach((week, index) => {
-                                                    repo.additions += week.a;
-                                                    repo.deletions += week.d;
-                                                });
-                                            }
-                                        });
-                                        this.commits += repo.commits || 0;
-                                        this.additions += repo.additions || 0;
-                                        this.deletions += repo.deletions || 0;
-                                        return data;
-                                    })
-                                    .catch(err => console.log(err));
                                 particpationPromises[index] = fetch(repo.url
                                     + "/stats/participation"
                                     + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
@@ -275,31 +240,44 @@
                                             throw new Error("Error!");
                                     })
                                     .then((data) => {
-                                        repo.other_commits = 0;
+                                        repo.all_commits = 0;
+                                        repo.commits = 0;
                                         if (!data)
                                             return data;
                                         let participation_data = JSON.parse(data);
                                         participation_data.all.forEach((commits, index) => {
-                                            repo.other_commits += commits || 0;
+                                            repo.all_commits += commits || 0;
                                         });
-                                        repo.other_commits -= repo.commits || 0;
+
+                                        participation_data.owner.forEach((commits, index) => {
+                                            repo.commits += commits || 0;
+                                        });
+                                        this.commits += repo.commits;
                                     })
                                     .catch(err => console.log(err));
                             });
-                            Promise.all(statsPromises)
-                                .then(() => {
-                                    return Promise.all(particpationPromises)
-                                })
-                                .then(() => {
-                                    this.$.reposContainer.innerHTML = "";
-                                    this.repos.forEach((repo, index) => {
-                                        let repoBox = document.createElement("repo-box");
-                                        repoBox.repo = repo;
-                                        this.$.reposContainer.appendChild(repoBox);
-                                    })
-                                })
-                                .then(() => resolve());
-                        });
+                            return Promise.all(particpationPromises);
+                        })
+                        .then(() => {
+                            this.repos.sort((a, b) => {
+                                if (a.commits < b.commits)
+                                    return 1;
+                                else if (a.commits === b.commits) {
+                                    if (a.all_commits < b.all_commits)
+                                        return 1;
+                                    else return -1;
+                                }
+                                else return -1;
+                            });
+                            this.$.reposContainer.innerHTML = "";
+                            this.repos.forEach((repo, index) => {
+                                let repoBox = document.createElement("repo-box");
+                                repoBox.repo = repo;
+                                this.$.reposContainer.appendChild(repoBox);
+                            });
+                            return {};
+                        })
+                        .then(() => resolve());
                 });
 
             }
