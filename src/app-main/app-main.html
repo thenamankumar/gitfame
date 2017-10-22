@@ -90,8 +90,8 @@
             }
 
             showSpinner() {
-                this.$.spinner.active = true;
                 this.$.content.hideBox();
+                this.$.spinner.active = true;
             }
 
             search(event) {
@@ -126,12 +126,13 @@
                         throw new Error("not found");
                     })
                     .then((user) => {
+                        this.showSpinner();
                         return this.$.content.loadContent(user);
                     })
                     .then((response) => {
-                        console.log('complested');
+                        this.$.content.showContent();
                         this.hideSpinner();
-                        return Promise.resolve(response);
+                        return response;
                     })
                     .catch((err) => console.log(err));
             }

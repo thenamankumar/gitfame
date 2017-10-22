@@ -22,13 +22,17 @@
             }
 
             .card {
-                color: #2a2a2a;
+                color: white;
+                padding: 20px 0;
                 font-weight: 400;
+                background-color: #333332;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+                margin: 20px;
             }
 
             .profile-card {
+                color: #2a2a2a;
                 background: var(--default-primary-color);
-                padding: 20px 0;
             }
 
             .profile-card .name {
@@ -60,6 +64,18 @@
                 color: #2a2a2a;
             }
 
+            .count-box {
+                margin-bottom: 43px;
+            }
+
+            .count {
+                color: #e0c453;
+                font-weight: 800;
+            }
+
+            .card-container {
+                display: flex;
+            }
         </style>
 
         <section hidden$="{{hide}}">
@@ -68,8 +84,8 @@
                 <h2>User Not Found!</h2>
             </div>
             <div id="content" class="container" hidden$="{{contentHide}}">
-                <div class="row col-xs-12">
-                    <div class=" card col-xs-12 col-sm-6 col-md-4 profile-card">
+                <div class="row col-xs-12 card-container">
+                    <div class="card col-xs-12 col-sm-6 col-md-4 profile-card">
                         <div class="image-container col-xs-12">
                             <img class="img-responsive img-circle col-xs-6 col-xs-offset-3 profile-img"
                                  src="{{user.avatar_url}}">
@@ -79,13 +95,44 @@
                             <p class="username">@{{user.login}}</p>
                             <q class="bio">{{user.bio}}</q>
                             <div class="row button-row">
-                                <paper-button><img class="icon" src="/src/assets/images/follower.png">Followers:
-                                    {{user.followers}}
-                                </paper-button>
-                                <paper-button><img class="icon" src="/src/assets/images/repos.png">Repos:
-                                    {{user.public_repos}}
-                                </paper-button>
+                                <a href="{{user.html_url}}" target="_blank">
+                                    <paper-button raised class="secondary">View Profile</paper-button>
+                                </a>
                             </div>
+                        </div>
+                    </div>
+                    <div class="card col-xs-12 col-sm-6 col-md-8 stats-card">
+                        <div class="col-xs-3 count-box">
+                            <h2 class="count">{{user.followers}}</h2>
+                            <h4>Followers</h4>
+                        </div>
+                        <div class="col-xs-3 count-box">
+                            <h2 class="count">{{stars}}</h2>
+                            <h4>Stars</h4>
+                        </div>
+                        <div class="col-xs-3 count-box">
+                            <h2 class="count">{{forks}}</h2>
+                            <h4>Forks</h4>
+                        </div>
+                        <div class="col-xs-3 count-box">
+                            <h2 class="count">{{user.public_repos}}</h2>
+                            <h4>Repos</h4>
+                        </div>
+                        <div class="col-xs-3 count-box">
+                            <h2 class="count">{{commits}}</h2>
+                            <h4>Commits</h4>
+                        </div>
+                        <div class="col-xs-3 count-box">
+                            <h2 class="count">{{additions}}</h2>
+                            <h4>Lines Added</h4>
+                        </div>
+                        <div class="col-xs-3 count-box">
+                            <h2 class="count">{{deletions}}</h2>
+                            <h4>Lines Deleted</h4>
+                        </div>
+                        <div class="col-xs-3 count-box">
+                            <h2 class="count">{{user.following}}</h2>
+                            <h4>Following</h4>
                         </div>
                     </div>
                 </div>
@@ -116,6 +163,31 @@
                     user: {
                         type: Object,
                         notify: true
+                    },
+                    repos: {
+                        type: Object,
+                        value: [],
+                        notify: true
+                    },
+                    stars: {
+                        type: Number,
+                        value: 0
+                    },
+                    forks: {
+                        type: Number,
+                        value: 0
+                    },
+                    commits: {
+                        type: Number,
+                        value: 0
+                    },
+                    additions: {
+                        type: Number,
+                        value: 0
+                    },
+                    deletions: {
+                        type: Number,
+                        value: 0
                     }
                 };
             }
@@ -148,9 +220,13 @@
 
             loadContent(data) {
                 this.user = data;
-                this.showContent();
-                this.user.data = {};
-                this.user.data.repos = [];
+                this.repos = [];
+                this.stars = 0;
+                this.forks = 0;
+                this.commits = 0;
+                this.additions = 0;
+                this.deletions = 0;
+
                 let repoPromises = [];
                 for (let repoCount = Math.floor(this.user.public_repos / 100) + 1, i = 0; repoCount > 0; repoCount--, i++) {
                     repoPromises[i] = fetch(this.user.repos_url
@@ -164,12 +240,66 @@
                                 throw new Error("Error!");
                         })
                         .then((response) => {
-                            this.user.data.repos.concat(JSON.parse(response));
+                            this.repos = this.repos.concat(JSON.parse(response));
                             return response;
                         })
                         .catch(err => console.log(err))
                 }
-                return new Promise.all(repoPromises);
+
+                return new Promise((resolve, reject) => {
+                    Promise.all(repoPromises)
+                        .then(() => {
+                            let statsPromises = [];
+                            this.repos.forEach((repo, index) => {
+                                if (repo.owner.login === this.user.login) {
+                                    this.stars += repo.stargazers_count;
+                                    this.forks += repo.forks_count;
+                                }
+
+                                statsPromises[index] = fetch(repo.url
+                                    + "/stats/contributors"
+                                    + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
+                                    , {method: 'get'})
+                                    .then((response) => {
+                                        if (response.ok)
+                                            return response.text();
+                                        else
+                                            throw new Error("Error!");
+                                    })
+                                    .then((data) => {
+                                        repo.commits = 0;
+                                        repo.additions = 0;
+                                        repo.deletions = 0;
+                                        if (!data)
+                                            return data;
+                                        repo.contributors = JSON.parse(data);
+                                        repo.contributors.forEach((contributor, index) => {
+                                            if (contributor.author.login === this.user.login) {
+                                                repo.commits += contributor.total;
+                                                contributor.weeks.forEach((week, index) => {
+                                                    repo.additions += week.a;
+                                                    repo.deletions += week.d;
+                                                });
+
+                                            }
+                                        });
+                                        return data;
+                                    })
+                                    .catch(err => console.log(err));
+                            });
+                            Promise.all(statsPromises)
+                                .then(() => {
+                                    this.repos.forEach((repo, index) => {
+                                        console.log(repo.name, repo.commits, repo.additions, repo.deletions, repo.url);
+                                        this.commits += repo.commits || 0;
+                                        this.additions += repo.additions || 0;
+                                        this.deletions += repo.deletions || 0;
+                                    });
+                                    resolve();
+                                })
+                        });
+                });
+
             }
         }
 
