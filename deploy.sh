@@ -12,4 +12,4 @@ now=$(date)
 echo "Deployed on $now" >> "Deployed_$now".txt
 git add -A
 git commit -m "Deploy to Build"
-git push --force --quiet "https://${GH_USER}:${GH_TOKEN}@${GH_REF}" master:build
+git push --force --quiet "https://${GH_USER}:${GH_TOKEN}@${GH_REF}" master:gh-pages
