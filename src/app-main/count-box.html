@@ -1,0 +1,57 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
+
+<dom-module id="count-box">
+    <template>
+        <style include="granite-bootstrap"></style>
+        <link rel="stylesheet" href="/src/assets/theme/theme.css">
+
+        <style>
+            .count-box {
+                color: white;
+                margin-bottom: 10.5%;
+            }
+
+            .count {
+                color: #e0c453;
+                font-weight: 800;
+            }
+
+            @media (max-width: 768px) {
+                .count {
+                    font-size: 20px;
+                }
+            }
+        </style>
+        <div class="col-xs-4 col-sm-3 count-box">
+            <h2 class="count">{{count}}</h2>
+            <h4 class="name">{{name}}</h4>
+        </div>
+
+    </template>
+
+    <script>
+        class countBox extends Polymer.Element {
+            static get is() {
+                return 'count-box';
+            }
+
+            static get properties() {
+                return {
+                    count: {
+                        type: Number,
+                        reflectToAttribute: true
+                    },
+                    name: {
+                        type: String,
+                        reflectToAttribute: true
+                    }
+                }
+            }
+        }
+
+        window.customElements.define(countBox.is, countBox);
+    </script>
+</dom-module>

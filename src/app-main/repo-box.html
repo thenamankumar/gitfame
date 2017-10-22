@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
+
+<dom-module id="repo-box">
+    <template>
+        <style include="granite-bootstrap"></style>
+        <link rel="stylesheet" href="/src/assets/theme/theme.css">
+        <style>
+            .card {
+                color: white;
+                padding: 20px 0;
+                margin-bottom: 50px;
+                font-weight: 400;
+                background-color: #333332;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            }
+
+            .name {
+                color: #e0c453;
+                font-weight: 800;
+                margin-bottom: 10px;
+            }
+        </style>
+        <div class="card col-xs-12 col-sm-4 repo-card">
+            <h4 class="name">{{repo.full_name}}</h4>
+        </div>
+
+    </template>
+
+    <script>
+        class repoBox extends Polymer.Element {
+            static get is() {
+                return 'repo-box';
+            }
+
+            static get properties() {
+                return {
+                    repo: {
+                        type: Object,
+                        reflectToAttribute: true
+                    }
+                }
+            }
+        }
+
+        window.customElements.define(repoBox.is, repoBox);
+    </script>
+</dom-module>

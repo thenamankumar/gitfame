@@ -9,6 +9,10 @@
         <style include="granite-bootstrap"></style>
         <link rel="stylesheet" href="/src/assets/theme/theme.css">
         <style>
+            * {
+                transition: 1s !important;
+            }
+
             :host(*) {
                 font-family: 'Open Sans', sans-serif;
             }
@@ -35,8 +39,8 @@
             }
 
             #searchSection {
-                padding-top: 10vh;
-                transition: 1s;
+                padding-top: 50px;
+                padding-bottom: 0;
             }
 
             #spinner {
@@ -116,7 +120,7 @@
                     })
                     .then((response) => {
                         let user = JSON.parse(response);
-                        if (user.login !== this.$.searchBar.$.inputUsername.value)
+                        if (user.login != this.$.searchBar.$.inputUsername.value)
                             throw new Error("Debounced");
                         else
                             return user

@@ -2,7 +2,8 @@
 <link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-
+<link rel="import" href="count-box.html">
+<link rel="import" href="repo-box.html">
 <dom-module id="content-box">
     <template>
         <style include="granite-bootstrap"></style>
@@ -18,16 +19,16 @@
             }
 
             section {
-                padding: 80px 0;
+                padding: 0 !important;
             }
 
             .card {
                 color: white;
                 padding: 20px 0;
+                margin-bottom: 50px;
                 font-weight: 400;
                 background-color: #333332;
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-                margin: 20px;
             }
 
             .profile-card {
@@ -47,6 +48,9 @@
             }
 
             .profile-card .bio {
+                max-height: 44px;
+                overflow: hidden;
+                height: 44px;
                 font-weight: 800;
             }
 
@@ -64,17 +68,10 @@
                 color: #2a2a2a;
             }
 
-            .count-box {
-                margin-bottom: 43px;
-            }
-
-            .count {
-                color: #e0c453;
-                font-weight: 800;
-            }
-
-            .card-container {
-                display: flex;
+            @media (min-width: 768px) {
+                .flex-box {
+                    display: flex;
+                }
             }
         </style>
 
@@ -84,58 +81,37 @@
                 <h2>User Not Found!</h2>
             </div>
             <div id="content" class="container" hidden$="{{contentHide}}">
-                <div class="row col-xs-12 card-container">
-                    <div class="card col-xs-12 col-sm-6 col-md-4 profile-card">
-                        <div class="image-container col-xs-12">
-                            <img class="img-responsive img-circle col-xs-6 col-xs-offset-3 profile-img"
-                                 src="{{user.avatar_url}}">
-                        </div>
-                        <div class="details col-xs-12">
-                            <h3 class="name">{{user.name}}</h3>
-                            <p class="username">@{{user.login}}</p>
-                            <q class="bio">{{user.bio}}</q>
-                            <div class="row button-row">
-                                <a href="{{user.html_url}}" target="_blank">
-                                    <paper-button raised class="secondary">View Profile</paper-button>
-                                </a>
+                <div class="row col-xs-12">
+                    <div class="flex-box">
+                        <div class="card col-xs-12 col-sm-4  col-md-4 profile-card">
+                            <div class="image-container col-xs-12">
+                                <img class="img-responsive img-circle col-xs-6 col-xs-offset-3 profile-img"
+                                     src="{{user.avatar_url}}">
+                            </div>
+                            <div class="details col-xs-12">
+                                <h3 class="name">{{user.name}}</h3>
+                                <p class="username">@{{user.login}}</p>
+                                <p class="bio">{{user.bio}}</p>
+                                <div class="row button-row">
+                                    <a href="{{user.html_url}}" target="_blank">
+                                        <paper-button raised class="secondary">View Profile</paper-button>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card col-xs-12 col-sm-6 col-md-8 stats-card">
-                        <div class="col-xs-3 count-box">
-                            <h2 class="count">{{user.followers}}</h2>
-                            <h4>Followers</h4>
-                        </div>
-                        <div class="col-xs-3 count-box">
-                            <h2 class="count">{{stars}}</h2>
-                            <h4>Stars</h4>
-                        </div>
-                        <div class="col-xs-3 count-box">
-                            <h2 class="count">{{forks}}</h2>
-                            <h4>Forks</h4>
-                        </div>
-                        <div class="col-xs-3 count-box">
-                            <h2 class="count">{{user.public_repos}}</h2>
-                            <h4>Repos</h4>
-                        </div>
-                        <div class="col-xs-3 count-box">
-                            <h2 class="count">{{commits}}</h2>
-                            <h4>Commits</h4>
-                        </div>
-                        <div class="col-xs-3 count-box">
-                            <h2 class="count">{{additions}}</h2>
-                            <h4>Lines Added</h4>
-                        </div>
-                        <div class="col-xs-3 count-box">
-                            <h2 class="count">{{deletions}}</h2>
-                            <h4>Lines Deleted</h4>
-                        </div>
-                        <div class="col-xs-3 count-box">
-                            <h2 class="count">{{user.following}}</h2>
-                            <h4>Following</h4>
+                        <div class="card col-xs-12 col-sm-8  col-md-8 stats-card">
+                            <count-box count="{{user.followers}}" name="Followers"></count-box>
+                            <count-box count="{{stars}}" name="Stars"></count-box>
+                            <count-box count="{{forks}}" name="Forks"></count-box>
+                            <count-box count="{{user.public_repos}}" name="Repos"></count-box>
+                            <count-box count="{{commits}}" name="Commits"></count-box>
+                            <count-box count="{{additions}}" name="Lines +"></count-box>
+                            <count-box count="{{deletions}}" name="Lines -"></count-box>
+                            <count-box count="{{user.following}}" name="Following"></count-box>
                         </div>
                     </div>
                 </div>
+                <div id="reposContainer" class="row col-xs-12"></div>
             </div>
         </section>
     </template>
@@ -249,13 +225,13 @@
                 return new Promise((resolve, reject) => {
                     Promise.all(repoPromises)
                         .then(() => {
-                            let statsPromises = [];
+                            let statsPromises = []
+                                , particpationPromises = [];
                             this.repos.forEach((repo, index) => {
                                 if (repo.owner.login === this.user.login) {
                                     this.stars += repo.stargazers_count;
                                     this.forks += repo.forks_count;
                                 }
-
                                 statsPromises[index] = fetch(repo.url
                                     + "/stats/contributors"
                                     + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
@@ -280,23 +256,49 @@
                                                     repo.additions += week.a;
                                                     repo.deletions += week.d;
                                                 });
-
                                             }
                                         });
+                                        this.commits += repo.commits || 0;
+                                        this.additions += repo.additions || 0;
+                                        this.deletions += repo.deletions || 0;
                                         return data;
+                                    })
+                                    .catch(err => console.log(err));
+                                particpationPromises[index] = fetch(repo.url
+                                    + "/stats/participation"
+                                    + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
+                                    , {method: 'get'})
+                                    .then((response) => {
+                                        if (response.ok)
+                                            return response.text();
+                                        else
+                                            throw new Error("Error!");
+                                    })
+                                    .then((data) => {
+                                        repo.other_commits = 0;
+                                        if (!data)
+                                            return data;
+                                        let participation_data = JSON.parse(data);
+                                        participation_data.all.forEach((commits, index) => {
+                                            repo.other_commits += commits || 0;
+                                        });
+                                        repo.other_commits -= repo.commits || 0;
                                     })
                                     .catch(err => console.log(err));
                             });
                             Promise.all(statsPromises)
                                 .then(() => {
-                                    this.repos.forEach((repo, index) => {
-                                        console.log(repo.name, repo.commits, repo.additions, repo.deletions, repo.url);
-                                        this.commits += repo.commits || 0;
-                                        this.additions += repo.additions || 0;
-                                        this.deletions += repo.deletions || 0;
-                                    });
-                                    resolve();
+                                    return Promise.all(particpationPromises)
                                 })
+                                .then(() => {
+                                    this.$.reposContainer.innerHTML = "";
+                                    this.repos.forEach((repo, index) => {
+                                        let repoBox = document.createElement("repo-box");
+                                        repoBox.repo = repo;
+                                        this.$.reposContainer.appendChild(repoBox);
+                                    })
+                                })
+                                .then(() => resolve());
                         });
                 });
 
