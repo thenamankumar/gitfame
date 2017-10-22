@@ -1,7 +1,8 @@
 # GH_USER: Username for the user
 # GH_TOKEN: Token or pass for the user
 # GH_REF: github.com/<user-name>/<repo-name>.git
-rm -rf dist/
+rm -rf build/
+polymer install
 polymer build
 cd build/
 git init .
