@@ -10,7 +10,7 @@ cache:
         - "bower_components"
 
 install:
-  - npm install -g polymer-cli
+  - npm install -g polymer-cli --unsafe-perm
   - npm install -g bower
   - sudo apt-get install sshpass
 
