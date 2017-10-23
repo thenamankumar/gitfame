@@ -1,0 +1,301 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="count-box.html">
+<link rel="import" href="repo-box.html">
+<dom-module id="content-box">
+    <template>
+        <style include="granite-bootstrap"></style>
+        <link rel="stylesheet" href="/src/assets/theme/theme.css">
+        <style>
+            .row {
+                margin: 0;
+                text-align: center;
+            }
+
+            h2 {
+                color: white;
+            }
+
+            section {
+                padding: 0 !important;
+            }
+
+            .card {
+                color: white;
+                padding: 20px 0;
+                margin-bottom: 50px;
+                font-weight: 400;
+                background-color: #333332;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            }
+
+            .profile-card {
+                color: #2a2a2a;
+                background: var(--default-primary-color);
+            }
+
+            .profile-card .name {
+                color: white;
+                margin-bottom: 5px;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            .profile-card .username {
+                font-style: italic;
+            }
+
+            .profile-card .bio {
+                max-height: 44px;
+                overflow: hidden;
+                height: 44px;
+                font-weight: 800;
+            }
+
+            .profile-card .icon {
+                height: 16px;
+                margin-right: 3px;
+            }
+
+            .profile-card .button-row {
+                margin-top: 10px;
+            }
+
+            .profile-card a, .profile-card a:hover, .profile-card a:active, .profile-card a:focus {
+                text-decoration: none;
+                color: #2a2a2a;
+            }
+
+            @media (min-width: 768px) {
+                .flex-box {
+                    display: flex;
+                }
+            }
+
+            @media (max-width: 767px) {
+                #content {
+                    padding: 0;
+                }
+            }
+        </style>
+
+        <section hidden$="{{hide}}">
+            <div id="notFound" class="row" hidden$="{{notFoundHide}}">
+                <img src="/src/assets/images/error_outline.png">
+                <h2>User Not Found!</h2>
+            </div>
+            <div id="content" class="container" hidden$="{{contentHide}}">
+                <div class="row col-xs-12">
+                    <div class="flex-box">
+                        <div class="card col-xs-12 col-sm-4 profile-card">
+                            <div class="image-container col-xs-12">
+                                <img class="img-responsive img-circle col-xs-6 col-xs-offset-3 profile-img" src="{{user.avatar_url}}">
+                            </div>
+                            <div class="details col-xs-12">
+                                <h3 class="name">{{user.name}}</h3>
+                                <p class="username">@{{user.login}}</p>
+                                <p class="bio">{{user.bio}}</p>
+                                <div class="row button-row">
+                                    <a href="{{user.html_url}}" target="_blank">
+                                        <paper-button raised="" class="secondary">View Profile</paper-button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-xs-12 col-sm-8 stats-card">
+                            <count-box count="{{user.followers}}" name="Followers"></count-box>
+                            <count-box count="{{stars}}" name="Stars"></count-box>
+                            <count-box count="{{forks}}" name="Forks"></count-box>
+                            <count-box count="{{user.public_repos}}" name="Repos"></count-box>
+                            <count-box count="{{commits}}" name="Commits"></count-box>
+                            <count-box count="{{user.following}}" name="Following"></count-box>
+                        </div>
+                    </div>
+                </div>
+                <div id="reposContainer" class="row col-xs-12"></div>
+            </div>
+        </section>
+    </template>
+
+    <script>
+        class contentBox extends Polymer.Element {
+            static get is() {
+                return 'content-box';
+            }
+
+            static get properties() {
+                return {
+                    hide: {
+                        type: Boolean,
+                        notify: true,
+                        value: false,
+                    },
+                    notFoundHide: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    contentHide: {
+                        type: Boolean,
+                        notify: true,
+                        value: true
+                    },
+                    user: {
+                        type: Object,
+                        notify: true
+                    },
+                    repos: {
+                        type: Object,
+                        value: [],
+                        notify: true
+                    },
+                    stars: {
+                        type: Number,
+                        notify: true,
+                        value: 0
+                    },
+                    forks: {
+                        type: Number,
+                        notify: true,
+                        value: 0
+                    },
+                    commits: {
+                        type: Number,
+                        notify: true,
+                        value: 0
+                    },
+                    additions: {
+                        type: Number,
+                        notify: true,
+                        value: 0
+                    },
+                    deletions: {
+                        type: Number,
+                        notify: true,
+                        value: 0
+                    }
+                };
+            }
+
+            hideNotFound() {
+                this.notFoundHide = true;
+            }
+
+            showNotFound() {
+                this.hideContent();
+                this.notFoundHide = false;
+            }
+
+            hideBox() {
+                this.hide = true;
+            }
+
+            showBox() {
+                this.hide = false;
+            }
+
+            hideContent() {
+                this.contentHide = true;
+            }
+
+            showContent() {
+                this.hideNotFound();
+                this.contentHide = false;
+            }
+
+            loadContent(data) {
+                this.user = data;
+                this.repos = [];
+                this.stars = 0;
+                this.forks = 0;
+                this.commits = 0;
+                this.additions = 0;
+                this.deletions = 0;
+
+                let repoPromises = [];
+                for (let repoCount = Math.floor(this.user.public_repos / 100) + 1, i = 0; repoCount > 0; repoCount--, i++) {
+                    repoPromises[i] = fetch(this.user.repos_url
+                        + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88&type=all&per_page=100&page="
+                        + repoCount
+                        , {method: 'get'})
+                        .then((response) => {
+                            if (response.ok)
+                                return response.text();
+                            else
+                                throw new Error("Error!");
+                        })
+                        .then((response) => {
+                            this.repos = this.repos.concat(JSON.parse(response));
+                            return response;
+                        })
+                        .catch(err => console.log(err))
+                }
+
+                return new Promise((resolve, reject) => {
+                    Promise.all(repoPromises)
+                        .then(() => {
+                            let particpationPromises = [];
+                            this.repos.forEach((repo, index) => {
+                                if (repo.owner.login === this.user.login) {
+                                    this.stars += repo.stargazers_count;
+                                    this.forks += repo.forks_count;
+                                }
+                                particpationPromises[index] = fetch(repo.url
+                                    + "/stats/participation"
+                                    + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
+                                    , {method: 'get'})
+                                    .then((response) => {
+                                        if (response.ok)
+                                            return response.text();
+                                        else
+                                            throw new Error("Error!");
+                                    })
+                                    .then((data) => {
+                                        repo.all_commits = 0;
+                                        repo.commits = 0;
+                                        if (!data)
+                                            return data;
+                                        let participation_data = JSON.parse(data);
+                                        participation_data.all.forEach((commits, index) => {
+                                            repo.all_commits += commits || 0;
+                                        });
+
+                                        participation_data.owner.forEach((commits, index) => {
+                                            repo.commits += commits || 0;
+                                        });
+                                        this.commits += repo.commits;
+                                    })
+                                    .catch(err => console.log(err));
+                            });
+                            return Promise.all(particpationPromises);
+                        })
+                        .then(() => {
+                            this.repos.sort((a, b) => {
+                                if (a.commits < b.commits)
+                                    return 1;
+                                else if (a.commits === b.commits) {
+                                    if (a.all_commits < b.all_commits)
+                                        return 1;
+                                    else return -1;
+                                }
+                                else return -1;
+                            });
+                            this.$.reposContainer.innerHTML = "";
+                            this.repos.forEach((repo, index) => {
+                                let repoBox = document.createElement("repo-box");
+                                repoBox.repo = repo;
+                                this.$.reposContainer.appendChild(repoBox);
+                            });
+                            return {};
+                        })
+                        .then(() => resolve());
+                });
+
+            }
+        }
+
+        window.customElements.define(contentBox.is, contentBox);
+    </script>
+</dom-module>

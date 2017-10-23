@@ -1,0 +1,175 @@
+<link rel="import" href="../polymer/lib/mixins/property-accessors.html">
+
+<script>
+
+  /**
+  * `svg-piechart`
+  *
+  * `svg-piechart` draws a piechart using SVG. The absolut values are defined as an *  array in `data`.
+  *
+  *  <svg-piechart data="[10,20,40,50]"></svg-piechart>
+  *
+  *  Height and width in pixels can be changed by setting `size`:
+  *
+  *  <svg-piechart size="250" data="[10,20,40,50]"></svg-piechart>
+  *
+  *   There are three default color palettes included. They all use the official <a *   href="http://www.google.com/design/spec/style/color.html">Material            *   Colors</a>. One has 4 different colors, one 8 and one 16. The chart element   *   automatically uses the smallest palette that covers the amount of given       *   values. (So with 6 given values, the 8-color-palette is used.)
+  *
+  *   To use custom colors, set the `colors` property to an array of rgb or rgba   *   values:
+  *
+  *  <svg-piechart
+  *    colors='["red", "#666", "#1e88e5", "rgba(255, 0, 20, .4)"]'
+  *    data="  [ 10,    20,     40,        50]">
+  *  </svg-piechart>
+  *
+  *
+  * @customElement
+  * @element svg-piechart
+  * @demo demo/index.html
+  */
+  class SvgPiechart extends Polymer.PropertyAccessors(HTMLElement) {
+
+    static get DEFAULT_COLORS16() {return [ '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5','#1e88e5','#03a9f4','#00bcd4','#009688','#4caf50','#8bc34a',
+    '#cddc39','#ffeb3b','#ffc107','#ff9800','#ff5722'];}
+
+    static get DEFAULT_COLORS8() {return ['#f44336','#9c27b0','#3f51b5',
+    '#03a9f4','#009688','#8bc34a','#ffeb3b','#ff9800'];}
+
+    static get DEFAULT_COLORS4() {return ['#f44336','#3f51b5','#8bc34a','#ffeb3b',]}
+
+
+    static get observedAttributes() {return ['colors','size','data']; }
+
+    constructor() {
+      super();
+      this.attachShadow({mode: 'open'});
+      this.data = [];
+      this.size = 150;
+      this.colors = [];
+    }
+
+    connectedCallback() {
+      this._enableProperties();
+    }
+
+    ready() {
+      this._init();
+      super.ready();
+    }
+
+    _propertiesChanged() {
+      this._render();
+    }
+
+    _attributeToProperty(attribute, value, type) {
+      if (!type) {
+        switch (attribute) {
+          case "size":
+            type = String;
+          break;
+          case "data":
+          case "colors":
+            type = Array
+          break
+        }
+      }
+      super._attributeToProperty(attribute, value,type);
+    }
+
+    _init() {
+      let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute('viewBox',"0 0 360 360");
+      svg.setAttribute('width',this.size);
+      svg.setAttribute('height',this.size);
+      this.shadowRoot.appendChild(svg);
+    }
+
+    _calculateArcs(colors, data) {
+      let total = this._calculateTotal(data);
+      colors = this._getColors(colors);
+      let startAngle = 0;
+      let endAngle = -90;
+      let arcs = [];
+
+      for (let i = 0; i < data.length; i++) {
+        let angle = (360*data[i]/total);
+        let largeArcFlag = 0;
+        if (angle > 180) {
+          largeArcFlag = 1;
+        }
+
+        startAngle = endAngle;
+        endAngle = startAngle + angle;
+        let arc = {
+          x1: 180 + 180*Math.cos(Math.PI*startAngle/180),
+          y1: 180 + 180*Math.sin(Math.PI*startAngle/180),
+          x2: 180 + 180*Math.cos(Math.PI*endAngle/180),
+          y2: 180 + 180*Math.sin(Math.PI*endAngle/180),
+          largeArcFlag: largeArcFlag,
+          color: colors[i]
+        };
+        if (arc.x2 > 179.9 && arc.y2 === 0 && arc.largeArcFlag === 1) {
+          arc.x2 = 179.99;
+        }
+        arcs.push(arc);
+      }
+
+      return arcs;
+    }
+
+    _calculateTotal(data) {
+      let total = 0;
+      for (let i = 0; i < data.length; i++) {
+        total += data[i];
+      }
+      return total;
+    }
+
+    _computePath(arc) {
+      return 'M180,180 L' + arc.x1 + ',' + arc.y1 + ' A180,180 0 ' + arc.largeArcFlag + ',1 ' + arc.x2 + ',' + arc.y2 + ' z';
+    }
+
+    _getColors(colors) {
+      if (!colors || colors.length == 0) {
+        if (this.data.length > 8) {
+          colors = this.constructor.DEFAULT_COLORS16;
+        }
+        else if (this.data.length > 4) {
+          colors = this.constructor.DEFAULT_COLORS8;
+        }
+        else {
+          colors = this.constructor.DEFAULT_COLORS4;
+        }
+      }
+      return colors;
+    }
+
+    _render() {
+      let arcs = this._calculateArcs(this.colors, this.data);
+      let svg = this.shadowRoot.querySelector('svg');
+      svg.setAttribute('width',this.size);
+      svg.setAttribute('height',this.size);
+
+      while (svg.firstChild) {
+        svg.removeChild(svg.firstChild);
+      }
+
+      for (let i = 0; i < arcs.length; i++) {
+        let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        // IE11 does not support classList on SVG elements
+        if (path.classList) {
+          path.classList.add('slice');
+        }
+        else {
+          path.setAttribute('class','slice');
+        }
+        path.style.fill = arcs[i].color;
+        path.setAttribute('d', this._computePath(arcs[i]));
+        svg.appendChild(path);
+      }
+    }
+
+  }
+  SvgPiechart.createPropertiesForAttributes();
+  window.customElements.define('svg-piechart', SvgPiechart);
+</script>

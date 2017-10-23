@@ -1,0 +1,208 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-location/iron-location.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="nav-bar.html">
+<link rel="import" href="content-box.html">
+<dom-module id="app-main">
+    <template>
+        <style include="granite-bootstrap"></style>
+        <link rel="stylesheet" href="/src/assets/theme/theme.css">
+        <style>
+            * {
+                transition: 1s !important;
+            }
+
+            :host(*) {
+                font-family: 'Open Sans', sans-serif;
+            }
+
+            .searchRow {
+                margin: 0;
+                padding: 70px 20px 20px 20px;
+            }
+
+            #searchBar {
+                --paper-font-subhead_-_font-size: 34px;
+                padding: 0;
+            }
+
+            .inputPrefix {
+                color: #fff;
+                font-size: var(--paper-font-subhead_-_font-size);
+                margin-right: 5px;
+            }
+
+            .main-container {
+                margin: 0;
+                padding: 0;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            section[hero]:not([style-scope]):not(.style-scope) {
+                text-align: center;
+            }
+
+            .row {
+                margin: 0;
+            }
+
+            .heading-container {
+                padding: 10px 20px !important;
+            }
+
+            #spinner {
+                position: absolute;
+                top: calc(50vh - 14px);
+                left: calc(50vw - 14px);
+            }
+        </style>
+
+        <app-location route="{{route}}"></app-location>
+        <app-route route="{{route}}" pattern="/user" tail="{{userRoute}}"></app-route>
+        <app-route route="{{userRoute}}" pattern="/:username" data="{{userData}}"></app-route>
+        <iron-location path="{{path}}"></iron-location>
+
+        <div class="container-fluid main-container flex style-scope paper-header-panel">
+            <nav-bar><span slot="brand">gitFame</span></nav-bar>
+            <section hero="" id="heading" hidden$="{{headingHide}}">
+                <div class="heading-container">
+                    <h1 class="title">gitFame</h1>
+                    <h2 class="title">Your GitHub Contributions Analyser</h2>
+                </div>
+            </section>
+
+            <div class="row searchRow">
+                <paper-input id="searchBar" on-input="searchinit" value="{{userData.username}}" label="username" type="search" autofocus="true" class="col-xs-12 col-md-8 col-md-offset-2">
+                    <div class="inputPrefix" slot="prefix">@</div>
+                </paper-input>
+            </div>
+
+            <paper-spinner id="spinner"></paper-spinner>
+            <content-box id="content"></content-box>
+        </div>
+    </template>
+
+    <script>
+        class appMain extends Polymer.Element {
+            static get is() {
+                return 'app-main';
+            }
+
+            static get properties() {
+                return {
+                    headingHide: {
+                        type: Boolean,
+                        value: false
+                    },
+                    route: {
+                        type: Object,
+                        notify: true
+                    },
+                    userRoute: {
+                        type: Object,
+                        notify: true
+                    },
+                    userData: {
+                        type: Object,
+                        notify: true,
+                        observer: '_userData'
+                    },
+                    path: {
+                        type: String,
+                        value: '/',
+                        notify: true
+                    }
+                };
+            }
+
+            searchinit(event) {
+                let userName = event.target.value;
+                this.route.path = "/user";
+                if (this.path === '/')
+                    this.path = '/user/' + userName;
+                if (userName === '') {
+                    this.path = '/';
+                    this.showHeading();
+                    return;
+                }
+                this.search(userName);
+            };
+
+            _userData(newData, oldData) {
+                if (!oldData) {
+                    if (!newData.username) {
+                        this.showHeading();
+                        return;
+                    }
+                    this.search(newData.username);
+                }
+            }
+
+            hideHeading() {
+                this.headingHide = true;
+            }
+
+            showHeading() {
+                this.headingHide = false;
+                this.$.content.hideBox();
+            }
+
+            hideSpinner() {
+                this.$.spinner.active = false;
+                this.$.content.showBox();
+            }
+
+            showSpinner() {
+                this.$.content.hideBox();
+                this.$.spinner.active = true;
+            }
+
+            search(userName) {
+                this.hideHeading();
+
+                this.showSpinner();
+
+                fetch('https://api.github.com/users/'
+                    + userName
+                    + '?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88'
+                    , {method: 'get'})
+                    .then((response) => {
+                        if (response.ok)
+                            return response.text();
+                        else
+                            throw new Error("User Not Found!");
+                    })
+                    .then((response) => {
+                        let user = JSON.parse(response);
+                        if (user.login !== this.userData.username)
+                            throw new Error("Debounced");
+                        else
+                            return user
+                    }, () => {
+                        this.$.content.showNotFound();
+                        this.hideSpinner();
+                        throw new Error("not found");
+                    })
+                    .then((user) => {
+                        this.showSpinner();
+                        return this.$.content.loadContent(user);
+                    })
+                    .then((response) => {
+                        this.$.content.showContent();
+                        this.hideSpinner();
+                        return response;
+                    })
+                    .catch((err) => console.log(err));
+            }
+        }
+
+        window.customElements.define(appMain.is, appMain);
+    </script>
+</dom-module>

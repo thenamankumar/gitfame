@@ -1,0 +1,162 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/granite-bootstrap/granite-bootstrap.html">
+<link rel="import" href="../../bower_components/svg-piechart/svg-piechart.html">
+<dom-module id="repo-box">
+    <template>
+        <style include="granite-bootstrap"></style>
+        <link rel="stylesheet" href="/src/assets/theme/theme.css">
+        <style>
+            .card {
+                color: white;
+                padding: 20px 0;
+                margin-bottom: 50px;
+                font-weight: 400;
+                background-color: #333332;
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            }
+
+            .repo-card {
+                padding: 20px;
+            }
+
+            .name {
+                color: #e0c453;
+                font-weight: 800;
+                margin-bottom: 15px;
+                font-size: 18px;
+                line-height: 24px;
+                max-height: 48px;
+                height: 48px;
+                overflow: hidden;
+                word-wrap: break-word;
+            }
+
+            a:hover {
+                text-decoration-color: #e0c453 !important;
+            }
+
+            .chat-stat-title {
+                color: white;
+                font-size: 16px;
+                font-weight: 800;
+                margin-bottom: 20px;
+            }
+
+            .chart-value-1 {
+                color: #959695;
+            }
+
+            .chart-value-2 {
+                color: #e0c453;
+            }
+
+            .chart-value-1, .chart-value-2 {
+                font-weight: 800;
+            }
+
+            .chart-data {
+                text-align: left;
+            }
+
+            .repo-stats {
+                margin-bottom: 65px;
+            }
+
+            .no-contri-box {
+                height: 90px;
+            }
+
+            .on-contri-message {
+                margin-top: 100px;
+                font-size: 16px;
+                font-weight: 800;
+            }
+
+            .stat {
+                color: #80cbc4;
+                font-weight: 800;
+            }
+
+            .stat-count {
+                color: white;
+            }
+        </style>
+        <div class="card col-xs-12 col-sm-4 repo-card">
+            <a href="{{repo.html_url}}" target="_blank">
+                <h4 class="name">{{repo.full_name}}</h4>
+            </a>
+            <div class="repo-stats">
+                <div class="col-xs-4 stat">Stars: <span class="stat-count">{{repo.stargazers_count}}</span></div>
+                <div class="col-xs-4 stat">Forks: <span class="stat-count">{{repo.forks_count}}</span></div>
+                <div class="col-xs-4 stat">Watch: <span class="stat-count">{{repo.watchers_count}}</span></div>
+            </div>
+            <div class="chart-container" hidden="{{chartHide}}">
+                <div class="col-xs-12 col-sm-6">
+                    <svg-piechart title="Contributed {{repo.commits}} Commits" size="120" data="{{chartData}}" colors="[&quot;rgba(224,196,83,1)&quot;,&quot;rgba(247, 247, 247,0.5)&quot;]"></svg-piechart>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <p class="chat-stat-title">Commits</p>
+                    <div class="chart-data">
+                        <p>Total: <span class="chart-value-1">{{repo.all_commits}}</span></p>
+                        <p>Contributed: <span class="chart-value-2">{{repo.commits}}</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="no-contri-box" hidden="{{messageHide}}">
+                <p class="on-contri-message">No Activity in Last Year!</p>
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+        class repoBox extends Polymer.Element {
+            static get is() {
+                return 'repo-box';
+            }
+
+            static get properties() {
+                return {
+                    repo: {
+                        type: Object,
+                        notify: true,
+                        reflectToAttribute: true
+                    },
+                    chartData: {
+                        type: Object,
+                        notify: true,
+                        computed: 'generateCharData(repo)'
+                    },
+                    chartHide: {
+                        type: Boolean,
+                        notify: true,
+                        computed: 'chartHidden(repo)'
+                    },
+                    messageHide: {
+                        type: Boolean,
+                        notify: true,
+                        computed: 'messageHidden(repo)'
+                    }
+                }
+            }
+
+            generateCharData(repo) {
+                if (repo.commits === 0 && repo.all_commits === 0)
+                    return [1, 0];
+                return [repo.commits, repo.all_commits - repo.commits];
+            }
+
+            chartHidden(repo) {
+                return repo.all_commits === 0;
+            }
+
+            messageHidden(repo) {
+                return repo.all_commits !== 0;
+            }
+        }
+
+        window.customElements.define(repoBox.is, repoBox);
+    </script>
+</dom-module>
