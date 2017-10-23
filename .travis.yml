@@ -12,6 +12,7 @@ cache:
 install:
   - npm install -g polymer-cli
   - npm install -g bower
+  - sudo apt-get install sshpass
 
 script:
         - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./deploy.sh; fi'

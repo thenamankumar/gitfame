@@ -1,16 +1,11 @@
-# GH_USER: Username for the user
-# GH_TOKEN: Token or pass for the user
-# GH_REF: github.com/<user-name>/<repo-name>.git
+# DO_PASS DIGITAL OCEAN PASS
+# DO_USR DIGITAL OCEAN USER
+# DO_IP DIGITAL OCEAN IP
+
 rm -rf build/
 polymer install
 polymer build
-cd build/default/
-git init .
-git config --local user.name "hereisnaman"
-git config --local user.email "naman@outlook.in"
+cd build/
 now=$(date)
 echo "Deployed on $now" >> "Deployed_$now".txt
-echo "gitfa.me" >> CNAME
-git add -A
-git commit -m "Deploy to Build"
-git push --force --quiet "https://${GH_USER}:${GH_TOKEN}@${GH_REF}" master:gh-pages
+sshpass -p "${DO_PASS}" scp -r default/* ${DO_USR}@${DO_IP}:/var/www/html/gitfame/
