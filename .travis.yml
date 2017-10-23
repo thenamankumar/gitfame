@@ -10,9 +10,9 @@ cache:
         - "bower_components"
 
 install:
-  - npm install -g polymer-cli --unsafe-perm
   - npm install -g bower
+  - npm install -g polymer-cli --unsafe-perm
   - sudo apt-get install sshpass
 
 script:
-        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./deploy.sh; fi'
+        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./deploy.sh;'

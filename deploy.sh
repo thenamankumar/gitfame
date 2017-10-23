@@ -6,6 +6,4 @@ rm -rf build/
 polymer install
 polymer build
 cd build/
-now=$(date)
-echo "Deployed on $now" >> "Deployed_$now".txt
 sshpass -p "${DO_PASS}" scp -r default/* ${DO_USR}@${DO_IP}:/var/www/html/gitfame/
