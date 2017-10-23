@@ -122,24 +122,30 @@
                 return {
                     repo: {
                         type: Object,
+                        notify: true,
                         reflectToAttribute: true
                     },
                     chartData: {
                         type: Object,
+                        notify: true,
                         computed: 'generateCharData(repo)'
                     },
                     chartHide: {
                         type: Boolean,
+                        notify: true,
                         computed: 'chartHidden(repo)'
                     },
                     messageHide: {
                         type: Boolean,
+                        notify: true,
                         computed: 'messageHidden(repo)'
                     }
                 }
             }
 
             generateCharData(repo) {
+                if (repo.commits === 0 && repo.all_commits === 0)
+                    return [1, 0];
                 return [repo.commits, repo.all_commits - repo.commits];
             }
 

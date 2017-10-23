@@ -10,7 +10,7 @@
 
     <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
-    <link rel="import" href="src/assets/theme/theme.html">
+    <link rel="import" href="/src/assets/theme/theme.html">
     <link rel="import" href="/src/app-main/app-main.html">
     <style>
         body {
@@ -18,6 +18,14 @@
             margin: -21px 0 0 0;
         }
     </style>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
 </head>
 <body>
 <app-main></app-main>

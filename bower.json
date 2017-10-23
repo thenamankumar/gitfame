@@ -9,7 +9,9 @@
     "paper-icon-button": "^2.0.1",
     "paper-input": "^2.0.2",
     "paper-button": "^2.0.0",
-    "svg-piechart": "^2.0.0"
+    "svg-piechart": "^2.0.0",
+    "app-route": "https://github.com/PolymerElements/app-route.git#^2.0.3",
+    "iron-location": "^2.0.2"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

@@ -73,6 +73,12 @@
                     display: flex;
                 }
             }
+
+            @media (max-width: 767px) {
+                #content {
+                    padding: 0;
+                }
+            }
         </style>
 
         <section hidden$="{{hide}}">
@@ -124,14 +130,17 @@
                 return {
                     hide: {
                         type: Boolean,
-                        value: false
+                        notify: true,
+                        value: false,
                     },
                     notFoundHide: {
                         type: Boolean,
+                        notify: true,
                         value: true
                     },
                     contentHide: {
                         type: Boolean,
+                        notify: true,
                         value: true
                     },
                     user: {
@@ -145,22 +154,27 @@
                     },
                     stars: {
                         type: Number,
+                        notify: true,
                         value: 0
                     },
                     forks: {
                         type: Number,
+                        notify: true,
                         value: 0
                     },
                     commits: {
                         type: Number,
+                        notify: true,
                         value: 0
                     },
                     additions: {
                         type: Number,
+                        notify: true,
                         value: 0
                     },
                     deletions: {
                         type: Number,
+                        notify: true,
                         value: 0
                     }
                 };
