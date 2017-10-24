@@ -147,18 +147,32 @@
                 };
             }
 
+            static get observers() {
+                return [
+                    'userNameChanged(userData.username)'
+                ]
+            }
+
             searchinit(event) {
-                let userName = event.target.value;
-                this.route.path = "/user";
-                if (this.path === '/')
-                    this.path = '/user/' + userName;
-                if (userName === '') {
+                let userName = event.target.value.trim();
+                if (userName) {
+                    this.route.path = "/user";
+                    if (this.path === '/')
+                        this.path = '/user/' + userName;
+                }
+                else {
                     this.path = '/';
                     this.showHeading();
                     return;
                 }
-                this.search(userName);
-            };
+                window.setInterval(this.search(userName.trim()), 100);
+            }
+
+            userNameChanged(username) {
+                this.userData.username = username ? username.trim() : '';
+                if (username)
+                    this.path = '/user/' + this.userData.username;
+            }
 
             _userData(newData, oldData) {
                 if (!oldData) {
@@ -166,7 +180,7 @@
                         this.showHeading();
                         return;
                     }
-                    this.search(newData.username);
+                    this.search(newData.username.trim());
                 }
             }
 
@@ -193,9 +207,11 @@
             }
 
             search(userName) {
+                if (!userName || userName !== this.userData.username.trim())
+                    return;
+
                 this.hideHeading();
                 this.showSpinner();
-
                 fetch('https://api.github.com/users/'
                     + userName
                     + '?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88'
@@ -208,19 +224,13 @@
                     })
                     .then((response) => {
                         let user = JSON.parse(response);
-                        if (user.login.toLowerCase() !== this.userData.username)
-                            throw new Error("Debounced");
-                        else
-                            return user
+                        this.showSpinner();
+                        this.spinnerContent = "Analyzing the contributions";
+                        return this.$.content.loadContent(user);
                     }, () => {
                         this.$.content.showNotFound();
                         this.hideSpinner();
                         throw new Error("not found");
-                    })
-                    .then((user) => {
-                        this.showSpinner();
-                        this.spinnerContent = "Analyzing the contributions";
-                        return this.$.content.loadContent(user);
                     })
                     .then((response) => {
                         this.$.content.showContent();
