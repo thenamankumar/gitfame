@@ -3,10 +3,12 @@
   "shell": "src/app-main/app-main.html",
   "sources": [
     "src/**/*",
+    "icons/**/*",
     "bower.json"
   ],
   "extraDependencies": [
     "manifest.json",
+    "icons/icon-16x16.png",
     "bower_components/webcomponentsjs/webcomponents-lite.js"
   ],
   "builds": [

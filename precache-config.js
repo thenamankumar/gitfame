@@ -2,8 +2,11 @@ module.exports = {
     staticFileGlobs: [
         'index.html',
         'manifest.json',
+        'icons/icon-16x16.png',
         'bower_components/webcomponentsjs/webcomponents-loader.js'
     ],
+    navigateFallback: '/index.hml',
+    navigateFallbackWhitelist: [/^\/user\//],
     runtimeCaching: [
         {
             urlPattern: /src/,
