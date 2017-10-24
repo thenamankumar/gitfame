@@ -4,11 +4,11 @@
   "sources": [
     "src/**/*",
     "icons/**/*",
-    "bower.json"
+    "bower.json",
+    "browserconfig.xml"
   ],
   "extraDependencies": [
     "manifest.json",
-    "icons/icon-16x16.png",
     "bower_components/webcomponentsjs/webcomponents-lite.js"
   ],
   "builds": [
