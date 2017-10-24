@@ -16,29 +16,40 @@ module.exports = {
         },
         {
             urlPattern: /bower_components/,
-            handler: 'cacheFirst',
+            handler: 'networkFirst',
             options: {
                 cache: {
-                    maxAgeSeconds: 14400,
                     name: 'bower'
                 }
             }
         },
         {
-            urlPattern: /^https:\/\/api\.github\.com\/users/,
-            handler: 'networkFirst',
+            urlPattern: /^https:\/\/api\.github\.com\/users\/[^\/]*\?/,
+            handler: 'cacheFirst',
             options: {
                 cache: {
-                    name: 'github-users'
+                    maxAgeSeconds: 60 * 60 * 4,
+                    name: 'users'
+                }
+            }
+        },
+        {
+            urlPattern: /^https:\/\/api\.github\.com\/users\/[^\/]*\/repos\?.*$/,
+            handler: 'cacheFirst',
+            options: {
+                cache: {
+                    maxAgeSeconds: 60 * 60 * 4,
+                    name: 'repos'
                 }
             }
         },
         {
             urlPattern: /^https:\/\/api\.github\.com\/repos/,
-            handler: 'networkFirst',
+            handler: 'cacheFirst',
             options: {
                 cache: {
-                    name: 'github-repos'
+                    maxAgeSeconds: 60 * 60 * 4,
+                    name: 'contributors'
                 }
             }
         },
@@ -47,8 +58,8 @@ module.exports = {
             handler: 'cacheFirst',
             options: {
                 cache: {
-                    maxAgeSeconds: 86400,
-                    name: 'github-img'
+                    maxAgeSeconds: 60 * 60 * 24,
+                    name: 'user-images'
                 }
             }
         }

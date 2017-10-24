@@ -83,8 +83,14 @@
 
         <section hidden$="{{hide}}">
             <div id="notFound" class="row" hidden$="{{notFoundHide}}">
-                <img src="/src/assets/images/error_outline.png">
-                <h2>User Not Found!</h2>
+                <div id="noUser" hidden="{{noUserHide}}">
+                    <img src="/src/assets/images/error_outline.png">
+                    <h2>User Not Found!</h2>
+                </div>
+                <div id="noNetwork" hidden="{{noNetworkHide}}">
+                    <img src="/src/assets/images/dino.png">
+                    <h2>You are Offline!</h2>
+                </div>
             </div>
             <div id="content" class="container" hidden$="{{contentHide}}">
                 <div class="row col-xs-12">
@@ -138,6 +144,16 @@
                         notify: true,
                         value: true
                     },
+                    noUserHide: {
+                        type: Boolean,
+                        notify: true,
+                        value: !navigator.onLine
+                    },
+                    noNetworkHide: {
+                        type: Boolean,
+                        notify: true,
+                        value: navigator.onLine
+                    },
                     contentHide: {
                         type: Boolean,
                         notify: true,
@@ -185,6 +201,8 @@
             }
 
             showNotFound() {
+                this.noUserHide = !navigator.onLine;
+                this.noNetworkHide = navigator.onLine;
                 this.hideContent();
                 this.notFoundHide = false;
             }
@@ -218,7 +236,9 @@
                 let repoPromises = [];
                 for (let repoCount = Math.floor(this.user.public_repos / 100) + 1, i = 0; repoCount > 0; repoCount--, i++) {
                     repoPromises[i] = fetch(this.user.repos_url
-                        + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88&type=all&per_page=100&page="
+                        + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
+                        + "&type=all&"
+                        + "&per_page=100&page="
                         + repoCount
                         , {method: 'get'})
                         .then((response) => {
@@ -237,38 +257,87 @@
                 return new Promise((resolve, reject) => {
                     Promise.all(repoPromises)
                         .then(() => {
-                            let particpationPromises = [];
+                            let forksPromises = []
+                                , count = 0
+                                , self = this;
                             this.repos.forEach((repo, index) => {
-                                if (repo.owner.login === this.user.login) {
+                                if (repo.fork) {
+                                    forksPromises[++count] = fetch(repo.url
+                                        + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
+                                        , {method: 'get'})
+                                        .then((response) => {
+                                            if (response.ok)
+                                                return response.text();
+                                            else
+                                                throw new Error("Error!");
+                                        })
+                                        .then((response) => {
+                                            let data = JSON.parse(response);
+                                            return fetch(data.parent.url
+                                                + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
+                                                , {method: 'get'})
+                                                .then((response) => {
+                                                    if (response.ok)
+                                                        return response.text();
+                                                    else
+                                                        throw new Error("Error!");
+                                                })
+                                                .then((response) => {
+                                                    let newData = JSON.parse(response);
+                                                    self.repos[index] = newData;
+                                                })
+                                                .catch(err => console.log(err));
+                                        })
+                                        .catch(err => console.log(err));
+                                }
+                            });
+                            return Promise.all(forksPromises);
+                        })
+                        .then(() => {
+                            let particpationPromises = [],
+                                self = this;
+                            this.repos.forEach((repo, index) => {
+                                if (repo.owner.login === self.user.login) {
                                     this.stars += repo.stargazers_count;
                                     this.forks += repo.forks_count;
                                 }
-                                particpationPromises[index] = fetch(repo.url
-                                    + "/stats/participation"
-                                    + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
-                                    , {method: 'get'})
-                                    .then((response) => {
-                                        if (response.ok)
-                                            return response.text();
-                                        else
-                                            throw new Error("Error!");
-                                    })
-                                    .then((data) => {
-                                        repo.all_commits = 0;
-                                        repo.commits = 0;
-                                        if (!data)
-                                            return data;
-                                        let participation_data = JSON.parse(data);
-                                        participation_data.all.forEach((commits, index) => {
-                                            repo.all_commits += commits || 0;
-                                        });
 
-                                        participation_data.owner.forEach((commits, index) => {
-                                            repo.commits += commits || 0;
-                                        });
-                                        this.commits += repo.commits;
-                                    })
-                                    .catch(err => console.log(err));
+                                repo.commits = 0;
+                                repo.all_commits = 0;
+                                particpationPromises[index] = fetchParticipants(1);
+
+                                function fetchParticipants(page) {
+                                    return fetch(repo.contributors_url
+                                        + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
+                                        + "&per_page=100&page=" + page
+                                        , {method: 'get'})
+                                        .then((response) => {
+                                            if (response.ok)
+                                                return response.text();
+                                            else
+                                                throw new Error("Error!");
+                                        })
+                                        .then((response) => {
+                                            if (!response)
+                                                throw new Error("no data");
+                                            let contributors = JSON.parse(response);
+                                            if (contributors.length === 0)
+                                                return contributors;
+                                            let ourUser = contributors.find((item) => {
+                                                return item.login === self.user.login;
+                                            });
+                                            if (ourUser) {
+                                                repo.commits = ourUser.contributions;
+                                                self.commits += repo.commits;
+                                            }
+                                            contributors.forEach((item) => {
+                                                repo.all_commits += item.contributions;
+                                            });
+                                            return fetchParticipants(page + 1);
+                                        })
+                                        .catch(err => console.log(err));
+                                }
+
                             });
                             return Promise.all(particpationPromises);
                         })
