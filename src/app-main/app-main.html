@@ -58,9 +58,22 @@
             }
 
             #spinner {
+                margin-top: 100px;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .fork-corner {
                 position: absolute;
-                top: calc(50vh - 14px);
-                left: calc(50vw - 14px);
+                bottom: 0;
+                right: 0;
+                width: 100px;
+            }
+
+            @media (max-width: 767px) {
+                .fork-corner {
+                    display: none;
+                }
             }
         </style>
 
@@ -69,6 +82,8 @@
         <app-route route="{{userRoute}}" pattern="/:username" data="{{userData}}"></app-route>
         <iron-location path="{{path}}"></iron-location>
 
+        <a href="https://github.com/hereisnaman/gitfame/"><img class="fork-corner"
+                                                               src="/src/assets/images/fork-corner.png"></a>
         <div class="container-fluid main-container flex style-scope paper-header-panel">
             <nav-bar><span slot="brand">gitFame</span></nav-bar>
             <section hero id="heading" hidden$="{{headingHide}}">
@@ -86,7 +101,10 @@
                 </paper-input>
             </div>
 
-            <paper-spinner id="spinner"></paper-spinner>
+            <div id="spinner">
+                <h2 class="spinnerText">{{spinnerContent}}</h2>
+                <paper-spinner id="spinnerCircle"></paper-spinner>
+            </div>
             <content-box id="content"></content-box>
         </div>
     </template>
@@ -121,10 +139,10 @@
                         value: '/',
                         notify: true
                     },
-                    network: {
-                        type: Boolean,
+                    spinnerContent: {
+                        type: String,
                         notify: true,
-                        computed: ''
+                        value: ""
                     }
                 };
             }
@@ -162,18 +180,20 @@
             }
 
             hideSpinner() {
-                this.$.spinner.active = false;
+                this.$.spinner.hidden = true;
+                this.$.spinnerCircle.active = false;
                 this.$.content.showBox();
             }
 
             showSpinner() {
                 this.$.content.hideBox();
-                this.$.spinner.active = true;
+                this.spinnerContent = "Searching for the user";
+                this.$.spinnerCircle.active = true;
+                this.$.spinner.hidden = false;
             }
 
             search(userName) {
                 this.hideHeading();
-
                 this.showSpinner();
 
                 fetch('https://api.github.com/users/'
@@ -188,7 +208,7 @@
                     })
                     .then((response) => {
                         let user = JSON.parse(response);
-                        if (user.login !== this.userData.username)
+                        if (user.login.toLowerCase() !== this.userData.username)
                             throw new Error("Debounced");
                         else
                             return user
@@ -199,6 +219,7 @@
                     })
                     .then((user) => {
                         this.showSpinner();
+                        this.spinnerContent = "Analyzing the contributions";
                         return this.$.content.loadContent(user);
                     })
                     .then((response) => {

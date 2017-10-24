@@ -232,7 +232,7 @@
                 this.commits = 0;
                 this.additions = 0;
                 this.deletions = 0;
-
+                this.spinnerContent = '';
                 let repoPromises = [];
                 for (let repoCount = Math.floor(this.user.public_repos / 100) + 1, i = 0; repoCount > 0; repoCount--, i++) {
                     repoPromises[i] = fetch(this.user.repos_url
