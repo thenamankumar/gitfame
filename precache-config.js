@@ -19,7 +19,7 @@ module.exports = {
         'icons/android-chrome-256x256.png',
         'icons/android-chrome-384x384.png'
     ],
-    navigateFallback: '/index.hml',
+    navigateFallback: '/index.html',
     navigateFallbackWhitelist: [/^\/user\//],
     runtimeCaching: [
         {
