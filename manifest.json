@@ -7,7 +7,7 @@
   "display": "standalone",
   "orientation": "any",
   "Scope": "/",
-  "start_url": "/",
+  "start_url": "/index.html",
   "lang": "en-US",
   "icons": [
     {
