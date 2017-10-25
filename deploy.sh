@@ -1,9 +1,6 @@
-# DO_PASS DIGITAL OCEAN PASS
-# DO_USR DIGITAL OCEAN USER
-# DO_IP DIGITAL OCEAN IP
-
 rm -rf build/
 polymer install
 polymer build
-cd build/
-sshpass -p "${DO_PASS}" scp -r default/* ${DO_USR}@${DO_IP}:/var/www/html/gitfame/
+chmod 600 key.pem
+ssh -o StrictHostKeyChecking=no -i key.pem $USER@$SERVER "rm -rf /var/www/html/gitfame/*;"
+scp -o StrictHostKeyChecking=no -i key.pem -r build/bundled/* $USER@$SERVER:/var/www/html/gitfame
