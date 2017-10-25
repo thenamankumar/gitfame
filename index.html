@@ -6,8 +6,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-starturl" content="/">
-    <title>gitfame | by hereisnaman</title>
-    <meta name="description" content="A PWA to analyse GitHub contributions.">
+    <title>Git Fame | Github Contributions Analyzer</title>
+    <meta name="description"
+          content="Git Fame is a progressive web app to analyze github contributions of any user. Built with PolymerJS, by Naman Kumar, is an Open Source App.">
 
     <link rel="manifest" href="/manifest.json">
     <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-touch-icon-57x57.png">
@@ -46,6 +47,19 @@
             });
         }
     </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108431678-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'UA-108431678-1');
+    </script>
+
 </head>
 <body>
 <noscript>Sorry, your browser does not support JavaScript!</noscript>
