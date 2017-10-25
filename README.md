@@ -2,8 +2,18 @@
 
 A prograssive web app build with polymerJS to analyze all time Github contributions. Deployed at https://gitfa.me
 
-![screen shot 2017-10-24 at 7 52 09 pm](https://user-images.githubusercontent.com/22571395/31951099-cd8bf97e-b8fa-11e7-923f-2cfb7d73aa55.png)
 
+## How it works
+
+- **Stars:** total number of stars on the repos initiated by the user.
+- **Forks:** total number of forks of the repos initiated by the user.
+- **Commits:** The number of commits are calculated as per the following rules:
+    - If the repo is not a fork, all the commits of that repo, committed by the user, are considered.
+    - If the repo is a fork, the commits done by the user on the parent repo are considered.
+    - Commits of a repo are considered unless the repo is inactive from last 1 year.
+
+
+![screen shot 2017-10-24 at 7 52 09 pm](https://user-images.githubusercontent.com/22571395/31951099-cd8bf97e-b8fa-11e7-923f-2cfb7d73aa55.png)
 
 ## Install the Polymer-CLI
 
