@@ -361,6 +361,9 @@
                             return {};
                         })
                         .then(() => resolve());
+                }).catch((err) => {
+                    this.showNotFound();
+                    return err;
                 });
 
             }
