@@ -165,7 +165,9 @@
                     this.showHeading();
                     return;
                 }
-                window.setTimeout(this.search(userName.trim()), 2500);
+                window.setTimeout(() => {
+                    this.search(userName.trim())
+                }, 1000);
             }
 
             userNameChanged(username) {
