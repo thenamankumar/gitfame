@@ -1,8 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <dom-module id="nav-bar">
     <template>
+        <style include="granite-bootstrap"></style>
         <link rel="stylesheet" href="/src/assets/theme/theme.css">
         <style>
             .title {
@@ -23,10 +26,113 @@
                 --calculated-paper-toolbar-height: 80px;
                 box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
             }
+
+            .navbar {
+                padding: 20px 10px;
+                margin: 0;
+                height: 80px;
+                border: none;
+                background: #e0c453;
+                border-radius: 0;
+                color: #2b2b2b !important;
+                font-size: 20px !important;
+                font-family: 'Open Sans', sans-serif !important;
+            }
+
+            .navbar-brand {
+                color: #2b2b2b !important;
+                font-size: 20px !important;
+                margin: 0 !important;
+                font-weight: 800;
+                font-family: 'Open Sans', sans-serif !important;
+                line-height: inherit;
+            }
+
+            .modal-content {
+                font-family: 'Open Sans', sans-serif !important;
+                font-size: 20px;
+                background: #2b2b2b;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                color: white;
+            }
+
+            .content-item {
+                font-family: 'Open Sans', sans-serif !important;
+                margin-bottom: 5px;
+                line-height: 25px;
+            }
+
+            .content-item strong {
+                margin-left: 3px;
+                color: #e0c453;
+            }
+
+            .modal-content-box {
+                padding: 30px;
+            }
+
+            #how {
+                max-width: none !important;
+                max-height: none !important;
+                padding: 10px 20px;
+            }
+
+            @media (max-width: 767px) {
+                #how {
+                    width: 90vw;
+                }
+            }
+
+            @media (min-width: 768px) {
+                #how {
+                    width: 60vw;
+                }
+            }
         </style>
-        <paper-toolbar role="toolbar" class="animate has-shadow x-scope paper-toolbar-0">
-            <span slot="top" class="title">gitFame</span>
-        </paper-toolbar>
+        <paper-dialog id="how" modal>
+            <h2>How this works?</h2>
+            <hr>
+            <ul class="modal-content">
+                <li class="content-item"><strong>Stars:</strong> total number of stars on the repos initiated by the
+                    user.
+                </li>
+                <li class="content-item"><strong>Forks:</strong> total number of forks of the repos initiated by the
+                    user.
+                </li>
+                <li class="content-item"><strong>Commits:</strong> The number of commits are calculated as per the
+                    following rules:
+                    <ul class="modal-content">
+                        <li class="content-item">If the repo is not a fork, all the commits of that repo, committed
+                            by the user, are considered.
+                        </li>
+                        <li class="content-item">If the repo is a fork, the commits done by the user on the parent
+                            repo are considered.
+                        </li>
+                        <li class="content-item">Commits of a repo are considered unless the repo is inactive from last
+                            1 year.
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <paper-button dialog-confirm autofocus>Close</paper-button>
+        </paper-dialog>
+        <!--<paper-toolbar role="toolbar" class="animate has-shadow x-scope paper-toolbar-0">-->
+        <!--<span slot="top" class="title">gitFame</span>-->
+        <!--<paper-button slot="top" onclick="showHow()">How this works</paper-button>-->
+        <!--</paper-toolbar>-->
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">gitFame</a>
+                </div>
+                <div class="navbar-right">
+                    <paper-button on-click="showHow">How this works</paper-button>
+                </div>
+            </div>
+        </nav>
+
     </template>
 
     <script>
@@ -34,8 +140,13 @@
             static get is() {
                 return 'nav-bar';
             }
+
+            showHow(event) {
+                this.$.how.open();
+            }
         }
 
         window.customElements.define(navBar.is, navBar);
     </script>
+
 </dom-module>

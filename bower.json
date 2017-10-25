@@ -11,7 +11,8 @@
     "paper-button": "^2.0.0",
     "svg-piechart": "^2.0.0",
     "app-route": "https://github.com/PolymerElements/app-route.git#^2.0.3",
-    "iron-location": "^2.0.2"
+    "iron-location": "^2.0.2",
+    "paper-dialog": "^2.0.0"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
