@@ -20,14 +20,19 @@
                 font-family: 'Open Sans', sans-serif;
             }
 
+            #heading {
+                margin-bottom: 40px;
+            }
+
             .searchRow {
-                margin: 0;
-                padding: 70px 20px 20px 20px;
+                margin: 0 0 40px 0 !important;
+                padding: 30px 20px 20px 20px;
             }
 
             #searchBar {
+                background: #343433;
+                padding: 10px 20px;
                 --paper-font-subhead_-_font-size: 34px;
-                padding: 0;
             }
 
             .inputPrefix {
@@ -73,6 +78,11 @@
             @media (max-width: 767px) {
                 .fork-corner {
                     display: none;
+                }
+
+                #searchBar {
+                    background: transparent;
+                    padding: 0;
                 }
             }
         </style>

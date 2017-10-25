@@ -45,11 +45,11 @@
             }
 
             .chart-value-1 {
-                color: #959695;
+                color: #e0c453;
             }
 
             .chart-value-2 {
-                color: #e0c453;
+                color: #58c6a0;
             }
 
             .chart-value-1, .chart-value-2 {
@@ -75,7 +75,7 @@
             }
 
             .stat {
-                color: #80cbc4;
+                color: #58c6a0;
                 font-weight: 800;
             }
 
@@ -95,13 +95,13 @@
             <div class="chart-container" hidden="{{chartHide}}">
                 <div class="col-xs-12 col-sm-6">
                     <svg-piechart title="Contributed {{repo.commits}} Commits" size="120" data="{{chartData}}"
-                                  colors="[&quot;rgba(224,196,83,1)&quot;,&quot;rgba(247, 247, 247,0.5)&quot;]"></svg-piechart>
+                                  colors="[&quot;rgba(88, 198, 160,1)&quot;,&quot;rgba(224, 196, 83, 1)&quot;]"></svg-piechart>
                 </div>
                 <div class="col-xs-12 col-sm-6">
-                    <p class="chat-stat-title">Commits</p>
+                    <p class="chat-stat-title">Commits: {{repo.all_commits}}</p>
                     <div class="chart-data">
-                        <p>Total: <span class="chart-value-1">{{repo.all_commits}}</span></p>
-                        <p>Contributed: <span class="chart-value-2">{{repo.commits}}</span></p>
+                        <p>User: <span class="chart-value-2">{{repo.commits}}</span></p>
+                        <p>Others: <span class="chart-value-1">{{other_commits}}</span></p>
                     </div>
                 </div>
             </div>
@@ -139,8 +139,17 @@
                         type: Boolean,
                         notify: true,
                         computed: 'messageHidden(repo)'
+                    },
+                    other_commits: {
+                        type: Number,
+                        notify: true,
+                        computed: 'otherCommits(repo.all_commits,repo.commits)'
                     }
                 }
+            }
+
+            otherCommits(all, user) {
+                return all - user;
             }
 
             generateCharData(repo) {

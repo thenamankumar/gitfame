@@ -30,17 +30,22 @@
             .navbar {
                 padding: 20px 10px;
                 margin: 0;
-                height: 80px;
+                height: 64px;
                 border: none;
-                background: #e0c453;
+                background: #58c6a0;
                 border-radius: 0;
-                color: #2b2b2b !important;
+                color: #fff !important;
                 font-size: 20px !important;
+                font-weight: 800;
                 font-family: 'Open Sans', sans-serif !important;
             }
 
+            .navbar-right {
+                margin-top: -5px !important;
+            }
+
             .navbar-brand {
-                color: #2b2b2b !important;
+                color: #fff !important;
                 font-size: 20px !important;
                 margin: 0 !important;
                 font-weight: 800;
@@ -66,7 +71,7 @@
 
             .content-item strong {
                 margin-left: 3px;
-                color: #e0c453;
+                color: #58c6a0;
             }
 
             .modal-content-box {
@@ -96,7 +101,11 @@
             }
 
             .logo {
-                padding: 12px 0;
+                padding: 4px 0;
+            }
+
+            #closeHow {
+                float: right;
             }
         </style>
         <paper-dialog id="how" modal>
@@ -124,7 +133,7 @@
                     </ul>
                 </li>
             </ul>
-            <paper-button dialog-confirm autofocus>Close</paper-button>
+            <paper-button id="closeHow" dialog-confirm autofocus raised class="info">Close</paper-button>
         </paper-dialog>
         <!--<paper-toolbar role="toolbar" class="animate has-shadow x-scope paper-toolbar-0">-->
         <!--<span slot="top" class="title">gitFame</span>-->
