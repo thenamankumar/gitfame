@@ -21,6 +21,7 @@ module.exports = {
     ],
     navigateFallback: '/index.html',
     navigateFallbackWhitelist: [/^\/user\//],
+    skipWaiting: true,
     runtimeCaching: [
         {
             urlPattern: '/',
