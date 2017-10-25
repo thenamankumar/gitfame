@@ -83,12 +83,20 @@
                 #how {
                     width: 90vw;
                 }
+
+                #howButton {
+                    display: none;
+                }
             }
 
             @media (min-width: 768px) {
                 #how {
                     width: 60vw;
                 }
+            }
+
+            .logo {
+                padding: 12px 0;
             }
         </style>
         <paper-dialog id="how" modal>
@@ -125,10 +133,12 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/">gitFame</a>
+                    <div class="logo">
+                        <img src="/icons/android-chrome-36x36.png"> gitFame
+                    </div>
                 </div>
                 <div class="navbar-right">
-                    <paper-button on-click="showHow">How this works</paper-button>
+                    <paper-button id="howButton" on-click="showHow">How this works</paper-button>
                 </div>
             </div>
         </nav>
