@@ -14,7 +14,7 @@ install:
   - npm install -g polymer-cli --unsafe-perm
 
 before_script:
-    - openssl aes-256-cbc -a -d -in key.pem.enc -out key.pem -k $ENC_KEY
+  - openssl aes-256-cbc -a -d -in key.pem.enc -out key.pem -k $ENC_KEY
 
 script:
         - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./deploy.sh;'
