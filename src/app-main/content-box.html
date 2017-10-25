@@ -309,7 +309,7 @@
                                 function fetchParticipants(page) {
                                     return fetch(repo.contributors_url
                                         + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
-                                        + "&per_page=100&page=" + page
+                                        + "&anon=1&per_page=100&page=" + page
                                         , {method: 'get'})
                                         .then((response) => {
                                             if (response.ok)
