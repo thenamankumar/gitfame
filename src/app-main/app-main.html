@@ -12,12 +12,8 @@
         <style include="granite-bootstrap"></style>
         <link rel="stylesheet" href="/src/assets/theme/theme.css">
         <style>
-            * {
-                transition: 1s !important;
-            }
-
             :host(*) {
-                font-family: 'Open Sans', sans-serif;
+                font-family: 'Open Sans', sans-serif !important;
             }
 
             #heading {
@@ -59,7 +55,20 @@
             }
 
             .heading-container {
+                text-align: center;
                 padding: 10px 20px !important;
+                font-family: 'Open Sans', sans-serif !important;
+            }
+
+            .heading-container h1 {
+                color: #58c6a0 !important;
+                font-size: 50px !important;
+                font-weight: 800 !important;
+            }
+
+            .heading-container .sub-title {
+                font-size: 35px !important;
+                color: white !important;
             }
 
             #spinner {
@@ -99,7 +108,7 @@
             <section hero id="heading" hidden$="{{headingHide}}">
                 <div class="heading-container">
                     <h1 class="title">gitFame</h1>
-                    <h2 class="title">Your GitHub Contributions Analyser</h2>
+                    <h2 class="title sub-title">Your GitHub Contributions Analyser</h2>
                 </div>
             </section>
 
