@@ -3,6 +3,7 @@ module.exports = {
         'index.html',
         'manifest.json',
         'icons/favicon-32x32.png',
+        'icons/apple-touch-icon.png',
         'icons/android-chrome-192x192.png',
         'icons/favicon-16x16.png',
         'icons/safari-pinned-tab.svg',
