@@ -67,7 +67,7 @@ module.exports = {
             options: {
                 cache: {
                     name: 'users',
-                    maxAgeSeconds: 60 * 60 * 4
+                    maxAgeSeconds: 60 * 4
                 }
             }
         },
@@ -77,7 +77,7 @@ module.exports = {
             options: {
                 cache: {
                     name: 'repos',
-                    maxAgeSeconds: 60 * 60 * 4
+                    maxAgeSeconds: 60 * 4
                 }
             }
         },
@@ -87,7 +87,7 @@ module.exports = {
             options: {
                 cache: {
                     name: 'contributors',
-                    maxAgeSeconds: 60 * 60 * 4
+                    maxAgeSeconds: 60 * 4
                 }
             }
         },
@@ -97,7 +97,7 @@ module.exports = {
             options: {
                 cache: {
                     name: 'user-images',
-                    maxAgeSeconds: 60 * 60 * 24
+                    maxAgeSeconds: 60 * 24
                 }
             }
         }
