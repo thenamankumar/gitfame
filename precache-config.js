@@ -63,41 +63,37 @@ module.exports = {
         },
         {
             urlPattern: /^https:\/\/api\.github\.com\/users\/[^\/]*\?/,
-            handler: 'cacheFirst',
+            handler: 'networkFirst',
             options: {
                 cache: {
-                    name: 'users',
-                    maxAgeSeconds: 60 * 4
+                    name: 'users'
                 }
             }
         },
         {
             urlPattern: /^https:\/\/api\.github\.com\/users\/[^\/]*\/repos\?.*$/,
-            handler: 'cacheFirst',
+            handler: 'networkFirst',
             options: {
                 cache: {
-                    name: 'repos',
-                    maxAgeSeconds: 60 * 4
+                    name: 'repos'
                 }
             }
         },
         {
             urlPattern: /^https:\/\/api\.github\.com\/repos/,
-            handler: 'cacheFirst',
+            handler: 'networkFirst',
             options: {
                 cache: {
-                    name: 'contributors',
-                    maxAgeSeconds: 60 * 4
+                    name: 'contributors'
                 }
             }
         },
         {
             urlPattern: /^https:\/\/.*\.githubusercontent\.com\//,
-            handler: 'cacheFirst',
+            handler: 'networkFirst',
             options: {
                 cache: {
-                    name: 'user-images',
-                    maxAgeSeconds: 60 * 24
+                    name: 'user-images'
                 }
             }
         }
