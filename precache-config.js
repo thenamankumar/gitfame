@@ -66,8 +66,8 @@ module.exports = {
             handler: 'cacheFirst',
             options: {
                 cache: {
-                    maxAgeSeconds: 60 * 60 * 4,
-                    name: 'users'
+                    name: 'users',
+                    maxAgeSeconds: 60 * 60 * 4
                 }
             }
         },
@@ -76,8 +76,8 @@ module.exports = {
             handler: 'cacheFirst',
             options: {
                 cache: {
-                    maxAgeSeconds: 60 * 60 * 4,
-                    name: 'repos'
+                    name: 'repos',
+                    maxAgeSeconds: 60 * 60 * 4
                 }
             }
         },
@@ -86,8 +86,8 @@ module.exports = {
             handler: 'cacheFirst',
             options: {
                 cache: {
-                    maxAgeSeconds: 60 * 60 * 4,
-                    name: 'contributors'
+                    name: 'contributors',
+                    maxAgeSeconds: 60 * 60 * 4
                 }
             }
         },
@@ -96,8 +96,8 @@ module.exports = {
             handler: 'cacheFirst',
             options: {
                 cache: {
-                    maxAgeSeconds: 60 * 60 * 24,
-                    name: 'user-images'
+                    name: 'user-images',
+                    maxAgeSeconds: 60 * 60 * 24
                 }
             }
         }
