@@ -273,20 +273,8 @@
                                         })
                                         .then((response) => {
                                             let data = JSON.parse(response);
-                                            return fetch(data.parent.url
-                                                + "?client_id=306bffb6acf1e4b78303&client_secret=64f16f44d1346f04b72e6c9cb3f60e727b400c88"
-                                                , {method: 'get'})
-                                                .then((response) => {
-                                                    if (response.ok)
-                                                        return response.text();
-                                                    else
-                                                        throw new Error("Error!");
-                                                })
-                                                .then((response) => {
-                                                    let newData = JSON.parse(response);
-                                                    self.repos[index] = newData;
-                                                })
-                                                .catch(err => console.log(err));
+                                            self.repos[index] = data.parent;
+                                            return response;
                                         })
                                         .catch(err => console.log(err));
                                 }
