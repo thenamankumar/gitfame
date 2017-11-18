@@ -2,3 +2,4 @@
 /**/*.DS_Store
 build
 keys
+node_modules
