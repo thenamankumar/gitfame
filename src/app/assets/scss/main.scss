@@ -1,0 +1,24 @@
+@import "variables";
+@import "components/search";
+@import "components/footer";
+@import "components/bordergrad";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Raleway');
+
+*:hover, *:active, *:focus {
+  outline: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  background: $grey-dark;
+  margin: 0;
+  line-height: 1em;
+}
+
+.main-container {
+  padding: 0;
+}

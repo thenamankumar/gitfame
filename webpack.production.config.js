@@ -1,3 +1,4 @@
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -21,9 +22,14 @@ const config = {
         loaders: ['babel-loader?presets[]=react,presets[]=react'],
       },
       {
-        test: /\.css$/,
+        test: /\.s?css$/,
         include: APP_DIR,
-        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader'] }),
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [{ loader: 'css-loader' },
+            { loader: 'sass-loader' },
+          ],
+        }),
       },
       {
         test: /\.jsx?$/,
@@ -40,6 +46,7 @@ const config = {
     new CleanWebpackPlugin(BUILD_DIR),
     new ExtractTextPlugin('bundle.css'),
     new UglifyJsPlugin(),
+    new PreloadWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
