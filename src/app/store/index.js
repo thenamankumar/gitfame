@@ -4,9 +4,11 @@ import stateReducer from './reducers/stateReducer';
 const initialState = {
   ui: {
     showAnalytics: false,
-    searchCollapse: false,
+    searchState: 2, // 2: Show Full 1: Collapse 0: Hide
   },
-  user: {},
+  user: {
+    username: '',
+  },
 };
 const store = createStore(stateReducer, initialState);
 export default store;

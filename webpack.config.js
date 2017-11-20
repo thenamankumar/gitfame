@@ -35,7 +35,7 @@ const config = {
         test: /\.jsx?$/,
         include: APP_DIR,
         exclude: ASSETS_DIR,
-        loaders: ['eslint-loader'],
+        loader: ['eslint-loader'],
       },
       {
         test: /\.html$/,

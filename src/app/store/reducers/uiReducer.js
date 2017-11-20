@@ -1,15 +1,8 @@
 const uiReducer = (state = {}, action) => {
   switch (action.type) {
-    case 'collapseSearch': {
-      console.log('collapsing');
+    case 'setSearchState': {
       const newState = Object.assign({}, state);
-      newState.collapse = true;
-      console.log(newState === state);
-      return newState;
-    }
-    case 'expandSearch': {
-      const newState = state;
-      newState.collapse = false;
+      newState.searchState = action.state;
       return newState;
     }
     default:

@@ -7,7 +7,7 @@
   background: $grey-light;
 
   &.search-wrapper-collapse {
-    height: calc(50vh - 125px);
+    height: calc(40vh - 125px);
   }
 
   .logo-box, .git-btn-grp {
@@ -42,7 +42,7 @@
       color: $accent-secondary-light;
 
       &.form-collapse {
-        padding-top: 16vh;
+        padding-top: 7vh;
       }
 
       .search-icon {
@@ -56,6 +56,7 @@
         width: calc(100% - 52px);
         font-size: 48px;
         font-weight: 400;
+        color: $accent-secondary-dark;
         background: transparent;
         border: none;
         border-bottom: 5px solid $grey-dark;
