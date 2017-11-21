@@ -6,21 +6,39 @@ import { FaSearch } from 'react-icons/lib/fa';
 import BorderGrad from './BorderGrad';
 
 class Search extends React.Component {
-  usernameFromLoc() {
+  componentDidMount() {
     const path = this.props.location.pathname;
-    const username = path === '/' ? '' : path.split('/')[2];
-    if (username !== '') { this.props.setSearchState(1); }
-    return username;
+    if (path !== '/') {
+      const username = path.split('/')[2];
+      document.getElementById('search-input').value = username;
+      this.props.setSearchState(1);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props !== nextProps) {
+      if (nextProps.location.pathname === '/') {
+        document.getElementById('search-input').value = '';
+        this.props.setSearchState(2);
+      }
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.props.location.pathname !== nextProps.location.pathname) { return true; } else
+    if (this.props.searchState !== nextProps.searchState) { return true; }
+    return false;
   }
 
   process(event) {
     event.preventDefault();
-    if (this.props.searchState === 2) {
-      this.props.setSearchState(1);
-    }
     const username = document.getElementById('search-input').value;
-    if (username !== this.props.location.pathname.split('/')[2]) {
+    if (username === '') {
+      this.props.history.push('/');
+      this.props.setSearchState(2);
+    } else {
       this.props.history.push(`/user/${username}`);
+      this.props.setSearchState(1);
     }
   }
 
@@ -53,7 +71,7 @@ class Search extends React.Component {
           <Col sm={8} className="search-box offset-sm-2">
             <form onSubmit={e => this.process(e)} autoComplete="on" className={this.props.searchState === 1 ? 'form-collapse' : ''}>
               <FaSearch className="search-icon" />
-              <input id="search-input" type="text" name="Username" placeholder="Enter username" value={this.usernameFromLoc()} />
+              <input id="search-input" type="text" name="Username" placeholder="Enter username" />
             </form>
           </Col>
         </Col>
