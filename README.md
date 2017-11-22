@@ -1,6 +1,8 @@
 # gitfame
 A Github contributions analyser
 
+[![Build Status](https://travis-ci.org/hereisnaman/gitfame.svg?branch=master)](https://travis-ci.org/hereisnaman/gitfame)
+
 ## Environment Setup
 Generate env config for development and production in `env/`.
 ### env/dev.env
