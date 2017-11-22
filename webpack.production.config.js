@@ -1,3 +1,4 @@
+const Dotenv = require('dotenv-webpack');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -47,10 +48,8 @@ const config = {
     new ExtractTextPlugin('bundle.css'),
     new UglifyJsPlugin(),
     new PreloadWebpackPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
+    new Dotenv({
+      path: './env/prod.env',
     }),
   ],
   resolve: {
