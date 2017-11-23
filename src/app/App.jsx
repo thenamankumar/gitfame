@@ -5,8 +5,9 @@ import { Grid } from 'react-bootstrap';
 
 import './assets/scss/main.scss';
 import store from './store/index';
-import Search from './components/Search';
+import Search from './components/Home';
 import Analytics from './components/Analytics';
+import NavBar from './components/NavBar';
 
 class App extends React.Component {
   render() {
@@ -14,8 +15,10 @@ class App extends React.Component {
       <Provider store={store}>
         <Router>
           <Grid fluid className="main-container">
-            <Route path="/" component={Search} />
-            <Route path="/user/:username" component={Analytics} />
+            <NavBar />
+            <Route exact path="/" component={Search} />
+            <Route exact path="/user/:username" component={Search} />
+            <Route exact path="/user/:username" component={Analytics} />
           </Grid>
         </Router>
       </Provider>

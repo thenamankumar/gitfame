@@ -1,0 +1,74 @@
+.home-wrapper {
+  height: 100vh;
+  background: rgba($bg-dark, 0.1);
+  background-position: center;
+
+  .search-box {
+    position: absolute;
+    top: 200px;
+    height: 400px;
+    padding: 20px;
+    text-align: center;
+    color: $font-primary;
+    background: $bg-dark;
+    border-radius: 50%;
+
+    .title, .sub-title {
+      font-family: $font-family-secondary;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .title {
+      font-size: 4rem;
+      letter-spacing: 0.8rem;
+      margin: 0 auto 20px auto;
+
+      .ch1 {
+        color: #f3933d;
+      }
+
+      .ch2 {
+        color: #f06e53;
+      }
+
+      .ch3 {
+        color: #ed4d79;
+      }
+
+      .ch4 {
+        color: #a065a9;
+      }
+
+      .ch5 {
+        color: #4f72b8;
+      }
+
+      .ch6 {
+        color: #4eb299;
+      }
+
+      .ch7 {
+        color: #6cb980;
+      }
+    }
+
+    .sub-title {
+      font-size: 1.46rem;
+      letter-spacing: 0.35rem;
+      line-height: 2.2rem;
+    }
+
+    .description {
+      font-weight: bold;
+    }
+
+    .heart-icon {
+      color: red;
+    }
+
+    .search-btn {
+      margin-top: 10px;
+    }
+  }
+}

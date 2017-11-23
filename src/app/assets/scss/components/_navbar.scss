@@ -1,0 +1,71 @@
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 70px;
+  background: $bg-darker;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.2rem;
+  font-family: $font-family-secondary;
+  color: $font-primary;
+  text-transform: uppercase;
+  padding: 20px 20px;
+
+  & > div {
+    display: inline-block;
+  }
+
+  .logo {
+    border: 0.15rem solid;
+    border-image: lineargrad-github() 1;
+    padding: 3px 15px;
+    font-family: $font-family-secondary;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-top: -3px;
+  }
+  .pull-right {
+    float: right;
+  }
+
+  .pull {
+    margin-left: 50px;
+    text-align: center;
+  }
+
+  .git-btn-grp {
+    & > * {
+      margin: 0 10px;
+    }
+  }
+
+  a {
+    display: inline-block;
+    width: fit-content;
+  }
+  a, a:hover {
+    color: $font-primary;
+    transition: transform .4s ease-out;
+  }
+  a:after {
+    content: '';
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 0.1rem;
+    opacity: 1;
+    margin: 3px auto 0 auto;
+    background: linear-gradient(to right, #E67207 0%, #EF4E7B 50%, #A166AB 100%);
+    transform-origin: center;
+    transform: scaleX(0);
+    transition: transform .4s ease-out;
+  }
+
+  a:hover:after {
+    transform: scaleX(1);
+    transition: transform .4s ease-out;
+  }
+}
