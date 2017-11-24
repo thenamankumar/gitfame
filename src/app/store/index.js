@@ -4,7 +4,7 @@ import stateReducer from './reducers/stateReducer';
 const initialState = {
   ui: {
     showAnalytics: false,
-    searchState: 2, // 2: Show Full 1: Collapse 0: Hide
+    searchState: window.location.pathname === '/' ? 2 : 1, // 2: Show Full 1: Collapse
   },
   user: {
     username: '',

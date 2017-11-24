@@ -9,30 +9,35 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
-    const path = this.props.location.pathname;
-    if (path !== '/') {
-      const username = path.split('/')[2];
+    const { username } = this.props.match.params;
+    if (username) {
       document.getElementById('search-input').value = username;
-      this.props.setSearchState(1);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props !== nextProps) {
-      if (nextProps.location.pathname === '/') {
-        document.getElementById('search-input').value = '';
+      if (nextProps.match.params.username === '') {
         this.props.setSearchState(2);
+        document.getElementById('search-input').value = '';
       }
     }
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.location.pathname !== nextProps.location.pathname) {
+    if (this.props.match.params.username !== nextProps.match.params.username) {
       return true;
     } else if (this.props.searchState !== nextProps.searchState) {
       return true;
     }
     return false;
+  }
+
+  componentDidUpdate() {
+    const { username } = this.props.match.params;
+    if (!username && this.props.searchState === 1) {
+      document.getElementById('search-input').value = username;
+    }
   }
 
   process(event) {
@@ -48,27 +53,41 @@ class Search extends React.Component {
   }
 
   render() {
-    return (
-      <div className="home-wrapper">
-        <Col sm={12} className="search-box">
-          <h1 className="title">
+    console.log('render');
+    const { username } = this.props.match.params;
+    if (!username) {
+      return (
+        <div className="home-wrapper">
+          <Col sm={12} className="search-box">
+            <h1 className="title">
             Your GitHub contributions Analyzer
-          </h1>
-          <Col sm={12} md={6} className="offset-md-3 description">
-            <p className="bold">Check your all time GitHub contributions, analyze which language and repo you
+            </h1>
+            <Col sm={12} md={6} className="offset-md-3 description">
+              <p className="bold">Check your all time GitHub contributions, analyze which language and repo you
               contributed to the most and how much people love your work.
-            </p>
+              </p>
+            </Col>
+            <Col sm={12} md={4} className="offset-md-4">
+              <form onSubmit={this.process} autoComplete="off">
+                <span className="search-label">@</span>
+                <input id="search-input" type="text" placeholder="username" />
+              </form>
+            </Col>
           </Col>
+        </div>
+      );
+    }
+    return (
+      <div className="home-wrapper small">
+        <Col sm={12} className="search-box small">
           <Col sm={12} md={4} className="offset-md-4">
-            <form onSubmit={this.process}>
+            <form onSubmit={this.process} autoComplete="off">
               <span className="search-label">@</span>
-              <input id="search-input" type="text" placeholder="username" />
-              <button type="submit" className="btn search-btn">Search</button>
+              <input id="search-input" className="small" type="text" placeholder="username" />
             </form>
           </Col>
         </Col>
-      </div>
-    );
+      </div>);
   }
 }
 

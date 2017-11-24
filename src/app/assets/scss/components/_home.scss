@@ -6,6 +6,10 @@
   border-bottom: 0.15rem solid;
   border-image: lineargrad-github() 1;
 
+  &.small {
+    height: 175px;
+  }
+
   .search-box {
     margin-top: 100px;
     position: relative;
@@ -15,6 +19,13 @@
     color: $font-primary;
     background: $bg-darker;
     border-radius: 50%;
+
+    &.small {
+      margin-top: 0;
+      background: transparent;
+      border-radius: 0;
+      height: 100px;
+    }
 
     .title {
       font-family: $font-family-secondary;
@@ -46,6 +57,12 @@
       background: transparent;
       border-width: 0 0 0.15rem 0;
       border-image: lineargrad-github() 1;
+
+      &.small {
+        width: 66%;
+        display: inline-block;
+      }
+
       &, &::placeholder {
         color: $font-primary;
         font-size: 1.5rem;
@@ -58,6 +75,10 @@
 
     .search-btn {
       margin-top: 10px;
+
+      &.small {
+        display: inline-block;
+      }
     }
   }
 }
