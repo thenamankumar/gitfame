@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Col } from 'react-bootstrap';
-import { FaHeart } from 'react-icons/lib/fa';
-import Particles from 'react-particles-js';
-import ParticleConfig from '../assets/particlesjs-config.json';
 
 class Search extends React.Component {
+  constructor() {
+    super();
+    this.process = this.process.bind(this);
+  }
+
   componentDidMount() {
     const path = this.props.location.pathname;
     if (path !== '/') {
@@ -48,23 +50,22 @@ class Search extends React.Component {
   render() {
     return (
       <div className="home-wrapper">
-        <Particles params={ParticleConfig} height="100vh" />
-        <Col sm={12} md={4} className="offset-md-4 search-box">
+        <Col sm={12} className="search-box">
           <h1 className="title">
-            <span className="ch1">G</span>
-            <span className="ch2">I</span>
-            <span className="ch3">T</span>
-            <span className="ch4">F</span>
-            <span className="ch5">A</span>
-            <span className="ch6">M</span>
-            <span className="ch7">E</span>
+            Your GitHub contributions Analyzer
           </h1>
-          <p className="sub-title">Your GitHub contributions Analyzer</p>
-          <p className="description">Check your all time GitHub contributions, analyze which language and repo your
-            contributed to the most and how much people love you work.
-          </p>
-          <p>Made with <FaHeart className="heart-icon" /> in India</p>
-          <button className="btn search-btn">Search</button>
+          <Col sm={12} md={6} className="offset-md-3 description">
+            <p className="bold">Check your all time GitHub contributions, analyze which language and repo you
+              contributed to the most and how much people love your work.
+            </p>
+          </Col>
+          <Col sm={12} md={4} className="offset-md-4">
+            <form onSubmit={this.process}>
+              <span className="search-label">@</span>
+              <input id="search-input" type="text" placeholder="username" />
+              <button type="submit" className="btn search-btn">Search</button>
+            </form>
+          </Col>
         </Col>
       </div>
     );

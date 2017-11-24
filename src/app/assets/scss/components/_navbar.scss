@@ -12,6 +12,7 @@
   color: $font-primary;
   text-transform: uppercase;
   padding: 20px 20px;
+  border-bottom: 0.15rem solid $bg-dark;
 
   & > div {
     display: inline-block;

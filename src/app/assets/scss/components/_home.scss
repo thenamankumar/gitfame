@@ -1,66 +1,55 @@
 .home-wrapper {
-  height: 100vh;
-  background: rgba($bg-dark, 0.1);
+  padding: 70px;
+  height: 700px;
+  background: $bg-darker;
   background-position: center;
+  border-bottom: 0.15rem solid;
+  border-image: lineargrad-github() 1;
 
   .search-box {
-    position: absolute;
-    top: 200px;
+    margin-top: 100px;
+    position: relative;
     height: 400px;
     padding: 20px;
     text-align: center;
     color: $font-primary;
-    background: $bg-dark;
+    background: $bg-darker;
     border-radius: 50%;
 
-    .title, .sub-title {
+    .title {
       font-family: $font-family-secondary;
       text-transform: uppercase;
       font-weight: 900;
-    }
-
-    .title {
-      font-size: 4rem;
-      letter-spacing: 0.8rem;
-      margin: 0 auto 20px auto;
-
-      .ch1 {
-        color: #f3933d;
-      }
-
-      .ch2 {
-        color: #f06e53;
-      }
-
-      .ch3 {
-        color: #ed4d79;
-      }
-
-      .ch4 {
-        color: #a065a9;
-      }
-
-      .ch5 {
-        color: #4f72b8;
-      }
-
-      .ch6 {
-        color: #4eb299;
-      }
-
-      .ch7 {
-        color: #6cb980;
-      }
-    }
-
-    .sub-title {
-      font-size: 1.46rem;
-      letter-spacing: 0.35rem;
-      line-height: 2.2rem;
+      font-size: 2.5rem;
+      letter-spacing: 0.4rem;
+      margin: 0 auto 30px auto;
     }
 
     .description {
+      margin-bottom: 70px;
+      .bold {
+        font-weight: bold;
+      }
+    }
+
+    .search-label {
+      position: absolute;
+      color: $font-primary;
+      font-size: 1.5rem;
       font-weight: bold;
+    }
+
+    #search-input {
+      width: 100%;
+      margin-bottom: 40px;
+      padding-left: 1.6rem;
+      background: transparent;
+      border-width: 0 0 0.15rem 0;
+      border-image: lineargrad-github() 1;
+      &, &::placeholder {
+        color: $font-primary;
+        font-size: 1.5rem;
+      }
     }
 
     .heart-icon {
