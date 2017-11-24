@@ -53,7 +53,6 @@ class Search extends React.Component {
   }
 
   render() {
-    console.log('render');
     const { username } = this.props.match.params;
     if (!username) {
       return (
