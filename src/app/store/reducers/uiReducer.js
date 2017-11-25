@@ -5,6 +5,11 @@ const uiReducer = (state = {}, action) => {
       newState.searchState = action.state;
       return newState;
     }
+    case 'setAnalyticsState': {
+      const newState = Object.assign({}, state);
+      newState.analyticsState = action.state;
+      return newState;
+    }
     default:
       return state;
   }

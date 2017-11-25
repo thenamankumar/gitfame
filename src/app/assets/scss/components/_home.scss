@@ -2,8 +2,7 @@
   padding: 70px;
   height: 700px;
   background: $bg-darker;
-  background-position: center;
-  border-bottom: 0.15rem solid;
+  border-bottom: 2px solid;
   border-image: lineargrad-github() 1;
 
   &.small {
@@ -16,7 +15,7 @@
     height: 400px;
     padding: 20px;
     text-align: center;
-    color: $font-primary;
+    color: $font-color-primary;
     background: $bg-darker;
     border-radius: 50%;
 
@@ -31,31 +30,36 @@
       font-family: $font-family-secondary;
       text-transform: uppercase;
       font-weight: 900;
-      font-size: 2.5rem;
-      letter-spacing: 0.4rem;
-      margin: 0 auto 30px auto;
+      font-size: 40px;
+      letter-spacing: 8px;
+      margin: 0 auto 40px auto;
     }
 
     .description {
       margin-bottom: 70px;
+      animation-delay: 0.5s;
       .bold {
         font-weight: bold;
       }
     }
 
+    form {
+      animation-delay: 1s;
+    }
+
     .search-label {
       position: absolute;
-      color: $font-primary;
-      font-size: 1.5rem;
+      color: $font-color-primary;
+      font-size: 24px;
       font-weight: bold;
     }
 
     #search-input {
       width: 100%;
       margin-bottom: 40px;
-      padding-left: 1.6rem;
+      padding-left: 24px;
       background: transparent;
-      border-width: 0 0 0.15rem 0;
+      border-width: 0 0 2px 0;
       border-image: lineargrad-github() 1;
 
       &.small {
@@ -64,8 +68,8 @@
       }
 
       &, &::placeholder {
-        color: $font-primary;
-        font-size: 1.5rem;
+        color: $font-color-primary;
+        font-size: 24px;
       }
     }
 

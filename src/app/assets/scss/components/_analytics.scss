@@ -1,0 +1,19 @@
+.analytics-wrapper {
+  padding-top: 70px;
+
+  .stats-box {
+    margin-top: 140px;
+    text-align: center;
+
+    #load-msg {
+      color: $font-color-primary;
+      font-family: $font-family-secondary;
+      text-transform: uppercase;
+      font-weight: 100;
+      font-size: 30px;
+      letter-spacing: 6px;
+      margin: 0 auto 40px auto;
+    }
+
+  }
+}

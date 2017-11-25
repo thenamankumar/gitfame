@@ -58,16 +58,16 @@ class Search extends React.Component {
       return (
         <div className="home-wrapper">
           <Col sm={12} className="search-box">
-            <h1 className="title">
+            <h1 className="title animated fadeInUp">
             Your GitHub contributions Analyzer
             </h1>
-            <Col sm={12} md={6} className="offset-md-3 description">
+            <Col sm={12} md={6} className="offset-md-3 description animated fadeInDown">
               <p className="bold">Check your all time GitHub contributions, analyze which language and repo you
               contributed to the most and how much people love your work.
               </p>
             </Col>
             <Col sm={12} md={4} className="offset-md-4">
-              <form onSubmit={this.process} autoComplete="off">
+              <form onSubmit={this.process} autoComplete="off" className="animated fadeInDown" >
                 <span className="search-label">@</span>
                 <input id="search-input" type="text" placeholder="username" />
               </form>

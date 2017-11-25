@@ -1,47 +1,11 @@
 .loader {
-  position: relative;
-  width: 35px;
-  height: 40px;
   display: inline-block;
-
-  @keyframes line-grow {
-    0% {
-      height: 0;
-    }
-    100% {
-      height: 40px;
-    }
-  }
-
-  .line1, .line2, .line3, .line4 {
-    width: 5px;
-    position: absolute;
-    bottom: 0;
-  }
-
-  .line1 {
-    left: 0;
-    background: $accent-primary-dark;
-    -webkit-animation: line-grow 0.5s ease-out alternate infinite;
-    animation: line-grow 0.5s ease alternate infinite;
-  }
-
-  .line2 {
-    left: 10px;
-    background: $accent-secondary-dark;
-    animation: line-grow 0.5s 0.2s ease alternate infinite;
-  }
-
-  .line3 {
-    left: 20px;
-    background: $accent-secondary-light;
-    animation: line-grow 0.5s 0.4s ease alternate infinite;
-  }
-
-  .line4 {
-    left: 30px;
-    background: $accent-primary-light;
-    animation: line-grow 0.5s 0.6s ease alternate infinite;
-  }
-
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: 2px solid;
+  border-image: lineargrad-github() 1;
+  border-radius: 50%;
+  background: transparent;
+  animation: rotate 1s linear 0s infinite;
 }

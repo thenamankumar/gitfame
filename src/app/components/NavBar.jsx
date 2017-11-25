@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link as To } from 'react-router-dom';
 
 class NavBar extends React.Component {
   render() {
     return (
       <header className="site-header">
-        <div className="logo">gitfame</div>
+        <div className="logo">
+          <To to="/">gitfame</To>
+        </div>
         <div className="pull">
           <a href="/">How this works</a>
         </div>
