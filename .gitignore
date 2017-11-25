@@ -3,5 +3,4 @@
 build
 keys
 node_modules
-env/dev.env
-env/prod.env
+env
