@@ -26,9 +26,9 @@ class Search extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     if (this.props.match.params.username !== nextProps.match.params.username) {
-      return true;
-    } else if (this.props.searchState !== nextProps.searchState) {
-      return true;
+      if (this.props.searchState !== nextProps.searchState) {
+        return true;
+      }
     }
     return false;
   }
@@ -47,10 +47,10 @@ class Search extends React.Component {
       this.props.history.push('/');
       this.props.setSearchState(2);
     } else {
-      this.props.history.push(`/user/${username}`);
       this.props.setSearchState(1);
+      this.props.history.push(`/user/${username}`);
     }
-  }
+  }x
 
   render() {
     const { username } = this.props.match.params;
@@ -92,12 +92,19 @@ class Search extends React.Component {
 
 const mapStateToProps = state => ({
   searchState: state.ui.searchState,
+  analyticsState: state.ui.analyticsState,
 });
 
 const mapDispatchToProps = dispatch => ({
   setSearchState: (state) => {
     dispatch({
       type: 'setSearchState',
+      state,
+    });
+  },
+  setAnalyticsState: (state) => {
+    dispatch({
+      type: 'setAnalyticsState',
       state,
     });
   },

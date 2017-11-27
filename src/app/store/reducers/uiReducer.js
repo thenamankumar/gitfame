@@ -10,6 +10,12 @@ const uiReducer = (state = {}, action) => {
       newState.analyticsState = action.state;
       return newState;
     }
+    case 'setUserFound': {
+      const newState = Object.assign({}, state);
+      newState.userFound = action.status;
+      newState.analyticsState = action.state || state.analyticsState;
+      return newState;
+    }
     default:
       return state;
   }

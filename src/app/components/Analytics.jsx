@@ -6,18 +6,11 @@ import { findUser } from '../logic';
 
 const updateLoadMsg = (msg) => {
   const ele = document.getElementById('load-msg');
-  const state = ele.getAttribute('class');
-  let wait = 1000;
-  if (state.split(' ').indexOf('fadeOutDown') >= 0) {
-    setTimeout(() => {
-      ele.setAttribute('class', 'animated fadeOutDown');
-    }, wait + 500);
-    wait += 1500;
-  } else { ele.setAttribute('class', 'animated fadeOutDown'); }
+  ele.setAttribute('class', 'animated fadeOutDown');
   setTimeout(() => {
     ele.innerHTML = msg;
     ele.setAttribute('class', 'animated fadeInDown');
-  }, wait);
+  }, 1000);
 };
 
 class Analytics extends React.Component {
@@ -26,30 +19,18 @@ class Analytics extends React.Component {
     this.process = this.process.bind(this);
   }
 
-  componentDidMount() {
-    if (this.props.analyticsState === 1) {
-      setTimeout(this.process(), 1000);
-    }
-  }
-
   shouldComponentUpdate(nextProps) {
     if (this.props.match.params.username !== nextProps.match.params.username) {
-      return true;
-    } else if (this.props.searchState !== nextProps.searchState) {
-      return true;
+      if (nextProps.analyticsState === 1) { return true; }
+      this.props.setAnalyticsState(1);
     } else if (this.props.analyticsState !== nextProps.analyticsState) {
+      return true;
+    } else if (this.props.userFound !== nextProps.userFound) {
       return true;
     } else if (this.props.user !== nextProps.user) {
       return true;
     }
     return false;
-  }
-
-  componentDidUpdate() {
-    if (this.props.analyticsState === 1) {
-      updateLoadMsg('Search the User');
-      setTimeout(this.process(), 3000);
-    }
   }
 
   process() {
@@ -59,7 +40,7 @@ class Analytics extends React.Component {
         if (response) {
           updateLoadMsg('Analyzing your Contributions');
         } else {
-          updateLoadMsg('User not found!');
+          this.props.setUserFound(false, 2);
         }
       })
       .catch(e => console.log(e));
@@ -67,14 +48,26 @@ class Analytics extends React.Component {
 
   render() {
     if (this.props.analyticsState === 1) {
+      setTimeout(this.process(), 1000);
       return (
         <div className="analytics-wrapper">
           <Col sm={12} md={6} className="offset-md-3 stats-box">
-            <h2 id="load-msg" className="animated fadeInDown">Search the User</h2>
+            <h2 id="load-msg" className="animated fadeInDown">Searching the User</h2>
             <Loader />
           </Col>
         </div>
       );
+    } else
+    if (this.props.analyticsState === 2) {
+      if (!this.props.userFound) {
+        return (
+          <div className="analytics-wrapper">
+            <Col sm={12} md={6} className="offset-md-3 stats-box">
+              <h2 id="load-msg" className="animated fadeInDown">User Not Found!</h2>
+            </Col>
+          </div>
+        );
+      }
     }
     return (<div />);
   }
@@ -83,6 +76,7 @@ class Analytics extends React.Component {
 const mapStateToProps = state => ({
   searchState: state.ui.searchState,
   analyticsState: state.ui.analyticsState,
+  userFound: state.ui.userFound,
   user: state.user,
 });
 
@@ -90,6 +84,13 @@ const mapDispatchToProps = dispatch => ({
   setAnalyticsState: (state) => {
     dispatch({
       type: 'setAnalyticsState',
+      state,
+    });
+  },
+  setUserFound: (status, state) => {
+    dispatch({
+      type: 'setUserFound',
+      status,
       state,
     });
   },
