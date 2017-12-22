@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Col } from 'react-bootstrap';
 
 class Search extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.process = this.process.bind(this);
   }
 
@@ -45,12 +45,10 @@ class Search extends React.Component {
     const username = document.getElementById('search-input').value;
     if (username === '') {
       this.props.history.push('/');
-      this.props.setSearchState(2);
     } else {
-      this.props.setSearchState(1);
       this.props.history.push(`/user/${username}`);
     }
-  }x
+  }
 
   render() {
     const { username } = this.props.match.params;
@@ -91,23 +89,8 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  searchState: state.ui.searchState,
-  analyticsState: state.ui.analyticsState,
+  searchState: state,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setSearchState: (state) => {
-    dispatch({
-      type: 'setSearchState',
-      state,
-    });
-  },
-  setAnalyticsState: (state) => {
-    dispatch({
-      type: 'setAnalyticsState',
-      state,
-    });
-  },
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps)(Search);

@@ -1,20 +1,19 @@
-function findUser(username) {
-  const query = `{user(login:"${username}"){login}}`;
-
-  return fetch('https://api.github.com/graphql', {
+const fetchData = (username, fresh) => fetch(
+  process.env.API_URL,
+  {
     method: 'POST',
     headers: {
-      Authorization: `bearer ${process.env.GIT_TOKEN}`,
-      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify({ query }),
-  })
-    .then(response => response.text())
-    .then((response) => {
-      const data = JSON.parse(response);
-      return !data.errors;
-    });
-}
+    body: `name=${username}&fresh=${fresh}`,
+  },
+).then((response) => {
+  if (response.ok) {
+    return response.text();
+  }
+  throw new Error('Request Failed');
+}).catch(console.log);
 
-export { findUser };
+export { fetchData };
 

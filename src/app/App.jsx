@@ -5,7 +5,7 @@ import { Grid } from 'react-bootstrap';
 
 import './assets/scss/main.scss';
 import store from './store/index';
-import Search from './components/Home';
+import Search from './components/Search';
 import Analytics from './components/Analytics';
 import NavBar from './components/NavBar';
 
