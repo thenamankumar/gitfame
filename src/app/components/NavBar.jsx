@@ -2,7 +2,12 @@ import React from 'react';
 import { Link as To } from 'react-router-dom';
 
 class NavBar extends React.Component {
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
+    console.log('Render Navbar');
     return (
       <header className="site-header">
         <div className="logo">

@@ -71,6 +71,12 @@
         color: $font-color-primary;
         font-size: 24px;
       }
+
+      @media (max-width: 767px) {
+        &.small {
+          width: 100%;
+        }
+      }
     }
 
     .heart-icon {
@@ -84,5 +90,9 @@
         display: inline-block;
       }
     }
+  }
+
+  @media (max-width: 767px) {
+    padding: 70px 0;
   }
 }

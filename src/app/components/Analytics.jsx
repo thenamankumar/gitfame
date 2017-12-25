@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Col } from 'react-bootstrap';
+import { FaExclamationCircle } from 'react-icons/lib/fa';
 import Loader from './Loader';
-import { fetchData } from '../logic';
-
-const generateStats = data => data;
+import FetchData from '../logics/FetchData';
+import GenerateStats from '../logics/GenerateStats';
 
 class Analytics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataReq: 'pending',
+      dataReq: 'fetching',
     };
     this.process = this.process.bind(this);
   }
@@ -21,12 +21,11 @@ class Analytics extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.match.params.username !== nextProps.match.params.username) {
-      this.setState({ dataReq: 'pending' });
+      this.setState({ dataReq: 'fetching' });
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log(this.state, 'should', nextState);
     if (this.state.dataReq !== nextState.dataReq) {
       return true;
     }
@@ -38,9 +37,8 @@ class Analytics extends React.Component {
   }
 
   process() {
-    if (this.state.dataReq === 'pending') {
-      this.setState({ dataReq: 'fetching' });
-      fetchData(this.props.match.params.username, true)
+    if (this.state.dataReq === 'fetching') {
+      FetchData(this.props.match.params.username, true)
         .then((response) => {
           const data = JSON.parse(response);
           if (data.success) {
@@ -48,7 +46,7 @@ class Analytics extends React.Component {
           }
           throw new Error('User not found');
         })
-        .then(response => generateStats(response))
+        .then(data => GenerateStats(data))
         .then((data) => {
           this.props.setUserData(data);
           this.setState({ dataReq: 'successful' });
@@ -61,7 +59,7 @@ class Analytics extends React.Component {
   }
 
   render() {
-    console.log('Analytics render');
+    console.log('Render Analytics');
     if (this.state.dataReq === 'fetching') {
       return (
         <div className="analytics-wrapper">
@@ -75,6 +73,7 @@ class Analytics extends React.Component {
       return (
         <div className="analytics-wrapper">
           <Col sm={12} md={6} className="offset-md-3 stats-box">
+            <FaExclamationCircle className="icon-not-found animated fadeIn" />
             <h2 id="load-msg" className="animated fadeInDown">User Not Found!</h2>
           </Col>
         </div>

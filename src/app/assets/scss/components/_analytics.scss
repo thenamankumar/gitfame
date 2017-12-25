@@ -5,6 +5,13 @@
     margin-top: 140px;
     text-align: center;
 
+    .icon-not-found {
+      font-size: 50px;
+      margin-top: -70px;
+      margin-bottom: 20px;
+      color: $font-color-primary;
+    }
+
     #load-msg {
       color: $font-color-primary;
       font-family: $font-family-secondary;

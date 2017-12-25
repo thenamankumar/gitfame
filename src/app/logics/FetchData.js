@@ -15,5 +15,4 @@ const fetchData = (username, fresh) => fetch(
   throw new Error('Request Failed');
 }).catch(console.log);
 
-export { fetchData };
-
+export default fetchData;
