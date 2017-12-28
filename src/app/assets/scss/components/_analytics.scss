@@ -21,6 +21,30 @@
       letter-spacing: 6px;
       margin: 0 auto 40px auto;
     }
+  }
 
+  .stats-card {
+    margin-top: 30px;
+    padding: 0 10px;
+    color: $font-color-primary;
+
+    .front{
+      padding: 15px;
+      background: $bg-darker;
+    }
+  }
+
+  @media (max-width: 767px){
+    &{
+      padding: 0;
+      .stats-card {
+        margin-top: 30px;
+        padding: 0;
+
+        .front {
+          padding: 10px;
+        }
+      }
+    }
   }
 }

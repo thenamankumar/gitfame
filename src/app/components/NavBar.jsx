@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link as To } from 'react-router-dom';
+import { FaCodeFork as Fork } from 'react-icons/lib/fa';
 
 class NavBar extends React.Component {
   shouldComponentUpdate() {
@@ -11,7 +12,7 @@ class NavBar extends React.Component {
     return (
       <header className="site-header">
         <div className="logo">
-          <To to="/">gitfame</To>
+          <To to="/"><Fork />gitfame</To>
         </div>
         <div className="pull">
           <a href="/">How this works</a>

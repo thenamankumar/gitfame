@@ -5,6 +5,7 @@ import { FaExclamationCircle } from 'react-icons/lib/fa';
 import Loader from './Loader';
 import FetchData from '../logics/FetchData';
 import GenerateStats from '../logics/GenerateStats';
+import UserInfo from './UserInfo';
 
 class Analytics extends React.Component {
   constructor(props) {
@@ -80,11 +81,9 @@ class Analytics extends React.Component {
       );
     } else if (this.state.dataReq === 'successful') {
       return (
-        <div className="analytics-wrapper">
-          <Col sm={12} md={6} className="offset-md-3 stats-box">
-            <h2 id="load-msg" className="animated fadeInDown">User Found!</h2>
-          </Col>
-        </div>
+        <Col sm={12} md={10} className="offset-md-1 analytics-wrapper">
+          <UserInfo data={this.props.userData} />
+        </Col>
       );
     }
     return (<div />);
@@ -92,7 +91,7 @@ class Analytics extends React.Component {
 }
 
 const mapStateToProps = store => ({
-  user: store.user,
+  userData: store.user,
 });
 
 const mapDispatchToProps = dispatch => ({

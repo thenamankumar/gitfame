@@ -1,10 +1,12 @@
 const webpack = require('webpack');
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'build');
 const APP_DIR = path.resolve(__dirname, 'src');
 const ASSETS_DIR = path.resolve(__dirname, 'src/app/assets');
+const PUBLIC_DIR = path.resolve(__dirname, 'public');
 
 const config = {
   entry: `${APP_DIR}/index.jsx`,
@@ -54,6 +56,12 @@ const config = {
     new Dotenv({
       path: './env/dev.env',
     }),
+    new CopyWebpackPlugin([
+      {
+        from: `${PUBLIC_DIR}/**/*`,
+        to: BUILD_DIR,
+      },
+    ]),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],

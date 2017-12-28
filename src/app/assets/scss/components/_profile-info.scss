@@ -1,0 +1,50 @@
+.profile-info {
+  justify-content: center;
+  text-align: center;
+  height: 460px;
+  overflow: hidden;
+  .profile-pic-wrap {
+    padding: 2px;
+    background: lineargrad-github();
+    border-radius: 50%;
+    width: 154px;
+    height: 154px;
+    margin: 0 auto 10px auto;
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+  }
+
+  .profile-details {
+    .username {
+      margin-bottom: 15px;
+    }
+
+    .bio {
+      height: 48px;
+      max-height: 48px;
+      overflow: hidden;
+      word-break: normal;
+      text-overflow: ellipsis;
+    }
+
+    .details {
+      font-weight: bold;
+      width: 80%;
+      margin: 0 auto 30px auto;
+      .field {
+        float: left;
+
+        svg {
+          vertical-align: text-top!important;
+          margin-right: 5px;
+        }
+      }
+      .value {
+        float: right;
+      }
+    }
+  }
+}

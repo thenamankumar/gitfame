@@ -1,12 +1,14 @@
 .home-wrapper {
   padding: 70px;
-  height: 700px;
+  height: 80vh;
+  min-height: 600px;
   background: $bg-darker;
   border-bottom: 2px solid;
   border-image: lineargrad-github() 1;
 
   &.small {
     height: 175px;
+    min-height: 0;
   }
 
   .search-box {
@@ -17,7 +19,6 @@
     text-align: center;
     color: $font-color-primary;
     background: $bg-darker;
-    border-radius: 50%;
 
     &.small {
       margin-top: 0;

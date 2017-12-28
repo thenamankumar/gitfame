@@ -8,16 +8,19 @@
 @import "components/navbar";
 @import "components/home";
 @import "components/analytics";
+@import "components/profile-info";
 
 *:hover, *:active, *:focus {
   outline: none !important;
 }
 
 a {
+  outline: none;
   transition: all .4s ease-out;
 }
 
-a:hover {
+a:hover, a:focus, a:active {
+  outline: none;
   text-decoration: none !important;
 }
 
@@ -37,6 +40,7 @@ body {
   position: relative;
   display: inline-block;
   vertical-align: middle;
+  outline: none;
   width: auto;
   height: 45px;
   min-width: 140px;
@@ -46,7 +50,7 @@ body {
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: $font-color-primary;
+  color: $font-color-primary!important;
   text-align: center;
   overflow: hidden;
   background: transparent;

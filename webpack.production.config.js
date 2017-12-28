@@ -3,10 +3,13 @@ const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 const BUILD_DIR = path.resolve(__dirname, 'build');
 const APP_DIR = path.resolve(__dirname, 'src');
+const ASSETS_DIR = path.resolve(__dirname, 'src/app/assets');
+const PUBLIC_DIR = path.resolve(__dirname, 'public');
 
 const config = {
   entry: `${APP_DIR}/index.jsx`,
@@ -57,6 +60,12 @@ const config = {
     new Dotenv({
       path: './env/prod.env',
     }),
+    new CopyWebpackPlugin([
+      {
+        from: `${PUBLIC_DIR}/**/*`,
+        to: BUILD_DIR,
+      },
+    ]),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
