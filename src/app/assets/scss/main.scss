@@ -36,6 +36,10 @@ body {
   padding: 0;
 }
 
+.row {
+  margin: 0;
+}
+
 .btn {
   position: relative;
   display: inline-block;
@@ -50,7 +54,7 @@ body {
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: $font-color-primary!important;
+  color: $font-color-primary !important;
   text-align: center;
   overflow: hidden;
   background: transparent;
@@ -75,4 +79,12 @@ body {
     transform: translate3d(0, -3px, 0);
     box-shadow: 0 8px 18px -3px rgba(161, 102, 171, 0.3);
   }
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
 }
