@@ -33,10 +33,6 @@ class Analytics extends React.Component {
     return this.props.match.params.username !== nextProps.match.params.username;
   }
 
-  componentDidUpdate() {
-    this.process();
-  }
-
   process() {
     if (this.state.dataReq === 'fetching') {
       FetchData(this.props.match.params.username, true)

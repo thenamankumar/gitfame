@@ -13,6 +13,8 @@ const fetchUserDataPromise = (username) => {
     .then(data => GenerateStats(data))
     .then((data) => {
       console.log(data);
+      // this.props.setUserData(data);
+      // this.setState({ dataReq: 'successful' });
     })
     .catch((err) => {
       console.log(err);
