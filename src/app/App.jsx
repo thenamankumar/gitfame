@@ -7,7 +7,7 @@ import './assets/scss/main.scss';
 import store from './store/index';
 import Search from './components/Search';
 import Analytics from './components/Analytics';
-import Comparison from './components/Comparison';
+import ParentComparison from './components/ParentComparison';
 import NavBar from './components/NavBar';
 
 class App extends React.Component {
@@ -20,7 +20,7 @@ class App extends React.Component {
             <Route exact path="/" component={Search} />
             <Route exact path="/user/:username" component={Search} />
             <Route exact path="/user/:username" component={Analytics} />
-            <Route exact path="/compare/:username1/:username2" component={Comparison} />
+            <Route exact path="/compare/:username1/:username2" component={ParentComparison} />
           </Grid>
         </Router>
       </Provider>
