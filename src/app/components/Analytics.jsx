@@ -5,7 +5,7 @@ import { FaExclamationCircle } from 'react-icons/lib/fa';
 import Loader from './Loader';
 import FetchData from '../logics/FetchData';
 import GenerateStats from '../logics/GenerateStats';
-import UserInfo from './UserInfo';
+import UserInfo from './analytics/UserInfo';
 
 class Analytics extends React.Component {
   constructor(props) {

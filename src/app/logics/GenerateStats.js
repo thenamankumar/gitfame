@@ -47,50 +47,52 @@ const generateStats = (data) => {
   });
 
   // User Scoring
-  data.score = 0;
+  data.score = {};
 
   const daysFromCreated = (new Date() - new Date(data.createdAt)) / (1000 * 60 * 60 * 24);
   data.commitsPerDay = (data.commits / daysFromCreated).toFixed(1);
 
   // 30 points for commits/day
   if (data.commitsPerDay < 2 && data.commitsPerDay >= 1) {
-    data.score += 10;
+    data.score.work = 10;
   } else if (data.commitsPerDay < 3) {
-    data.score += 20;
+    data.score.work = 20;
   } else if (data.commitsPerDay >= 3) {
-    data.score += 30;
+    data.score.work = 30;
   }
 
   // 30 points for total commits
   if (data.commits >= data.commitsPerDay * 700) {
-    data.score += 30;
+    data.score.consistency = 30;
   } else if (data.commits > data.commitsPerDay * 350) {
-    data.score += 20;
+    data.score.consistency = 20;
   } else if (data.commits > data.commitsPerDay * 200) {
-    data.score += 10;
+    data.score.consistency = 10;
   } else {
-    data.score += 0;
+    data.score.consistency = 0;
   }
 
   // 20 points for stars
-  const starPerRepo = data.stars / data.repos.length;
+  const starPerRepo = data.stars / data.own_repos;
   if (starPerRepo < 1) {
-    data.score += 5;
+    data.score.stars = 5;
   } else if (starPerRepo < 2) {
-    data.score += 10;
+    data.score.stars = 10;
   } else if (starPerRepo >= 2) {
-    data.score += 20;
+    data.score.stars = 20;
   }
 
   // 20 points for forks
-  const forksPerRepo = data.forks / data.repos.length;
+  const forksPerRepo = data.forks / data.own_repos;
   if (forksPerRepo < 1) {
-    data.score += 5;
+    data.score.forks = 5;
   } else if (forksPerRepo < 2) {
-    data.score += 10;
+    data.score.forks = 10;
   } else if (forksPerRepo >= 2) {
-    data.score += 20;
+    data.score.forks = 20;
   }
+
+  data.score.total = data.score.work + data.score.consistency + data.score.stars + data.score.forks;
 
   return data;
 };

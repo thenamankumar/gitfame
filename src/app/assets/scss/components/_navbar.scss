@@ -31,7 +31,7 @@
     margin-top: -3px;
 
     svg {
-      vertical-align: text-top!important;
+      vertical-align: text-top !important;
     }
 
     a {
@@ -78,5 +78,12 @@
       transform: scaleX(1);
       transition: transform .4s ease-out;
     }
+  }
+
+  @media (max-width: 767px) {
+    .git-btn-grp {
+      display: none;
+    }
+
   }
 }
