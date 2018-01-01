@@ -81,7 +81,7 @@ class Analytics extends React.Component {
       );
     } else if (this.state.dataReq === 'successful') {
       return (
-        <Col sm={12} md={10} className="offset-md-1 analytics-wrapper">
+        <Col className="col-xl-10 offset-xl-1 analytics-wrapper">
           <UserInfo data={this.props.userData} />
         </Col>
       );

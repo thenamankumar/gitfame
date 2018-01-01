@@ -2,6 +2,11 @@
   justify-content: center;
   height: 100%;
   overflow: hidden;
+
+  .description {
+    text-align: center;
+    margin-bottom: 5px;
+  }
   .profile-pic-wrap {
     padding: 2px;
     background: lineargrad-github();
@@ -36,6 +41,7 @@
       margin: 0 auto 30px auto;
       .field {
         float: left;
+        text-align: left;
 
         svg {
           vertical-align: text-top !important;
@@ -44,6 +50,7 @@
       }
       .value {
         float: right;
+        text-align: right;
       }
     }
   }
@@ -54,8 +61,11 @@
     .score-box {
       padding: 10px;
       .score {
+        &.pull {
+          margin-right: -30px;
+        }
         &.sm {
-          margin-bottom: clac(0.5rem + 0.625rem);
+          margin-bottom: calc(0.5rem + 0.625rem);
         }
         .score-value {
           display: inline;
