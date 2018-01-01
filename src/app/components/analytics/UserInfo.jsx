@@ -90,7 +90,7 @@ class UserInfo extends React.Component {
         <Col sm={12} md={6} lg={4} className="stats-card">
           <div className="front  profile-info">
             <div className="heading">Stats:</div>
-            <p className="description">These are the all time stats. Learn about <Link to="/how"><span className="font-italic">how they are calculated</span></Link>.</p>
+            <p className="description">These are the all time stats. Learn <Link to="/how"><span className="font-italic">how they are calculated</span></Link>.</p>
             <div className="row score-row">
               <Col xs={6} sm={6} className="score-box">
                 <p className="score">
@@ -127,7 +127,7 @@ class UserInfo extends React.Component {
                 <p className="score-name">Public Repos</p>
               </Col>
               <Col xs={6} sm={6} className="score-box">
-                <p className="score">
+                <p className="score lang">
                   <h2 className="score-value" style={{ color: user.languages[0].color }}>{user.languages[0].name}</h2>
                 </p>
                 <p className="score-name">Top Language</p>

@@ -50,7 +50,7 @@ class Donut extends React.Component {
           strokeWidth="0"
         />
         <circle
-          className="donut-segment"
+          className="donut-segment animated fadeIn rotateIn"
           cx="21"
           cy="21"
           r="18"

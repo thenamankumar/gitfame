@@ -67,6 +67,12 @@
         &.sm {
           margin-bottom: calc(0.5rem + 0.625rem);
         }
+        &.lang {
+          margin-bottom: 1.5rem;
+          .score-value {
+            font-size: 1.5rem;
+          }
+        }
         .score-value {
           display: inline;
           vertical-align: super;
@@ -76,6 +82,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
           }
+
         }
         .sub {
           font-size: 1rem;
