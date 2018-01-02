@@ -4,3 +4,4 @@ build
 keys
 node_modules
 env
+key.pem

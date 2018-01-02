@@ -51,33 +51,6 @@
   .pull {
     margin-left: 50px;
     text-align: center;
-
-    a {
-      display: inline-block;
-      width: fit-content;
-    }
-    a, a:hover {
-      color: $font-color-primary;
-      transition: transform .4s ease-out;
-    }
-    a:after {
-      content: '';
-      display: block;
-      position: relative;
-      width: 100%;
-      height: 2px;
-      opacity: 1;
-      margin: 3px auto 0 auto;
-      background: linear-gradient(to right, #E67207 0%, #EF4E7B 50%, #A166AB 100%);
-      transform-origin: center;
-      transform: scaleX(0);
-      transition: transform .4s ease-out;
-    }
-
-    a:hover:after {
-      transform: scaleX(1);
-      transition: transform .4s ease-out;
-    }
   }
 
   @media (max-width: 767px) {

@@ -67,7 +67,7 @@ class Search extends React.Component {
       return (
         <div className="home-wrapper small">
           <Col sm={12} className="search-box small">
-            <Col sm={12} md={4} className="offset-md-4">
+            <Col sm={12} md={6} lg={4} className="offset-md-3 offset-lg-4">
               <form onSubmit={this.process} autoComplete="off">
                 <span className="search-label">@</span>
                 <input id="search-input" className="small" type="text" placeholder="username" />

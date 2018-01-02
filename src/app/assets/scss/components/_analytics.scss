@@ -42,6 +42,7 @@
         text-transform: uppercase;
         display: inline-block;
         width: fit-content;
+        margin-bottom: 10px;
         transition: transform .4s ease-out;
         cursor: pointer;
         &:after {
@@ -55,6 +56,38 @@
           background: linear-gradient(to right, #E67207 0%, #EF4E7B 50%, #A166AB 100%);
           transform-origin: center;
           transition: transform .4s ease-out;
+        }
+      }
+
+      .donut-wrap {
+        width: 154px;
+        height: 154px;
+        margin: 0 auto 10px auto;
+
+        .donut-number {
+          stroke: none;
+          fill: $font-color-primary !important;
+          font-size: 0.6rem;
+          font-family: $font-family-primary;
+          text-anchor: middle;
+          margin-bottom: 10px;
+          -moz-transform: translateY(-0.25rem);
+          -ms-transform: translateY(-0.25rem);
+          -webkit-transform: translateY(-0.25rem);
+          transform: translateY(-0.25rem);
+        }
+
+        .donut-label {
+          stroke: none;
+          fill: $font-color-primary !important;
+          font-size: 0.3rem;
+          font-family: $font-family-primary;
+          line-height: 1;
+          text-anchor: middle;
+          -moz-transform: translateY(0.4rem);
+          -ms-transform: translateY(0.4rem);
+          -webkit-transform: translateY(0.4rem);
+          transform: translateY(0.4rem);
         }
       }
     }

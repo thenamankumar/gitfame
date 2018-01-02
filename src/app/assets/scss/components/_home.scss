@@ -64,19 +64,12 @@
       border-image: lineargrad-github() 1;
 
       &.small {
-        width: 66%;
         display: inline-block;
       }
 
       &, &::placeholder {
         color: $font-color-primary;
         font-size: 24px;
-      }
-
-      @media (max-width: 767px) {
-        &.small {
-          width: 100%;
-        }
       }
     }
 
