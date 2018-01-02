@@ -75,6 +75,7 @@ class ChildComparison extends React.Component {
         </div>
       );
     } else if (this.state.dataReq === 'successful') {
+      console.log(this.props.userData);
       return (
         <Col sm={12} md={10} className="offset-md-1 analytics-wrapper">
           <UserComparsionInfo data={this.props.userData} />
