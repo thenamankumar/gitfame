@@ -12,10 +12,6 @@ const generateStats = (data) => {
     return -1;
   });
 
-  if (!data.repos[0]) {
-    data.repos.splice(0, 1);
-  }
-
   // Top Repos
   data.topStarsRepo = { stars: 0 };
 
@@ -52,11 +48,6 @@ const generateStats = (data) => {
     return -1;
   });
 
-  console.log(data.languages);
-  if (!data.languages[0]) {
-    data.languages.splice(0, 1);
-  }
-  console.log(data.languages);
   // User Scoring
   data.score = {};
 
