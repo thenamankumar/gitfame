@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Col } from 'react-bootstrap';
 import { FaExclamationCircle } from 'react-icons/lib/fa';
-import Loader from './Loader';
 import GenerateComparisonStats from '../logics/GenerateComparisonStats';
 import FetchData from '../logics/FetchData';
 import UserComparsionInfo from './analytics/UserComparisonInfo';
@@ -47,25 +46,18 @@ class ChildComparison extends React.Component {
         .then((data) => {
           this.props.setUserData(data);
           this.setState({ dataReq: 'successful' });
+          this.props.updateState();
         })
         .catch((err) => {
           this.setState({ dataReq: 'unsuccessful' });
           console.log(err);
+          this.props.updateState();
         });
     }
   }
   render() {
     console.log('Render Child Comparison View');
-    if (this.state.dataReq === 'fetching') {
-      return (
-        <div className="analytics-wrapper">
-          <Col sm={12} md={6} className="offset-md-3 stats-box">
-            <h2 id="load-msg" className="animated fadeInDown">Fetching Data</h2>
-            <Loader />
-          </Col>
-        </div>
-      );
-    } else if (this.state.dataReq === 'unsuccessful') {
+    if (this.state.dataReq === 'unsuccessful') {
       return (
         <div className="analytics-wrapper">
           <Col sm={12} md={6} className="offset-md-3 stats-box">
