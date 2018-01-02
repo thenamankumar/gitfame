@@ -20,11 +20,13 @@ const generateStats = (data) => {
   data.topContributionsRepo = data.repos[0];
 
   data.repos.forEach((repo) => {
-    if (repo.stars > data.topStarsRepo.stars) {
-      data.topStarsRepo = repo;
-    }
-    if (repo.forks > data.topForksRepo.forks) {
-      data.topForksRepo = repo;
+    if (repo) {
+      if (repo.stars > data.topStarsRepo.stars) {
+        data.topStarsRepo = repo;
+      }
+      if (repo.forks > data.topForksRepo.forks) {
+        data.topForksRepo = repo;
+      }
     }
   });
 
