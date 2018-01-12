@@ -1,9 +1,10 @@
+const webpack = require('webpack');
 const Dotenv = require('dotenv-webpack');
 const PreloadWebpackPlugin = require('preload-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 const path = require('path');
 
 const BUILD_DIR = path.resolve(__dirname, 'build');
@@ -52,20 +53,34 @@ const config = {
       },
     ],
   },
+  devtool: 'source-map',
   plugins: [
-    new CleanWebpackPlugin(BUILD_DIR),
-    new ExtractTextPlugin('bundle.css'),
-    new UglifyJsPlugin(),
-    new PreloadWebpackPlugin(),
     new Dotenv({
       path: './env/prod.env',
     }),
+    new CleanWebpackPlugin(BUILD_DIR),
+    new PreloadWebpackPlugin(),
     new CopyWebpackPlugin([
       {
         from: `${PUBLIC_DIR}/**/*`,
         to: BUILD_DIR,
       },
     ]),
+    new ExtractTextPlugin('bundle.css'),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false },
+      comments: false,
+      sourceMap: true,
+      minimize: false,
+    }),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 1024,
+      minRatio: 0.8,
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],

@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Col } from 'react-bootstrap';
 import { FaExclamationCircle } from 'react-icons/lib/fa';
-import Loader from './Loader';
+import GenerateComparisonStats from '../logics/GenerateComparisonStats';
 import FetchData from '../logics/FetchData';
-import GenerateStats from '../logics/GenerateStats';
-import UserInfo from './analytics/UserInfo';
+import UserComparsionInfo from './analytics/UserComparisonInfo';
 
-class Analytics extends React.Component {
+class ChildComparison extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +20,7 @@ class Analytics extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.username !== nextProps.match.params.username) {
+    if (this.props.userid !== nextProps.userid) {
       this.setState({ dataReq: 'fetching' });
     }
   }
@@ -30,12 +29,12 @@ class Analytics extends React.Component {
     if (this.state.dataReq !== nextState.dataReq) {
       return true;
     }
-    return this.props.match.params.username !== nextProps.match.params.username;
+    return this.props.userid !== nextProps.userid;
   }
 
   process() {
     if (this.state.dataReq === 'fetching') {
-      FetchData(this.props.match.params.username, true)
+      FetchData(this.props.userid, true)
         .then((response) => {
           const data = JSON.parse(response);
           if (data.success) {
@@ -43,30 +42,22 @@ class Analytics extends React.Component {
           }
           throw new Error('User not found');
         })
-        .then(data => GenerateStats(data))
+        .then(data => GenerateComparisonStats(data))
         .then((data) => {
           this.props.setUserData(data);
           this.setState({ dataReq: 'successful' });
+          this.props.updateState();
         })
         .catch((err) => {
           this.setState({ dataReq: 'unsuccessful' });
           console.log(err);
+          this.props.updateState();
         });
     }
   }
-
   render() {
-    console.log('Render Analytics');
-    if (this.state.dataReq === 'fetching') {
-      return (
-        <div className="analytics-wrapper">
-          <Col sm={12} md={6} className="offset-md-3 stats-box">
-            <h2 id="load-msg" className="animated fadeInDown">Fetching Data</h2>
-            <Loader />
-          </Col>
-        </div>
-      );
-    } else if (this.state.dataReq === 'unsuccessful') {
+    console.log('Render Child Comparison View');
+    if (this.state.dataReq === 'unsuccessful') {
       return (
         <div className="analytics-wrapper">
           <Col sm={12} md={6} className="offset-md-3 stats-box">
@@ -76,9 +67,10 @@ class Analytics extends React.Component {
         </div>
       );
     } else if (this.state.dataReq === 'successful') {
+      console.log(this.props.userData);
       return (
-        <Col className="col-xl-10 offset-xl-1 analytics-wrapper">
-          <UserInfo data={this.props.userData} />
+        <Col sm={12} md={10} className="offset-md-1 analytics-wrapper">
+          <UserComparsionInfo data={this.props.userData} />
         </Col>
       );
     }
@@ -99,4 +91,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Analytics);
+export default connect(mapStateToProps, mapDispatchToProps)(ChildComparison);
