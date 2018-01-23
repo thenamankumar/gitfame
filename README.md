@@ -26,7 +26,7 @@ GIT_SECRET= #github client secret
 npm install
 
 #serve with hot reload at localhost:5000
-npm run dev
+npm start
 
 #build for production
 npm run build
