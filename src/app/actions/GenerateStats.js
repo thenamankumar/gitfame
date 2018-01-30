@@ -19,6 +19,8 @@ const generateStats = (data) => {
 
   data.topContributionsRepo = data.repos[0];
 
+  data.languages = [];
+
   data.repos.forEach((repo) => {
     if (!repo) {
       return;
@@ -30,9 +32,30 @@ const generateStats = (data) => {
     if (repo.forks > data.topForksRepo.forks) {
       data.topForksRepo = repo;
     }
+    const repoLangs = repo.languages.nodes;
+
+    repoLangs.forEach((language, index) => {
+      let found = false;
+
+      data.languages.forEach((lang) => {
+        if (lang.name === language.name) {
+          found = true;
+          const c = repoLangs.length;
+          lang.score += (repo.user_commits) * ((c / (index + 2)) + (1 / c));
+          lang.repos += 1;
+        }
+      });
+
+      if (!found) {
+        language.score = 0;
+        language.repos = 1;
+        data.languages.push(language);
+      }
+    });
   });
 
   // Sort Languages for highest score
+  console.log(data.languages);
   data.languages.sort((l, r) => {
     if (l.score < r.score) {
       return 1;
