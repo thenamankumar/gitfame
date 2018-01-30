@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Col } from 'react-bootstrap';
 import { FaExclamationCircle } from 'react-icons/lib/fa';
 import Loader from './Loader';
-import FetchData from '../logics/FetchData';
-import GenerateStats from '../logics/GenerateStats';
+import FetchData from '../actions/FetchData';
+import GenerateStats from '../actions/GenerateStats';
 import UserInfo from './analytics/UserInfo';
 
 class Analytics extends React.Component {

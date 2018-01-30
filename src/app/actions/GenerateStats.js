@@ -20,6 +20,10 @@ const generateStats = (data) => {
   data.topContributionsRepo = data.repos[0];
 
   data.repos.forEach((repo) => {
+    if (!repo) {
+      return;
+    }
+
     if (repo.stars > data.topStarsRepo.stars) {
       data.topStarsRepo = repo;
     }
@@ -97,5 +101,4 @@ const generateStats = (data) => {
 
   return data;
 };
-
 export default generateStats;
