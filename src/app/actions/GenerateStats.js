@@ -55,7 +55,6 @@ const generateStats = (data) => {
   });
 
   // Sort Languages for highest score
-  console.log(data.languages);
   data.languages.sort((l, r) => {
     if (l.score < r.score) {
       return 1;
@@ -72,33 +71,33 @@ const generateStats = (data) => {
   data.score = {};
 
   const daysFromCreated = (new Date() - new Date(data.createdAt)) / (1000 * 60 * 60 * 24);
-  data.commitsPerDay = (data.commits / daysFromCreated).toFixed(1) || 0;
+  data.commitsPerDay = (data.commits / 365).toFixed(1) || 0;
 
-  // 30 points for commits/day
+  // 30 points for total commits
   if (data.commitsPerDay < 1) {
     data.score.work = 0;
-  } else if (data.commitsPerDay < 2 && data.commitsPerDay >= 1) {
+  } else if (data.commitsPerDay < 2) {
     data.score.work = 10;
   } else if (data.commitsPerDay < 3) {
     data.score.work = 20;
-  } else if (data.commitsPerDay >= 3) {
+  } else {
     data.score.work = 30;
   }
 
   // 30 points for total commits
-  if (data.commits > data.commitsPerDay * 700) {
+  if (data.commits > data.commitsPerDay * 730) {
     data.score.consistency = 30;
-  } else if (data.commits > data.commitsPerDay * 350) {
+  } else if (data.commits > data.commitsPerDay * 365) {
     data.score.consistency = 20;
-  } else if (data.commits > data.commitsPerDay * 200) {
+  } else if (data.commits > data.commitsPerDay * 180) {
     data.score.consistency = 10;
   } else {
     data.score.consistency = 0;
   }
 
   // 20 points for stars
-  const starPerRepo = (data.stars / data.own_repos) || 0;
-  if (starPerRepo === 0) {
+  const starPerRepo = (data.stars / data.own_repos).toFixed(1) || 0;
+  if (starPerRepo < 0.5) {
     data.score.stars = 0;
   } else if (starPerRepo < 1) {
     data.score.stars = 5;
@@ -109,8 +108,8 @@ const generateStats = (data) => {
   }
 
   // 20 points for forks
-  const forksPerRepo = (data.forks / data.own_repos) || 0;
-  if (forksPerRepo === 0) {
+  const forksPerRepo = (data.forks / data.own_repos).toFixed(1) || 0;
+  if (forksPerRepo < 0.5) {
     data.score.forks = 0;
   } else if (forksPerRepo < 1) {
     data.score.forks = 5;

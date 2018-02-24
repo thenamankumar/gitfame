@@ -14,13 +14,7 @@ const config = {
     path: BUILD_DIR,
     filename: 'bundle.js',
   },
-  devServer: {
-    contentBase: BUILD_DIR,
-    watchContentBase: true,
-    historyApiFallback: true,
-    port: 5000,
-    hot: true,
-  },
+  devtool: 'inline-source-map',
   module: {
     loaders: [
       {
@@ -65,6 +59,13 @@ const config = {
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
+  },
+  devServer: {
+    contentBase: BUILD_DIR,
+    watchContentBase: true,
+    historyApiFallback: true,
+    port: 5000,
+    hot: true,
   },
 };
 

@@ -54,14 +54,14 @@ class UserInfo extends React.Component {
               <Donut score={user.score.total} total={100} />
             </div>
             <div className="row score-row">
-              <Col xs={6} sm={6} className="score-box">
+              <Col className="col-6 score-box">
                 <p className="score pull">
                   <h2 className="score-value">{user.score.stars}</h2>
                   <span className="sub">/20</span>
                 </p>
                 <p className="score-name">Stars</p>
               </Col>
-              <Col xs={6} sm={6} className="score-box">
+              <Col className="col-6 score-box">
                 <p className="score pull">
                   <h2 className="score-value">{user.score.forks}</h2>
                   <span className="sub">/20</span>
@@ -70,14 +70,14 @@ class UserInfo extends React.Component {
               </Col>
             </div>
             <div className="row score-row">
-              <Col xs={6} sm={6} className="score-box">
+              <Col className="col-6 score-box">
                 <p className="score pull">
                   <h2 className="score-value">{user.score.work}</h2>
                   <span className="sub">/30</span>
                 </p>
                 <p className="score-name">Contributions</p>
               </Col>
-              <Col xs={6} sm={6} className="score-box">
+              <Col className="col-6 score-box">
                 <p className="score pull">
                   <h2 className="score-value">{user.score.consistency}</h2>
                   <span className="sub">/30</span>
@@ -90,15 +90,21 @@ class UserInfo extends React.Component {
         <Col sm={12} md={6} lg={4} className="stats-card">
           <div className="front  profile-info">
             <div className="heading">Stats:</div>
-            <p className="description">These are the all time stats. Learn <Link to="/how"><span className="font-italic">how they are calculated</span></Link>.</p>
+            <p className="description">These are the all time stats. Learn
+              <Link to="/how">
+                <span className="font-italic">
+              how they are calculated
+                </span>
+              </Link>.
+            </p>
             <div className="row score-row">
-              <Col xs={6} sm={6} className="score-box">
+              <Col className="col-6 score-box">
                 <p className="score">
                   <h2 className="score-value">{user.commits}</h2>
                 </p>
                 <p className="score-name">Commits</p>
               </Col>
-              <Col xs={6} sm={6} className="score-box">
+              <Col className="col-6 score-box">
                 <p className="score">
                   <h2 className="score-value">{user.stars}</h2>
                 </p>
@@ -106,13 +112,13 @@ class UserInfo extends React.Component {
               </Col>
             </div>
             <div className="row score-row">
-              <Col xs={6} sm={6} className="score-box">
+              <Col className="col-6 score-box">
                 <p className="score">
                   <h2 className="score-value">{user.forks}</h2>
                 </p>
                 <p className="score-name">Forks</p>
               </Col>
-              <Col xs={6} sm={6} className="score-box">
+              <Col className="col-6 score-box">
                 <p className="score">
                   <h2 className="score-value">{user.watchers}</h2>
                 </p>
@@ -120,13 +126,13 @@ class UserInfo extends React.Component {
               </Col>
             </div>
             <div className="row score-row">
-              <Col xs={6} sm={6} className="score-box">
+              <Col className="col-6 score-box">
                 <p className="score">
                   <h2 className="score-value">{user.public_repos}</h2>
                 </p>
                 <p className="score-name">Public Repos</p>
               </Col>
-              <Col xs={6} sm={6} className="score-box">
+              <Col className="col-6 score-box">
                 <p className="score lang">
                   <h2 className="score-value" style={{ color: user.languages[0].color }}>{user.languages[0].name}</h2>
                 </p>
