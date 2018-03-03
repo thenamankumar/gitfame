@@ -42,9 +42,13 @@ class Analytics extends React.Component {
       FetchData(this.props.match.params.username, true)
         .then((response) => {
           const data = JSON.parse(response);
-          if (data.success) {
+          if (data.status === 200) {
             return data;
           }
+          this.setState({
+            dataStatus: data.status,
+            dataReq: 'unsuccessful',
+          });
           throw new Error('User not found');
         })
         .then(data => GenerateStats(data))
@@ -52,10 +56,7 @@ class Analytics extends React.Component {
           this.props.setUserData(data);
           this.setState({ dataReq: 'successful' });
         })
-        .catch((err) => {
-          this.setState({ dataReq: 'unsuccessful' });
-          console.log(err);
-        });
+        .catch();
     }
   }
 
@@ -71,11 +72,12 @@ class Analytics extends React.Component {
         </div>
       );
     } else if (this.state.dataReq === 'unsuccessful') {
+      const message = this.state.dataStatus === 404 ? 'User Not Found!' : 'There was some error fetching data!';
       return (
         <div className="analytics-wrapper">
           <Col sm={12} md={6} className="offset-md-3 stats-box">
             <FaExclamationCircle className="icon-not-found animated fadeIn" />
-            <h2 id="load-msg" className="animated fadeInDown">User Not Found!</h2>
+            <h2 id="load-msg" className="animated fadeInDown">{message}</h2>
           </Col>
         </div>
       );

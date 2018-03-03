@@ -3,11 +3,6 @@ const generateStats = (data) => {
   data.repos.sort((l, r) => {
     if (l.user_commits < r.user_commits) {
       return 1;
-    } else if (l.user_commits === r.user_commits) {
-      if (l.total_commits < r.total_commits) {
-        return 1;
-      }
-      return -1;
     }
     return -1;
   });
