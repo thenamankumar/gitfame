@@ -1,0 +1,19 @@
+{
+  "name": "react-starter-kit",
+  "version": "1.0.0",
+  "description": "Boilerplate for React apps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hereisnaman/react-starter-kit.git"
+  },
+  "author": "hereisnaman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hereisnaman/react-starter-kit/issues"
+  },
+  "homepage": "https://github.com/hereisnaman/react-starter-kit#readme"
+}
