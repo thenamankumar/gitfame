@@ -1,4 +1,6 @@
 const path = require("path");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
@@ -12,8 +14,7 @@ const config = {
     path: BUILD_DIR,
     filename: "bundle.js"
   },
-  mode: "development",
-  devtool: "source-map",
+  mode: "production",
   module: {
     rules: [
       {
@@ -48,23 +49,22 @@ const config = {
     ]
   },
   plugins: [
+    new CleanWebpackPlugin(BUILD_DIR),
     new ExtractTextPlugin("bundle.css"),
     new CopyWebpackPlugin([
       {
         from: `${PUBLIC_DIR}/**/*`,
         to: BUILD_DIR
       }
-    ])
+    ]),
+    new CompressionPlugin({
+      algorithm: "gzip",
+      test: /\.jsx?$|\.s?css$/,
+      minRatio: 0.8
+    })
   ],
   resolve: {
     extensions: [".js", ".jsx"]
-  },
-  devServer: {
-    contentBase: BUILD_DIR,
-    watchContentBase: true,
-    historyApiFallback: true,
-    port: 3000,
-    hot: true
   }
 };
 

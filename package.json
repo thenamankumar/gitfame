@@ -4,8 +4,8 @@
   "description": "Boilerplate for React apps",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --hot --open"
+    "start": "webpack-dev-server --hot --open",
+    "build": "webpack --config ./webpack.production.config.js --progress --profile --colors"
   },
   "repository": {
     "type": "git",
