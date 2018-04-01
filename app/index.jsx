@@ -1,9 +1,9 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { render } from "react-dom";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { render } from 'react-dom';
 
-import "./index.html";
-import store from "./store";
+import './index.html';
+import store from './store';
 
 const App = () => (
   <Provider store={store}>
@@ -11,4 +11,4 @@ const App = () => (
   </Provider>
 );
 
-render(<App />, document.getElementById("app"));
+render(<App />, document.getElementById('app'));
