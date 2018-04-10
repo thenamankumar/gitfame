@@ -10,16 +10,16 @@
 
 ``` bash
 # Install dependencies
-npm install
+yarn
 
-# Serve on localhost:3000
-npm start
+# Serve on localhost:4000
+yarn start
 
 # Build for production
-npm run build
+yarn build
 
 # Format code
-npm run format
+yarn format
 ```
 ## App Info
 
