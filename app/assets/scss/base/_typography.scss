@@ -36,13 +36,14 @@ a {
   font-weight: 400;
   line-height: 23px;
   text-decoration: none;
+  color: $primary-text-light;
 }
 
 button {
   outline: none;
   font-size: 18px;
-  font-weight: 400;
   line-height: 22px;
+  font-weight: 400;
   color: $primary-text-light;
   padding: 12px 38px;
   border-radius: 46px;

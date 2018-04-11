@@ -1,0 +1,40 @@
+nav.nav-bar {
+  padding: 15px 0;
+  height: 50px;
+  background-color: transparent;
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+  .logo-text {
+    font-size: 20px;
+    line-height: 20px;
+    width: fit-content;
+    color: $primary-text-light;
+    .back-icon {
+      font-size: 30px;
+    }
+  }
+
+  ul.menu {
+    width: fit-content;
+    list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    line-height: 16px;
+    .item {
+      color: $primary-text-mid;
+      text-transform: capitalize;
+      margin: 0 10px;
+    }
+
+    a {
+      &:hover {
+        color: $blue;
+      }
+    }
+  }
+}

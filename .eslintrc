@@ -17,6 +17,7 @@
     "no-unused-vars": 1,
     "react/prefer-stateless-function": 1,
     "consistent-return": 0,
+    "jsx-a11y/anchor-is-valid": 0,
     "prettier/prettier": "error"
   }
 }

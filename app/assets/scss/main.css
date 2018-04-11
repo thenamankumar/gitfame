@@ -332,11 +332,11 @@ template {
 }
 
 body {
-  background-color: #132638;
+  background-color: #102131;
 }
 
 .wrapper {
-  background-color: #132638;
+  background-color: #102131;
 }
 
 .container {
@@ -388,19 +388,57 @@ a {
   font-weight: 400;
   line-height: 23px;
   text-decoration: none;
+  color: #ffffff;
 }
 
 button {
   outline: none;
   font-size: 18px;
-  font-weight: 400;
   line-height: 22px;
+  font-weight: 400;
   color: #ffffff;
   padding: 12px 38px;
   border-radius: 46px;
   background-color: transparent;
   border: 1px solid #ffffff;
   cursor: pointer;
+}
+
+nav.nav-bar {
+  padding: 15px 0;
+  height: 50px;
+  background-color: transparent;
+}
+nav.nav-bar .row {
+  display: flex;
+  justify-content: space-between;
+}
+nav.nav-bar .logo-text {
+  font-size: 20px;
+  line-height: 20px;
+  width: fit-content;
+  color: #ffffff;
+}
+nav.nav-bar .logo-text .back-icon {
+  font-size: 30px;
+}
+nav.nav-bar ul.menu {
+  width: fit-content;
+  list-style: none;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 16px;
+}
+nav.nav-bar ul.menu .item {
+  color: #7887a7;
+  text-transform: capitalize;
+  margin: 0 10px;
+}
+nav.nav-bar ul.menu a:hover {
+  color: #4ed0e5;
 }
 
 /*# sourceMappingURL=main.css.map */

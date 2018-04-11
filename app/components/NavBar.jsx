@@ -1,18 +1,27 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { MdArrowBack } from 'react-icons/lib/md/';
+import { withRouter, Link } from 'react-router-dom';
+import { TiArrowLeft } from 'react-icons/lib/ti/';
 
 const NavBar = ({ match: { params: { username } } }) => (
   <nav className="nav-bar">
     <div className="container">
-      <div className="logo-text">
-        {username ? (
-          <React.Fragment>
-            <MdArrowBack />
-            {username}
-          </React.Fragment>
-        ) : (
-          'GitFame'
+      <div className="row">
+        <Link as="div" to="/" className="logo-text">
+          {username ? (
+            <React.Fragment>
+              <TiArrowLeft className="back-icon" />
+              {username}
+            </React.Fragment>
+          ) : (
+            'GITFAME'
+          )}
+        </Link>
+        {!username && (
+          <ul className="menu">
+            <Link as="li" to="/how" className="item">
+              How this works
+            </Link>
+          </ul>
         )}
       </div>
     </div>
