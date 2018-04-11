@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Arimo');
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -5,7 +6,6 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
-@import url('https://fonts.googleapis.com/css?family=Lato');
 html {
   line-height: 1.15;
   /* 1 */
@@ -331,13 +331,76 @@ template {
   display: none;
 }
 
+body {
+  background-color: #132638;
+}
+
+.wrapper {
+  background-color: #132638;
+}
+
 .container {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
+  padding: 0 10px;
 }
 
 .full-height {
   height: 100vh;
+}
+
+body {
+  color: #ffffff;
+  font-family: 'Arimo', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 68px;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 43px;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 23px;
+}
+
+a {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 23px;
+  text-decoration: none;
+}
+
+button {
+  outline: none;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #ffffff;
+  padding: 12px 38px;
+  border-radius: 46px;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=main.css.map */

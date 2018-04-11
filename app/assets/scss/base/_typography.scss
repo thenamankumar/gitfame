@@ -1,0 +1,52 @@
+body {
+  color: $primary-text-light;
+  font-family: 'Arimo', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 68px;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 43px;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 23px;
+}
+
+a {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 23px;
+  text-decoration: none;
+}
+
+button {
+  outline: none;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+  color: $primary-text-light;
+  padding: 12px 38px;
+  border-radius: 46px;
+  background-color: transparent;
+  border: 1px solid $primary-text-light;
+  cursor: pointer;
+}

@@ -1,6 +1,16 @@
+body {
+  background-color: $secondary-mid;
+}
+
+.wrapper {
+  background-color: $secondary-mid;
+}
+
 .container {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
+  padding: 0 10px;
 }
 
 .full-height {
