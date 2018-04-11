@@ -1,4 +1,5 @@
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -9,7 +10,7 @@ const APP_DIR = path.resolve(__dirname, 'app');
 const PUBLIC_DIR = path.resolve(__dirname, 'public');
 
 const config = {
-  entry: `${APP_DIR}/index.jsx`,
+  entry: ['babel-polyfill', `${APP_DIR}/index.jsx`],
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js',
@@ -49,6 +50,9 @@ const config = {
     ],
   },
   plugins: [
+    new Dotenv({
+      path: './env/prod.env',
+    }),
     new CleanWebpackPlugin(BUILD_DIR),
     new ExtractTextPlugin('bundle.css'),
     new CopyWebpackPlugin([
