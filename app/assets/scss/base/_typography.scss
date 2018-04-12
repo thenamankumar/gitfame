@@ -46,7 +46,20 @@ button {
   font-weight: 400;
   color: $primary-text-light;
   padding: 12px 38px;
-  border-radius: 46px;
+  border-radius: 38px;
+  background-color: transparent;
+  border: 1px solid $primary-text-light;
+  cursor: pointer;
+}
+
+input {
+  outline: none;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 400;
+  color: $primary-text-light;
+  padding: 12px 38px;
+  border-radius: 38px;
   background-color: transparent;
   border: 1px solid $primary-text-light;
   cursor: pointer;

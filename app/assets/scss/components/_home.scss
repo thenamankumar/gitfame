@@ -6,7 +6,7 @@
     animation-delay: 0.1s;
   }
   &.slideOutLeft {
-    animation-delay: 0.4s;
+    animation-delay: 0.2s;
   }
 }
 
@@ -14,7 +14,7 @@
   top: 0;
   position: absolute;
   &.slideOutLeft {
-    animation-delay: 0.5s;
+    animation-delay: 0.3s;
   }
 }
 
@@ -23,6 +23,61 @@
   .title {
     &.fadeIn {
       animation-delay: 0.6s;
+    }
+  }
+
+  .action-box {
+    margin-top: 20px;
+    display: block;
+    background-image: linear-gradient(-37deg, $primary-dark 0%, $primary-mid 51%, $primary-light 100%);
+    width: 206px;
+    border-radius: 100px;
+    border: none;
+
+    &.fadeInDown {
+      animation-delay: 0.8s;
+    }
+
+    .search-input {
+      display: none;
+      border: none;
+      flex: 1;
+    }
+
+    button {
+      flex: 1;
+    }
+
+    &.active {
+      display: flex;
+      max-width: 412px;
+      width: auto;
+      box-shadow: none;
+      height: 46px;
+      transition: box-shadow 0.3s ease-in-out;
+      .search-input {
+        display: flex;
+        max-width: 240px;
+        height: 42px;
+        padding: 11px 38px;
+        margin: 2px;
+        background-color: $primary-text-light;
+        color: $primary-text-dark;
+        border-radius: 100px 0 0 100px;
+        cursor: auto;
+        transition: width 1s ease-out;
+      }
+
+      button {
+        margin-left: -38px;
+        &:hover {
+          box-shadow: none;
+        }
+      }
+
+      &:hover {
+        box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.49);
+      }
     }
   }
 }

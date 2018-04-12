@@ -1,0 +1,10 @@
+.btn-dark {
+  background-image: linear-gradient(-37deg, $primary-dark 0%, $primary-mid 51%, $primary-light 100%);
+  border-radius: 100px;
+  border: none;
+  box-shadow: none;
+  transition: box-shadow 0.3s ease-in-out;
+  &:hover {
+    box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.49);
+  }
+}

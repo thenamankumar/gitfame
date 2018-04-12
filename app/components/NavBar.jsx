@@ -9,9 +9,6 @@ const NavBar = ({ match: { params: { username } } }) => {
   const logo = <div className="logo-text animated">GITFAME</div>;
   const menu = (
     <ul className="menu animated">
-      <Link as="li" to="/how" className="item">
-        How this works
-      </Link>
       <a href="https://github.com/hereisnaman/gitfame/" target="_blank" rel="noreferrer noopener" className="item">
         GitHub
       </a>
