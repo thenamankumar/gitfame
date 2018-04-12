@@ -1,11 +1,11 @@
 // fonts
 @import url('https://fonts.googleapis.com/css?family=Arimo');
-
 // base
 @import 'base/normalize';
 @import 'base/colors';
 @import 'base/layout';
 @import 'base/typography';
-
+@import 'base/animation';
 // components
 @import 'components/navbar';
+@import 'components/home';

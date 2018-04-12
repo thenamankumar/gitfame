@@ -6,6 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BUILD_DIR = path.resolve(__dirname, 'build');
 const APP_DIR = path.resolve(__dirname, 'app');
 const PUBLIC_DIR = path.resolve(__dirname, 'public');
+const ASSETS_DIR = path.join(APP_DIR, 'assets');
 
 const config = {
   entry: ['babel-polyfill', `${APP_DIR}/index.jsx`],
@@ -20,7 +21,7 @@ const config = {
       {
         enforce: 'pre',
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, ASSETS_DIR],
         loader: 'eslint-loader',
       },
       {
@@ -36,10 +37,17 @@ const config = {
         }),
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif)$/i,
         loaders: [
           'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
           'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false',
+        ],
+      },
+      {
+        test: /\.svg$/i,
+        loaders: [
+          'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack-loader?bypassOnDebug&interlaced=false',
         ],
       },
       {
