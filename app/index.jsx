@@ -1,7 +1,7 @@
 import React from 'react';
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { render } from 'react-dom';
 
 import './index.html';
 import './assets/scss/main.scss';
@@ -15,8 +15,8 @@ const App = () => (
   <Provider store={store}>
     <Router>
       <div className="wrapper">
-        <Route path="/:username?" component={NavBar} />
-        <Route path="/" component={Home} />
+        <Route exact path="/:username?" component={NavBar} />
+        <Route exact path="/:username?" component={Home} />
         <Route exact path="/:username" component={Report} />
       </div>
     </Router>

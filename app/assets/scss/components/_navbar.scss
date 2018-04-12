@@ -2,20 +2,26 @@ nav.nav-bar {
   padding: 15px 0;
   height: 50px;
   background-color: transparent;
-  .row {
+  .row span {
     display: flex;
+    position: absolute;
+    width: 100%;
     justify-content: space-between;
   }
+
   .logo-text {
     font-size: 20px;
     line-height: 30px;
     width: fit-content;
     color: $primary-text-light;
+    z-index: 100;
+    cursor: pointer;
     .back-icon {
       font-size: 30px;
     }
-    z-index: 100;
-    cursor: pointer;
+    &:hover {
+      color: $blue;
+    }
   }
 
   ul.menu {

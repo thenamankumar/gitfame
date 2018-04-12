@@ -346,6 +346,7 @@ body {
 .container {
   max-width: 1200px;
   width: 100%;
+  position: relative;
   margin: 0 auto;
   padding: 0 10px;
 }
@@ -3449,8 +3450,10 @@ nav.nav-bar {
   height: 50px;
   background-color: transparent;
 }
-nav.nav-bar .row {
+nav.nav-bar .row span {
   display: flex;
+  position: absolute;
+  width: 100%;
   justify-content: space-between;
 }
 nav.nav-bar .logo-text {
@@ -3463,6 +3466,9 @@ nav.nav-bar .logo-text {
 }
 nav.nav-bar .logo-text .back-icon {
   font-size: 30px;
+}
+nav.nav-bar .logo-text:hover {
+  color: #4ed0e5;
 }
 nav.nav-bar ul.menu {
   width: fit-content;
