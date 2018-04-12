@@ -5,12 +5,24 @@
   &.slideInLeft {
     animation-delay: 0.1s;
   }
+  &.slideOutLeft {
+    animation-delay: 0.4s;
+  }
 }
 
 .home-rec-two {
   top: 0;
   position: absolute;
   &.slideOutLeft {
-    animation-delay: 0.1s;
+    animation-delay: 0.5s;
+  }
+}
+
+.header {
+  margin-top: 50px;
+  .title {
+    &.fadeIn {
+      animation-delay: 0.6s;
+    }
   }
 }

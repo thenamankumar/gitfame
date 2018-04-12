@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import { Grid, Row, Col } from 'react-bootstrap';
 import { TiArrowRight } from 'react-icons/lib/ti/';
 
 import Animate from './Animate';
@@ -11,6 +12,9 @@ const NavBar = ({ match: { params: { username } } }) => {
       <Link as="li" to="/how" className="item">
         How this works
       </Link>
+      <a href="https://github.com/hereisnaman/gitfame/" target="_blank" rel="noreferrer noopener" className="item">
+        GitHub
+      </a>
     </ul>
   );
   const backBox = (
@@ -21,9 +25,9 @@ const NavBar = ({ match: { params: { username } } }) => {
   );
 
   return (
-    <nav className="nav-bar">
-      <div className="container">
-        <div className="row">
+    <Grid className="nav-bar">
+      <Row>
+        <Col xs={12} sm={12}>
           <Animate
             transitionName={{
               appear: 'fadeInLeft',
@@ -31,9 +35,6 @@ const NavBar = ({ match: { params: { username } } }) => {
               leave: 'fadeOutLeft',
             }}
             show={!username}
-            transitionAppear
-            transitionEnter
-            transitionLeave
             transitionAppearTimeout={1000}
             transitionEnterTimeout={1000}
             transitionLeaveTimeout={1000}>
@@ -47,18 +48,15 @@ const NavBar = ({ match: { params: { username } } }) => {
               leave: 'fadeOutRight',
             }}
             show={username || false}
-            transitionAppear
-            transitionEnter
-            transitionLeave
             transitionAppearTimeout={1000}
             transitionEnterTimeout={1000}
             transitionLeaveTimeout={1000}>
             <div />
             {backBox}
           </Animate>
-        </div>
-      </div>
-    </nav>
+        </Col>
+      </Row>
+    </Grid>
   );
 };
 
