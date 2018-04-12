@@ -46,10 +46,7 @@ const config = {
       },
       {
         test: /\.svg$/i,
-        loaders: [
-          'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
-          'image-webpack-loader?bypassOnDebug&interlaced=false',
-        ],
+        loaders: ['file-loader?hash=sha512&digest=hex&name=[hash].[ext]', 'image-webpack-loader'],
       },
       {
         test: /\.html$/,

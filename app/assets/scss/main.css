@@ -3459,6 +3459,7 @@ nav.nav-bar .logo-text {
   width: fit-content;
   color: #ffffff;
   z-index: 100;
+  cursor: pointer;
 }
 nav.nav-bar .logo-text .back-icon {
   font-size: 30px;
@@ -3486,12 +3487,17 @@ nav.nav-bar ul.menu a:hover {
   top: 0;
   z-index: 10;
   position: absolute;
+}
+.home-rec-one.slideInLeft {
   animation-delay: 0.1s;
 }
 
 .home-rec-two {
   top: 0;
   position: absolute;
+}
+.home-rec-two.slideOutLeft {
+  animation-delay: 0.1s;
 }
 
 /*# sourceMappingURL=main.css.map */

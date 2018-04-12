@@ -6,16 +6,14 @@ const NavBar = ({ match: { params: { username } } }) => (
   <nav className="nav-bar">
     <div className="container">
       <div className="row">
-        <Link as="div" to="/" className="logo-text">
-          {username ? (
-            <React.Fragment>
-              <TiArrowLeft className="back-icon" />
-              {username}
-            </React.Fragment>
-          ) : (
-            'GITFAME'
-          )}
-        </Link>
+        {username ? (
+          <Link as="div" to="/" className="logo-text">
+            <TiArrowLeft className="back-icon" />
+            {username}
+          </Link>
+        ) : (
+          <div className="logo-text">GITFAME</div>
+        )}
         {!username && (
           <ul className="menu">
             <Link as="li" to="/how" className="item">
