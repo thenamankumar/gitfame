@@ -84,7 +84,7 @@ class Home extends React.Component {
                 transitionAppearTimeout={1600}
                 transitionEnterTimeout={1600}
                 transitionLeaveTimeout={1000}>
-                <h1 className="title animated">
+                <h1 key="home-title" className="title animated">
                   Do You Want <br />To Analyze Your <br />GitHub Contributions?
                 </h1>
               </Animate>
@@ -98,7 +98,7 @@ class Home extends React.Component {
                 transitionAppearTimeout={1800}
                 transitionEnterTimeout={1800}
                 transitionLeaveTimeout={1000}>
-                <div className={`action-box animated ${inputActive ? 'active' : ''}`}>
+                <div key="home-action-box" className={`action-box animated ${inputActive ? 'active' : ''}`}>
                   <input
                     type="text"
                     placeholder="username"

@@ -1,10 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 import fetchUserData from '../actions/fetchUserData';
 import generateReport from '../actions/generateReport';
 import compareStringLower from '../utils/compareStringLower';
+import Animate from '../components/Animate';
 
 class Report extends React.Component {
   async componentDidMount() {
@@ -17,12 +19,13 @@ class Report extends React.Component {
     if (!compareStringLower(user.login, username)) return this.loadData(this.props);
   }
 
-  loadData = async ({ match: { params: { username } }, cache, addUser, addUserCache }) => {
+  loadData = async ({ match: { params: { username } }, cache, addUser, addUserCache, setLoading }) => {
     // check if cache report is latest
     const checkReportCache = report => report && new Date(report.time) - new Date() <= 24 * 60 * 60 * 1000;
 
     // fetch new data if cache  not latest
     const fetchLatest = async search => {
+      setLoading(true);
       const data = await fetchUserData(search);
 
       // generate report if user data found
@@ -45,17 +48,53 @@ class Report extends React.Component {
   };
 
   render() {
+    const { match: { params: { username } }, loading, user } = this.props;
+    const showLoading = (loading && username) || false;
+    const showReport = (!loading && username) || false;
+
     return (
-      <div className="container">
-        <h1>Do you want to impress your clients?</h1>
-        <h2>Do you want to impress your clients?</h2>
-        <h3>Hello</h3>
-        <p>
-          Do you want to impress your clients? Do you want to impress your clients? Do you want to impress your clients?
-        </p>
-        Hello
-        <button>Search</button>
-      </div>
+      <React.Fragment>
+        <Grid className="layer">
+          <Row className="content">
+            <Col xs={12} sm={12}>
+              <Animate
+                transitionName={{
+                  appear: 'fadeIn',
+                  enter: 'fadeIn',
+                  leave: 'fadeOutRight',
+                }}
+                show={showLoading}
+                transitionAppearTimeout={1000}
+                transitionEnterTimeout={1000}
+                transitionLeaveTimeout={1000}>
+                <h2 key="report-loading" className="animated">
+                  Fetching User Data
+                </h2>
+              </Animate>
+            </Col>
+          </Row>
+        </Grid>
+        <Grid className="layer">
+          <Row className="content">
+            <Col xs={12} sm={12}>
+              <Animate
+                transitionName={{
+                  appear: 'fadeIn',
+                  enter: 'fadeIn',
+                  leave: 'fadeOutRight',
+                }}
+                show={showReport}
+                transitionAppearTimeout={1000}
+                transitionEnterTimeout={1000}
+                transitionLeaveTimeout={1000}>
+                <h1 key="report-loading" className="animated">
+                  second
+                </h1>
+              </Animate>
+            </Col>
+          </Row>
+        </Grid>
+      </React.Fragment>
     );
   }
 }
@@ -63,9 +102,16 @@ class Report extends React.Component {
 const mapStateToProps = store => ({
   user: store.report.user,
   cache: store.report.cache,
+  loading: store.report.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
+  setLoading: data => {
+    dispatch({
+      type: 'setLoading',
+      data,
+    });
+  },
   addUser: data => {
     dispatch({
       type: 'addUser',

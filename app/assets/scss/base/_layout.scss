@@ -11,8 +11,18 @@ body {
   min-height: 100vh;
 }
 
+.layer {
+  position: absolute;
+}
+
 .container {
   position: relative;
+  &.layer {
+    position: absolute;
+    top: 50px;
+    left: auto;
+    right: auto;
+  }
 }
 
 .row {

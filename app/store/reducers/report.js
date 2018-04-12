@@ -1,8 +1,14 @@
-const report = (state = { user: {}, cache: [] }, action) => {
+const report = (state = { loading: true, user: {}, cache: [] }, action) => {
   switch (action.type) {
+    case 'setLoading':
+      return {
+        ...state,
+        loading: action.data,
+      };
     case 'addUser':
       return {
         ...state,
+        loading: true,
         user: action.data,
       };
     case 'addUserCache':

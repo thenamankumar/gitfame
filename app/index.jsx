@@ -17,7 +17,7 @@ const App = () => (
       <div className="wrapper">
         <Route exact path="/(user)?/:username?" component={NavBar} />
         <Route exact path="/(user)?/:username?" component={Home} />
-        <Route exact path="/user/:username" component={Report} />
+        <Route exact path="/(user)?/:username?" component={Report} />
       </div>
     </Router>
   </Provider>

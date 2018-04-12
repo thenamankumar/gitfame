@@ -5,6 +5,7 @@ import Reducer from './reducers';
 const initialState = {
   // initialize state here
   report: {
+    loading: true,
     user: {},
     cache: [],
   },
