@@ -11,6 +11,11 @@ const report = (state = { loading: true, user: {}, cache: [] }, action) => {
         loading: false,
         user: action.data,
       };
+    case 'resetUser':
+      return {
+        ...state,
+        user: {},
+      };
     case 'addUserCache':
       return {
         ...state,

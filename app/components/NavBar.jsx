@@ -24,33 +24,23 @@ const NavBar = ({ match: { params: { username } } }) => {
   return (
     <Grid className="nav-bar">
       <Row>
-        <Col xs={12} sm={12}>
-          <Animate
-            transitionName={{
-              appear: 'fadeInLeft',
-              enter: 'fadeInLeft',
-              leave: 'fadeOutLeft',
-            }}
-            show={!username}
-            transitionAppearTimeout={1000}
-            transitionEnterTimeout={1000}
-            transitionLeaveTimeout={1000}>
-            {logo}
-            {menu}
-          </Animate>
-          <Animate
-            transitionName={{
-              appear: 'fadeInRight',
-              enter: 'fadeInRight',
-              leave: 'fadeOutRight',
-            }}
-            show={username || false}
-            transitionAppearTimeout={1000}
-            transitionEnterTimeout={1000}
-            transitionLeaveTimeout={1000}>
-            <div />
-            {backBox}
-          </Animate>
+        <Col xs={12} sm={12} className="box">
+          {username ? (
+            <React.Fragment>
+              <Animate name="fadeIn">
+                {/* here comes the search box */}
+                <div />
+                {backBox}
+              </Animate>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Animate name="fadeIn">
+                {logo}
+                {menu}
+              </Animate>
+            </React.Fragment>
+          )}
         </Col>
       </Row>
     </Grid>

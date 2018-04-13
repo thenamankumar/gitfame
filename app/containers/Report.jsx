@@ -1,13 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Grid, Row, Col } from 'react-bootstrap';
 
 import fetchUserData from '../actions/fetchUserData';
 import generateReport from '../actions/generateReport';
 import compareStringLower from '../utils/compareStringLower';
-import Animate from '../components/Animate';
-import RecCurveThree from '../assets/svg/RecCurveThree.svg';
+import ReportLoading from '../components/ReportLoading';
 
 class Report extends React.Component {
   async componentDidMount() {
@@ -53,71 +51,8 @@ class Report extends React.Component {
   };
 
   render() {
-    const { match: { params: { username } }, loading, user } = this.props;
-    const showLoading = (loading && username) || false;
-    const showReport = (!loading && username) || false;
-
-    return (
-      <React.Fragment>
-        <Animate
-          transitionName={{
-            appear: 'slideInRight',
-            enter: 'slideInRight',
-            leave: 'slideOutRight',
-          }}
-          show={showLoading || showReport}
-          transitionAppearTimeout={1000}
-          transitionEnterTimeout={1000}
-          transitionLeaveTimeout={1000}>
-          <img
-            key="RecCurveThree-report-1"
-            src={RecCurveThree}
-            alt="gitfame shades"
-            className="report-rec-three animated"
-          />
-        </Animate>
-        <Grid className="layer">
-          <Row className="content">
-            <Col xs={12} sm={12}>
-              <Animate
-                transitionName={{
-                  appear: 'fadeInRight',
-                  enter: 'fadeInRight',
-                  leave: 'fadeOutRight',
-                }}
-                show={showLoading}
-                transitionAppearTimeout={1000}
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1000}>
-                <h2 key="report-loading" className="animated text-center">
-                  Fetching User Data
-                </h2>
-              </Animate>
-            </Col>
-          </Row>
-        </Grid>
-        <Grid className="layer">
-          <Row className="content">
-            <Col xs={12} sm={12}>
-              <Animate
-                transitionName={{
-                  appear: 'fadeInRight',
-                  enter: 'fadeInRight',
-                  leave: 'fadeOutRight',
-                }}
-                show={showReport}
-                transitionAppearTimeout={1000}
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1000}>
-                <h1 key="report-user" className="animated">
-                  {user.login}
-                </h1>
-              </Animate>
-            </Col>
-          </Row>
-        </Grid>
-      </React.Fragment>
-    );
+    const { loading, user } = this.props;
+    return loading ? <ReportLoading /> : <div />;
   }
 }
 

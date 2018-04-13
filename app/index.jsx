@@ -15,9 +15,10 @@ const App = () => (
   <Provider store={store}>
     <Router>
       <div className="wrapper">
-        <Route exact path="/(user)?/:username?" component={NavBar} />
-        <Route exact path="/(user)?/:username?" component={Home} />
-        <Route exact path="/(user)?/:username?" component={Report} />
+        <Route exact path="/" component={NavBar} />
+        <Route exact path="/user/:username" component={NavBar} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/user/:username" component={Report} />
       </div>
     </Router>
   </Provider>

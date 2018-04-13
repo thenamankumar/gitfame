@@ -53,51 +53,23 @@ class Home extends React.Component {
   };
 
   render() {
-    const { match: { params: { username } } } = this.props;
     const { inputActive, usernameInput } = this.state;
 
     return (
       <React.Fragment>
-        <Animate
-          transitionName={{
-            appear: 'slideInLeft',
-            enter: 'slideInLeft',
-            leave: 'slideOutLeft',
-          }}
-          show={!username}
-          transitionAppearTimeout={1100}
-          transitionEnterTimeout={1100}
-          transitionLeaveTimeout={1300}>
-          <img key="RecCurveOne-home-1" src={RecCurveOne} alt="gitfame shades" className="home-rec-one animated" />
-          <img key="RecCurveTwo-home-1" src={RecCurveTwo} alt="gitfame shades" className="home-rec-two animated" />
+        <Animate name="slideInLeft" timeout={1100}>
+          <img key="RecCurveOne-home-1" src={RecCurveOne} alt="background" className="home-rec-one animated" />
+          <img key="RecCurveTwo-home-1" src={RecCurveTwo} alt="background" className="home-rec-two animated" />
         </Animate>
-        <Grid className="layer">
+        <Grid>
           <Row className="content">
             <Col xs={12} sm={12} md={6} className="header">
-              <Animate
-                transitionName={{
-                  appear: 'fadeIn',
-                  enter: 'fadeIn',
-                  leave: 'fadeOutLeft',
-                }}
-                show={!username}
-                transitionAppearTimeout={1600}
-                transitionEnterTimeout={1600}
-                transitionLeaveTimeout={1000}>
+              <Animate name="fadeIn" timeout={1600}>
                 <h1 key="home-title" className="title animated">
                   Do You Want <br />To Analyze Your <br />GitHub Contributions?
                 </h1>
               </Animate>
-              <Animate
-                transitionName={{
-                  appear: 'fadeInDown',
-                  enter: 'fadeInDown',
-                  leave: 'fadeOutLeft',
-                }}
-                show={!username}
-                transitionAppearTimeout={1800}
-                transitionEnterTimeout={1800}
-                transitionLeaveTimeout={1000}>
+              <Animate name="fadeInDown" timeout={1800}>
                 <div key="home-action-box" className={`action-box animated ${inputActive ? 'active' : ''}`}>
                   <input
                     type="text"
