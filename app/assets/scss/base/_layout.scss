@@ -20,8 +20,22 @@ body {
   &.layer {
     position: absolute;
     top: 50px;
-    left: auto;
-    right: auto;
+    @media (min-width: 567px) {
+      left: calc(50vw - 270px);
+      right: calc(50vw - 270px);
+    }
+    @media (min-width: 768px) {
+      left: calc(50vw - 360px);
+      right: calc(50vw - 360px);
+    }
+    @media (min-width: 992px) {
+      left: calc(50vw - 480px);
+      right: calc(50vw - 480px);
+    }
+    @media (min-width: 1200px) {
+      left: calc(50vw - 570px);
+      right: calc(50vw - 570px);
+    }
   }
 }
 

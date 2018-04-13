@@ -71,7 +71,7 @@ class Home extends React.Component {
           <img key="RecCurveOne-home-1" src={RecCurveOne} alt="gitfame shades" className="home-rec-one animated" />
           <img key="RecCurveTwo-home-1" src={RecCurveTwo} alt="gitfame shades" className="home-rec-two animated" />
         </Animate>
-        <Grid>
+        <Grid className="layer">
           <Row className="content">
             <Col xs={12} sm={12} md={6} className="header">
               <Animate

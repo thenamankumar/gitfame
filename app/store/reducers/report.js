@@ -8,7 +8,7 @@ const report = (state = { loading: true, user: {}, cache: [] }, action) => {
     case 'addUser':
       return {
         ...state,
-        loading: true,
+        loading: false,
         user: action.data,
       };
     case 'addUserCache':

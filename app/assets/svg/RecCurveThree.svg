@@ -1,12 +1,21 @@
-<svg width="735px" height="1559px" viewBox="0 0 735 1559" version="1.1">
+<svg width="991px" height="1861px" viewBox="0 0 991 1861" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
     <desc>Created with Sketch.</desc>
     <defs>
+        <filter x="-0.2%" y="-0.1%" width="100.3%" height="100.2%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
     </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Dark-Landing" transform="translate(-705.000000, -1324.000000)" fill="#132638">
-            <g id="BG" transform="translate(-1775.000000, -2487.000000)">
-                <rect transform="translate(3410.500000, 4588.500000) rotate(-315.000000) translate(-3410.500000, -4588.500000) "
-                      x="2726" y="3904" width="1369" height="1369" rx="100"/>
+        <g id="Dark-Landing" transform="translate(-449.000000, -1455.000000)" fill="#132638">
+            <g id="BG" filter="url(#filter-1)" transform="translate(-2031.000000, -2205.000000)">
+                <rect transform="translate(3410.500000, 4588.500000) rotate(-315.000000) translate(-3410.500000, -4588.500000) " x="2726" y="3904" width="1369" height="1369" rx="100"></rect>
             </g>
         </g>
     </g>
