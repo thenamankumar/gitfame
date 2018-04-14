@@ -3,3 +3,33 @@
   right: -400px;
   position: absolute;
 }
+
+.user-bio {
+  margin-top: 50px;
+  display: flex;
+
+  .user-pic {
+    flex: 1;
+    border-radius: 50%;
+    max-width: 50px;
+    max-height: 50px;
+    overflow: hidden;
+    background-color: $secondary-light;
+  }
+
+  .user-details {
+    flex: 4;
+    max-width: 80%;
+    padding: 0 10px;
+    .user-name {
+    }
+
+    .bio {
+      color: $primary-text-mid;
+      overflow: hidden;
+      word-wrap: break-word;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}

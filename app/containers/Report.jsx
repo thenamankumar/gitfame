@@ -6,6 +6,7 @@ import fetchUserData from '../actions/fetchUserData';
 import generateReport from '../actions/generateReport';
 import compareStringLower from '../utils/compareStringLower';
 import ReportLoading from '../components/ReportLoading';
+import Analytics from '../components/Analytics';
 
 class Report extends React.Component {
   async componentDidMount() {
@@ -18,41 +19,44 @@ class Report extends React.Component {
     if (!compareStringLower(user.login, username)) return this.loadData(this.props);
   }
 
-  loadData = async ({ match: { params: { username } }, cache, addUser, addUserCache, setLoading }) => {
+  componentWillUnmount() {
+    const { resetUser } = this.props;
+
+    resetUser();
+  }
+
+  loadData = async ({ match: { params: { username } }, cache, addUser, addUserCache, resetUser }) => {
     // check if cache report is latest
     const checkReportCache = report => report && new Date(report.time) - new Date() <= 24 * 60 * 60 * 1000;
 
     // fetch new data if cache  not latest
     const fetchLatest = async search => {
-      setLoading(true);
+      resetUser();
       const data = await fetchUserData(search);
 
       // generate report if user data found
       return data.status === 200 ? generateReport(data) : data;
     };
 
-    const startLoading = async () => {
-      // find user report in cache
-      const reportCache = cache.find(({ login }) => login === username);
+    // find user report in cache
+    const reportCache = cache.find(({ login }) => login === username);
 
-      // fetch new data if cache report not latest
-      const report = checkReportCache(reportCache) ? reportCache : await fetchLatest(username);
+    // fetch new data if cache report not latest
+    const report = checkReportCache(reportCache) ? reportCache : await fetchLatest(username);
 
-      if (window.location.pathname.split('/')[2] === username) {
-        // dispatch action if current search is same
-        addUser(report);
-      } else if (report.status === 200) {
-        // add user report to cache if search is changed
-        addUserCache(report);
-      }
-    };
-
-    setTimeout(startLoading, 1000);
+    if (window.location.pathname.split('/')[2] === username) {
+      // dispatch action if current search is same
+      addUser(report);
+    } else if (report.status === 200) {
+      // add user report to cache if search is changed
+      addUserCache(report);
+    }
   };
 
   render() {
     const { loading, user } = this.props;
-    return loading ? <ReportLoading /> : <div />;
+
+    return loading ? <ReportLoading /> : <Analytics user={user} />;
   }
 }
 
@@ -63,12 +67,6 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setLoading: data => {
-    dispatch({
-      type: 'setLoading',
-      data,
-    });
-  },
   addUser: data => {
     dispatch({
       type: 'addUser',
@@ -79,6 +77,11 @@ const mapDispatchToProps = dispatch => ({
     dispatch({
       type: 'addUserCache',
       data,
+    });
+  },
+  resetUser: () => {
+    dispatch({
+      type: 'resetUser',
     });
   },
 });

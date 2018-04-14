@@ -10,16 +10,18 @@ const report = (state = { loading: true, user: {}, cache: [] }, action) => {
         ...state,
         loading: false,
         user: action.data,
-      };
-    case 'resetUser':
-      return {
-        ...state,
-        user: {},
+        cache: [...state.cache.filter(cacheReport => cacheReport.login !== action.data.login), action.data],
       };
     case 'addUserCache':
       return {
         ...state,
-        cache: [...state.cache, action.data],
+        cache: [...state.cache.filter(cacheReport => cacheReport.login !== action.data.login), action.data],
+      };
+    case 'resetUser':
+      return {
+        ...state,
+        loading: true,
+        user: {},
       };
     default:
       return state;
