@@ -4,8 +4,11 @@
   position: absolute;
 }
 
-.user-bio {
+.user-header {
   margin-top: 50px;
+}
+
+.user-bio {
   display: flex;
 
   .user-pic {
@@ -30,6 +33,35 @@
       word-wrap: break-word;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+  }
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-evenly;
+  .info {
+    flex: 1;
+    max-width: 75px;
+    .row.value-icon-row {
+      display: flex;
+      max-width: 50px;
+      justify-content: center;
+      margin: 0 auto;
+
+      .value,
+      .info-icon {
+        flex: 1;
+      }
+
+      .info-icon {
+        font-size: 23px;
+      }
+    }
+
+    .name-row {
+      color: $primary-text-mid;
+      text-align: center;
     }
   }
 }
