@@ -3,8 +3,6 @@ import { withRouter, Link } from 'react-router-dom';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { TiArrowRight } from 'react-icons/lib/ti/';
 
-import Animate from './Animate';
-
 const NavBar = ({ match: { params: { username } } }) => {
   const logo = <div className="logo-text animated">GITFAME</div>;
   const menu = (
@@ -15,7 +13,7 @@ const NavBar = ({ match: { params: { username } } }) => {
     </ul>
   );
   const backBox = (
-    <Link as="div" to="/" className="logo-text animated">
+    <Link as="div" to="/" className="back-text animated">
       {username}
       <TiArrowRight className="back-icon" />
     </Link>
@@ -25,22 +23,9 @@ const NavBar = ({ match: { params: { username } } }) => {
     <Grid className="nav-bar">
       <Row>
         <Col xs={12} sm={12} className="box">
-          {username ? (
-            <React.Fragment>
-              <Animate name="fadeIn">
-                {/* here comes the search box */}
-                <div />
-                {backBox}
-              </Animate>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <Animate name="fadeIn">
-                {logo}
-                {menu}
-              </Animate>
-            </React.Fragment>
-          )}
+          {logo}
+          {username && backBox}
+          {!username && menu}
         </Col>
       </Row>
     </Grid>

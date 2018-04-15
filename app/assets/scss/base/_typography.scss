@@ -42,6 +42,32 @@ a {
   text-decoration: none;
   color: $primary-text-light;
   margin: 0;
+  display: inline-block;
+  width: fit-content;
+  &,
+  &:hover {
+    color: $primary-text-light;
+    transition: transform 0.4s ease-out;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 2px;
+    opacity: 1;
+    margin: 3px auto 0 auto;
+    background: linear-gradient(to right, $primary-light 0%, $primary-mid 50%, $primary-dark 100%);
+    transform-origin: center;
+    transform: scaleX(0);
+    transition: transform 0.4s ease-out;
+  }
+
+  &:hover:after {
+    transform: scaleX(1);
+    transition: transform 0.4s ease-out;
+  }
 }
 
 button {

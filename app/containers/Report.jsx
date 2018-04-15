@@ -7,6 +7,8 @@ import generateReport from '../actions/generateReport';
 import compareStringLower from '../utils/compareStringLower';
 import ReportLoading from '../components/ReportLoading';
 import Analytics from '../components/Analytics';
+import Animate from '../components/Animate';
+import RecCurveThree from '../assets/svg/RecCurveThree.svg';
 
 class Report extends React.Component {
   async componentDidMount() {
@@ -56,7 +58,7 @@ class Report extends React.Component {
   render() {
     const { loading, user } = this.props;
 
-    return loading ? <ReportLoading /> : <Analytics user={user} />;
+    return <React.Fragment>{loading ? <ReportLoading /> : <Analytics user={user} />}</React.Fragment>;
   }
 }
 

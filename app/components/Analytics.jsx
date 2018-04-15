@@ -9,7 +9,7 @@ const Analytics = ({ user }) => (
         <Col xs={12} sm={12} md={6} className="user-bio">
           <img src={user.avatar_url} alt={`Github user ${user.login} pic`} className="user-pic" />
           <div className="user-details">
-            <p className="user-name">{user.login}</p>
+            <h2 className="user-name">{user.login}</h2>
             <p className="bio">{user.bio}</p>
           </div>
         </Col>

@@ -3,7 +3,7 @@
   padding-bottom: 15px;
   height: 50px;
   background-color: transparent;
-  .box span {
+  .box {
     display: flex;
     position: absolute;
     width: 100%;
@@ -17,15 +17,16 @@
     color: $primary-text-light;
     z-index: 100;
     cursor: pointer;
+    border: 2px solid;
+    border-image: linear-gradient(to right, #e67207 30%, #ef4e7b 60%, #a166ab 100%) 1;
+    padding: 3px 15px;
+  }
+
+  .back-text {
+    font-size: 20px;
+    line-height: 30px;
     .back-icon {
       font-size: 30px;
-    }
-    &:hover {
-      color: $blue;
-    }
-
-    &.home {
-      animation-delay: 0.2s;
     }
   }
 
@@ -43,12 +44,6 @@
     .item {
       color: $primary-text-mid;
       margin: 0 10px;
-    }
-
-    a {
-      &:hover {
-        color: $blue;
-      }
     }
   }
 }
