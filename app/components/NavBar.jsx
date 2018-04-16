@@ -13,7 +13,7 @@ const NavBar = ({ match: { params: { username } } }) => {
     </ul>
   );
   const backBox = (
-    <Link as="div" to="/" className="back-text animated">
+    <Link as="div" to="/" className="back-text animated under">
       {username}
       <TiArrowRight className="back-icon" />
     </Link>

@@ -68,6 +68,12 @@ a {
     transform: scaleX(1);
     transition: transform 0.4s ease-out;
   }
+
+  &.under {
+    &:after {
+      transform: scaleX(1);
+    }
+  }
 }
 
 button {
