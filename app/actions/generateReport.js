@@ -160,11 +160,6 @@ const generateReport = data => {
     }
   });
 
-  if (data.own_repos >= data.public_repos - data.own_repos) {
-    const { datasets } = reposPerLanguage;
-    reposPerLanguage.datasets = [datasets[1], datasets[0]];
-  }
-
   return {
     ...data,
     commitsForked,
