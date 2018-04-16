@@ -6,7 +6,7 @@
   .box {
     display: flex;
     position: absolute;
-    width: 100%;
+    width: calc(100% - 30px);
     justify-content: space-between;
   }
 
