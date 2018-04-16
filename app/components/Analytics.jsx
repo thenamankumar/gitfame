@@ -1,6 +1,11 @@
 import React from 'react';
+import uuid from 'uuid/v1';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut, Radar } from 'react-chartjs-2';
+
+const legend = {
+  display: false,
+};
 
 const Analytics = ({ user }) => (
   <React.Fragment>
@@ -94,27 +99,60 @@ const Analytics = ({ user }) => (
           <Col xs={12} sm={12} md={6} className="card-wrap">
             <div className="card tag total">
               <Row>
-                <p className="under">Repos Commits Analysis</p>
+                <h4 className="under">Commits by Repository</h4>
               </Row>
               <Row className="center">
                 <Col xs={6} sm={6}>
-                  <Doughnut
-                    width={225}
-                    height={225}
-                    data={user.commitsPerRepo}
-                    legend={{
-                      display: false,
+                  <Doughnut width={225} height={225} data={user.commitsPerRepo} legend={legend} />
+                </Col>
+                <Col xs={6} sm={6}>
+                  <ul>
+                    {(user.commitsPerRepo.labels || []).map((label, index) => (
+                      <li key={uuid()} className="labels-list">
+                        <div className={`bullet color-${index + 1}`} />
+                        {label.split('/')[1] || (index === 10 && 'Others')}
+                      </li>
+                    ))}
+                  </ul>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+          <Col xs={12} sm={12} md={6} className="card-wrap">
+            <div className="card tag total">
+              <Row>
+                <h4 className="under">Repositories by Language</h4>
+              </Row>
+              <Row className="center">
+                <Col xs={6} sm={6}>
+                  <Radar
+                    width={300}
+                    height={300}
+                    data={user.reposPerLanguage}
+                    legend={legend}
+                    options={{
+                      scale: {
+                        gridLines: { color: 'white' },
+                        angleLines: { color: 'white' },
+                        pointLabels: {
+                          fontSize: 12,
+                          fontColor: 'white',
+                          fontFamily: "'Arimo', sans-serif",
+                        },
+                      },
                     }}
                   />
                 </Col>
                 <Col xs={6} sm={6}>
                   <ul>
-                    {user.commitsPerRepo.labels.map((label, index) => (
-                      <li className="labels-list">
-                        <div className={`bullet color-${index + 1}`} />
-                        {label.split('/')[1] || (index === 10 && 'Others')}
-                      </li>
-                    ))}
+                    <li className="labels-list">
+                      <div className="bullet color-owned" />
+                      Owned
+                    </li>
+                    <li className="labels-list">
+                      <div className="bullet color-forked" />
+                      Forked
+                    </li>
                   </ul>
                 </Col>
               </Row>
