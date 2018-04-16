@@ -25,6 +25,16 @@ const generateReport = data => {
       },
     ],
   };
+  const starsPerRepo = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        backgroundColor: colors,
+        hoverBackgroundColor: colors,
+      },
+    ],
+  };
   const languageStat = [];
   const reposPerLanguage = {
     labels: [],
@@ -64,7 +74,7 @@ const generateReport = data => {
     return -1;
   });
 
-  (data.repos || []).forEach((repo, index) => {
+  (data.repos || []).forEach(repo => {
     // total commits owned / forked
     if (repo.isFork) {
       commitsForked += repo.user_commits;
@@ -72,15 +82,17 @@ const generateReport = data => {
       commitsOwned += repo.user_commits;
     }
 
-    // commits per repo
-    if (index < 10) {
-      commitsPerRepo.labels.push(repo.full_name);
-      commitsPerRepo.datasets[0].data.push(repo.user_commits);
-    } else if (index === 10) {
-      commitsPerRepo.labels[10] = 'Others';
-      commitsPerRepo.datasets[0].data[10] = repo.user_commits;
-    } else {
-      commitsPerRepo.datasets[0].data[10] += repo.user_commits;
+    if (repo.user_commits) {
+      const cprLength = commitsPerRepo.labels.length;
+      if (cprLength < 10) {
+        commitsPerRepo.labels.push(repo.full_name);
+        commitsPerRepo.datasets[0].data.push(repo.user_commits);
+      } else if (cprLength === 10) {
+        commitsPerRepo.labels[10] = 'Others';
+        commitsPerRepo.datasets[0].data[10] = repo.user_commits;
+      } else {
+        commitsPerRepo.datasets[0].data[10] += repo.user_commits;
+      }
     }
 
     (repo.languages.nodes || []).forEach(lang => {
@@ -106,7 +118,29 @@ const generateReport = data => {
         });
       }
     });
-    // repo per language
+  });
+
+  // sort repos in desc stars
+  (data.repos || []).sort((l, r) => {
+    if (l.stars < r.stars) {
+      return 1;
+    }
+    return -1;
+  });
+
+  (data.repos || []).forEach(repo => {
+    if (repo.stars) {
+      const sprLength = starsPerRepo.labels.length;
+      if (sprLength < 10) {
+        starsPerRepo.labels.push(repo.full_name);
+        starsPerRepo.datasets[0].data.push(repo.stars);
+      } else if (sprLength === 10) {
+        starsPerRepo.labels[10] = 'Others';
+        starsPerRepo.datasets[0].data[10] = repo.stars;
+      } else {
+        starsPerRepo.datasets[0].data[10] += repo.stars;
+      }
+    }
   });
 
   (languageStat || []).sort((l, r) => {
@@ -134,6 +168,7 @@ const generateReport = data => {
     commitsForked,
     commitsOwned,
     commitsPerRepo,
+    starsPerRepo,
     languageStat,
     reposPerLanguage,
   };

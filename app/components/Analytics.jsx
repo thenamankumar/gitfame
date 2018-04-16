@@ -102,10 +102,10 @@ const Analytics = ({ user }) => (
                 <h4 className="under">Commits by Repository</h4>
               </Row>
               <Row className="center">
-                <Col xs={6} sm={6}>
+                <Col xs={7} sm={7}>
                   <Doughnut
-                    width={225}
-                    height={225}
+                    width={250}
+                    height={250}
                     data={user.commitsPerRepo}
                     legend={legend}
                     options={{
@@ -113,10 +113,40 @@ const Analytics = ({ user }) => (
                     }}
                   />
                 </Col>
-                <Col xs={6} sm={6}>
-                  <ul>
+                <Col xs={5} sm={5}>
+                  <ul className="labels-list">
                     {(user.commitsPerRepo.labels || []).map((label, index) => (
-                      <li key={uuid()} className="labels-list">
+                      <li key={uuid()} className="labels-list-item">
+                        <div className={`bullet color-${index + 1}`} />
+                        {label.split('/')[1] || (index === 10 && 'Others')}
+                      </li>
+                    ))}
+                  </ul>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+          <Col xs={12} sm={12} md={6} className="card-wrap">
+            <div className="card tag total">
+              <Row>
+                <h4 className="under">Stars by Repository</h4>
+              </Row>
+              <Row className="center">
+                <Col xs={7} sm={7}>
+                  <Doughnut
+                    width={250}
+                    height={250}
+                    data={user.starsPerRepo}
+                    legend={legend}
+                    options={{
+                      maintainAspectRatio: false,
+                    }}
+                  />
+                </Col>
+                <Col xs={5} sm={5}>
+                  <ul className="labels-list">
+                    {(user.starsPerRepo.labels || []).map((label, index) => (
+                      <li key={uuid()} className="labels-list-item">
                         <div className={`bullet color-${index + 1}`} />
                         {label.split('/')[1] || (index === 10 && 'Others')}
                       </li>
@@ -132,7 +162,7 @@ const Analytics = ({ user }) => (
                 <h4 className="under">Repositories by Language</h4>
               </Row>
               <Row className="center">
-                <Col xs={8} sm={8}>
+                <Col xs={7} sm={7}>
                   <Radar
                     width={250}
                     height={250}
@@ -152,13 +182,13 @@ const Analytics = ({ user }) => (
                     }}
                   />
                 </Col>
-                <Col xs={4} sm={4}>
-                  <ul>
-                    <li className="labels-list">
+                <Col xs={5} sm={5}>
+                  <ul className="labels-list">
+                    <li className="labels-list-item">
                       <div className="bullet color-owned" />
                       Owned
                     </li>
-                    <li className="labels-list">
+                    <li className="labels-list-item">
                       <div className="bullet color-forked" />
                       Forked
                     </li>
