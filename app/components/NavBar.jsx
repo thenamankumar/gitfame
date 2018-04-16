@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { TiArrowRight } from 'react-icons/lib/ti/';
+import Animate from './Animate';
 
 const NavBar = ({ match: { params: { username } } }) => {
   const logo = <div className="logo-text animated">GITFAME</div>;
@@ -21,7 +22,7 @@ const NavBar = ({ match: { params: { username } } }) => {
 
   return (
     <Grid className="nav-bar">
-      <Row>
+      <Row className="animated">
         <Col xs={12} sm={12} className="box">
           {logo}
           {username && backBox}
