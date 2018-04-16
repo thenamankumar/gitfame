@@ -33,7 +33,7 @@ const generateReport = data => {
         // owned repos
         data: [],
         label: 'Owned',
-        backgroundColor: 'rgba(248, 229, 79, 0.4)',
+        backgroundColor: 'rgba(248, 229, 79, 0.15)',
         borderWidth: 2,
         borderColor: 'rgba(248, 229, 79, 1)',
         pointBackgroundColor: 'rgba(248, 229, 79, 1)',
@@ -123,6 +123,11 @@ const generateReport = data => {
       reposPerLanguage.datasets[1].data.push(lang.forkedRepos);
     }
   });
+
+  if (data.own_repos >= data.public_repos - data.own_repos) {
+    const { datasets } = reposPerLanguage;
+    reposPerLanguage.datasets = [datasets[1], datasets[0]];
+  }
 
   return {
     ...data,

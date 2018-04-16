@@ -103,7 +103,15 @@ const Analytics = ({ user }) => (
               </Row>
               <Row className="center">
                 <Col xs={6} sm={6}>
-                  <Doughnut width={225} height={225} data={user.commitsPerRepo} legend={legend} />
+                  <Doughnut
+                    width={225}
+                    height={225}
+                    data={user.commitsPerRepo}
+                    legend={legend}
+                    options={{
+                      maintainAspectRatio: false,
+                    }}
+                  />
                 </Col>
                 <Col xs={6} sm={6}>
                   <ul>
@@ -124,10 +132,10 @@ const Analytics = ({ user }) => (
                 <h4 className="under">Repositories by Language</h4>
               </Row>
               <Row className="center">
-                <Col xs={6} sm={6}>
+                <Col xs={8} sm={8}>
                   <Radar
-                    width={300}
-                    height={300}
+                    width={250}
+                    height={250}
                     data={user.reposPerLanguage}
                     legend={legend}
                     options={{
@@ -140,10 +148,11 @@ const Analytics = ({ user }) => (
                           fontFamily: "'Arimo', sans-serif",
                         },
                       },
+                      maintainAspectRatio: false,
                     }}
                   />
                 </Col>
-                <Col xs={6} sm={6}>
+                <Col xs={4} sm={4}>
                   <ul>
                     <li className="labels-list">
                       <div className="bullet color-owned" />
