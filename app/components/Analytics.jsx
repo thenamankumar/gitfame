@@ -1,11 +1,57 @@
 import React from 'react';
 import uuid from 'uuid/v1';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { Doughnut, Radar } from 'react-chartjs-2';
+import { Doughnut, Bar, Radar } from 'react-chartjs-2';
 import Animate from './Animate';
 
 const legend = {
   display: false,
+};
+
+const barGraphOptions = {
+  scales: {
+    xAxes: [
+      {
+        gridLines: {
+          display: false,
+          color: 'white',
+        },
+        scaleLabel: {
+          display: false,
+          labelString: 'Repositories',
+          fontSize: 14,
+          fontColor: '#7887a7',
+          fontFamily: "'Arimo', sans-serif",
+        },
+        ticks: {
+          fontFamily: "'Arimo', sans-serif",
+          fontColor: 'white',
+          fontSize: 12,
+        },
+      },
+    ],
+    yAxes: [
+      {
+        gridLines: {
+          display: false,
+          color: 'white',
+        },
+        scaleLabel: {
+          display: false,
+          labelString: 'Count',
+          fontSize: 14,
+          fontColor: '#7887a7',
+          fontFamily: "'Arimo', sans-serif",
+        },
+        ticks: {
+          fontFamily: "'Arimo', sans-serif",
+          fontColor: 'white',
+          fontSize: 12,
+        },
+      },
+    ],
+  },
+  maintainAspectRatio: false,
 };
 
 const Analytics = ({ user }) => (
@@ -131,29 +177,25 @@ const Analytics = ({ user }) => (
             <Col xs={12} sm={12} md={6} className="card-wrap">
               <div className="card tag total">
                 <Row>
-                  <h4 className="under">Stars by Repository</h4>
+                  <h4 className="under">Popular Repositories</h4>
+                </Row>
+                <Row>
+                  <Col xs={4} sm={4} className="text-center">
+                    <div className="bullet color-1" />
+                    Stars
+                  </Col>
+                  <Col xs={4} sm={4} className="text-center">
+                    <div className="bullet color-2" />
+                    Forks
+                  </Col>
+                  <Col xs={4} sm={4} className="text-center">
+                    <div className="bullet color-3" />
+                    Watchers
+                  </Col>
                 </Row>
                 <Row className="center">
-                  <Col xs={7} sm={7}>
-                    <Doughnut
-                      width={250}
-                      height={250}
-                      data={user.starsPerRepo}
-                      legend={legend}
-                      options={{
-                        maintainAspectRatio: false,
-                      }}
-                    />
-                  </Col>
-                  <Col xs={5} sm={5}>
-                    <ul className="labels-list">
-                      {(user.starsPerRepo.labels || []).map((label, index) => (
-                        <li key={uuid()} className="labels-list-item">
-                          <div className={`bullet color-${index + 1}`} />
-                          {label.split('/')[1] || (index === 10 && 'Others')}
-                        </li>
-                      ))}
-                    </ul>
+                  <Col xs={12} sm={12}>
+                    <Bar width={250} height={250} data={user.popularRepos} legend={legend} options={barGraphOptions} />
                   </Col>
                 </Row>
               </div>
@@ -163,12 +205,12 @@ const Analytics = ({ user }) => (
         <section>
           <h3 className="section-head under">
             I work on{' '}
-            <spam
+            <span
               style={{
                 color: user.topLanguage.color,
               }}>
               {user.topLanguage.name}
-            </spam>{' '}
+            </span>{' '}
             the most
           </h3>
           <Row className="content">

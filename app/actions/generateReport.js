@@ -25,13 +25,35 @@ const generateReport = data => {
       },
     ],
   };
-  const starsPerRepo = {
+  const popularRepos = {
     labels: [],
     datasets: [
       {
         data: [],
-        backgroundColor: colors,
-        hoverBackgroundColor: colors,
+        label: 'Stars',
+        backgroundColor: colors[0],
+        borderColor: 'white',
+        borderWidth: 2,
+        hoverBackgroundColor: colors[0],
+        hoverBorderColor: 'white',
+      },
+      {
+        data: [],
+        label: 'Forks',
+        backgroundColor: colors[1],
+        borderColor: 'white',
+        borderWidth: 2,
+        hoverBackgroundColor: colors[1],
+        hoverBorderColor: 'white',
+      },
+      {
+        data: [],
+        label: 'Watchers',
+        backgroundColor: colors[2],
+        borderColor: 'white',
+        borderWidth: 2,
+        hoverBackgroundColor: colors[2],
+        hoverBorderColor: 'white',
       },
     ],
   };
@@ -120,25 +142,24 @@ const generateReport = data => {
     });
   });
 
-  // sort repos in desc stars
+  // sort repos in desc stars + forks + watches
   (data.repos || []).sort((l, r) => {
-    if (l.stars < r.stars) {
+    if (l.stars + l.forks + l.watchers < r.stars + r.forks + r.watchers) {
       return 1;
     }
     return -1;
   });
 
   (data.repos || []).forEach(repo => {
-    if (repo.stars) {
-      const sprLength = starsPerRepo.labels.length;
-      if (sprLength < 10) {
-        starsPerRepo.labels.push(repo.full_name);
-        starsPerRepo.datasets[0].data.push(repo.stars);
-      } else if (sprLength === 10) {
-        starsPerRepo.labels[10] = 'Others';
-        starsPerRepo.datasets[0].data[10] = repo.stars;
-      } else {
-        starsPerRepo.datasets[0].data[10] += repo.stars;
+    const score = repo.stars + repo.forks + repo.watchers;
+
+    if (score) {
+      const popularLength = popularRepos.labels.length;
+      if (popularLength <= 3) {
+        popularRepos.labels.push(repo.full_name.split('/')[1].substr(0, 15));
+        popularRepos.datasets[0].data.push(repo.stars);
+        popularRepos.datasets[1].data.push(repo.forks);
+        popularRepos.datasets[2].data.push(repo.watchers);
       }
     }
   });
@@ -165,7 +186,7 @@ const generateReport = data => {
     commitsForked,
     commitsOwned,
     commitsPerRepo,
-    starsPerRepo,
+    popularRepos,
     languageStat,
     topLanguage,
     reposPerLanguage,
