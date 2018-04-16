@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { TiArrowRight } from 'react-icons/lib/ti/';
-import Animate from './Animate';
 
 const NavBar = ({ match: { params: { username } } }) => {
   const logo = <div className="logo-text animated">GITFAME</div>;
