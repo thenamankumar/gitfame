@@ -156,6 +156,20 @@ const Analytics = ({ user }) => (
               </Row>
             </div>
           </Col>
+        </Row>
+      </section>
+      <section>
+        <h3 className="section-head under">
+          I work on{' '}
+          <spam
+            style={{
+              color: user.topLanguage.color,
+            }}>
+            {user.topLanguage.name}
+          </spam>{' '}
+          the most
+        </h3>
+        <Row className="content">
           <Col xs={12} sm={12} md={6} className="card-wrap">
             <div className="card tag total">
               <Row>

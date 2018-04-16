@@ -150,6 +150,8 @@ const generateReport = data => {
     return -1;
   });
 
+  const topLanguage = languageStat[0];
+
   (languageStat || []).forEach((lang, index) => {
     if (index < 10) {
       reposPerLanguage.labels.push(lang.name);
@@ -170,6 +172,7 @@ const generateReport = data => {
     commitsPerRepo,
     starsPerRepo,
     languageStat,
+    topLanguage,
     reposPerLanguage,
   };
 };
