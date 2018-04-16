@@ -22,7 +22,7 @@ h2 {
 }
 
 h3 {
-  font-size: 16px;
+  font-size: 24px;
   font-weight: 400;
   line-height: 30px;
   margin: 0;
@@ -100,4 +100,25 @@ input {
 
 .text-center {
   text-align: center;
+}
+
+.mid-text {
+  color: $primary-text-mid;
+}
+
+.under {
+  width: fit-content;
+  display: inline-block;
+  &:after {
+    content: '';
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 2px;
+    opacity: 1;
+    margin: 3px auto 0 auto;
+    background: linear-gradient(to right, $primary-light 0%, $primary-mid 50%, $primary-dark 100%);
+    transform-origin: center;
+    transition: transform 0.4s ease-out;
+  }
 }

@@ -4,8 +4,8 @@
   position: absolute;
 }
 
-.user-header {
-  margin-top: 50px;
+.section-head {
+  margin-bottom: 20px;
 }
 
 .user-bio {
@@ -39,8 +39,6 @@
     flex: 4;
     max-width: 80%;
     padding: 0 10px;
-    .user-name {
-    }
 
     .bio {
       color: $primary-text-mid;
@@ -49,25 +47,5 @@
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-  }
-}
-
-.user-info {
-  display: flex;
-  justify-content: start;
-
-  .info {
-    flex: 1;
-    min-width: 100px;
-    max-width: 100px;
-    text-align: center;
-
-    .name {
-      color: $primary-text-mid;
-    }
-  }
-
-  @media (max-width: 767px) {
-    margin-top: 20px;
   }
 }

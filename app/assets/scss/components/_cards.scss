@@ -1,0 +1,22 @@
+.card-wrap {
+  padding: 10px;
+
+  .card {
+    border-radius: 10px;
+    background-color: $secondary-mid;
+    padding: 20px 10px;
+
+    .row {
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .value {
+      text-align: center;
+
+      .name {
+        color: $primary-text-dark;
+      }
+    }
+  }
+}
