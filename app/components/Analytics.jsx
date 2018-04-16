@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
+import { Doughnut } from 'react-chartjs-2';
 
 const Analytics = ({ user }) => (
   <React.Fragment>
@@ -27,10 +28,10 @@ const Analytics = ({ user }) => (
           <span className="forked-repo-count">{user.public_repos - user.own_repos} </span>
           repositories
         </h3>
-        <Row xs={12} sm={12} className="content">
+        <Row className="content">
           <Col xs={12} sm={12} md={2} className="card-wrap">
             <div className="card tag total">
-              <Row>
+              <Row className="center slim">
                 <Col className="value">
                   <h2>{user.commits}</h2>
                   <p className="name">Commits</p>
@@ -39,8 +40,28 @@ const Analytics = ({ user }) => (
             </div>
           </Col>
           <Col xs={12} sm={12} md={2} className="card-wrap">
+            <div className="card tag forked">
+              <Row className="center slim">
+                <Col className="value">
+                  <h2>{user.commitsForked}</h2>
+                  <p className="name">Commits</p>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+          <Col xs={12} sm={12} md={2} className="card-wrap">
             <div className="card tag owned">
-              <Row>
+              <Row className="center slim">
+                <Col className="value">
+                  <h2>{user.commitsOwned}</h2>
+                  <p className="name">Commits</p>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+          <Col xs={12} sm={12} md={2} className="card-wrap">
+            <div className="card tag owned">
+              <Row className="center slim">
                 <Col className="value">
                   <h2>{user.stars}</h2>
                   <p className="name">Stars</p>
@@ -50,7 +71,7 @@ const Analytics = ({ user }) => (
           </Col>
           <Col xs={12} sm={12} md={2} className="card-wrap">
             <div className="card tag owned">
-              <Row>
+              <Row className="center slim">
                 <Col className="value">
                   <h2>{user.forks}</h2>
                   <p className="name">Forks</p>
@@ -60,7 +81,7 @@ const Analytics = ({ user }) => (
           </Col>
           <Col xs={12} sm={12} md={2} className="card-wrap">
             <div className="card tag owned">
-              <Row>
+              <Row className="center slim">
                 <Col className="value">
                   <h2>{user.watchers}</h2>
                   <p className="name">Watchers</p>
@@ -69,10 +90,34 @@ const Analytics = ({ user }) => (
             </div>
           </Col>
         </Row>
-        <Row xs={12} sm={12} className="content">
-          <Col xs={12} sm={12} md={3} className="card-wrap">
-            <div className="card">
-              <Row />
+        <Row className="content">
+          <Col xs={12} sm={12} md={6} className="card-wrap">
+            <div className="card tag total">
+              <Row>
+                <p className="under">Repos Commits Analysis</p>
+              </Row>
+              <Row className="center">
+                <Col xs={6} sm={6}>
+                  <Doughnut
+                    width={225}
+                    height={225}
+                    data={user.commitsPerRepo}
+                    legend={{
+                      display: false,
+                    }}
+                  />
+                </Col>
+                <Col xs={6} sm={6}>
+                  <ul>
+                    {user.commitsPerRepo.labels.map((label, index) => (
+                      <li className="labels-list">
+                        <div className={`bullet color-${index + 1}`} />
+                        {label.split('/')[1] || (index === 10 && 'Others')}
+                      </li>
+                    ))}
+                  </ul>
+                </Col>
+              </Row>
             </div>
           </Col>
         </Row>

@@ -81,3 +81,63 @@
     }
   }
 }
+
+.labels-list {
+  overflow: hidden;
+  word-wrap: break-word;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bullet {
+  width: 15px;
+  height: 15px;
+  border: 2px solid white;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: inline-block;
+
+  &.color-1 {
+    background-color: #ff443d;
+  }
+
+  &.color-2 {
+    background-color: #ef4e7b;
+  }
+
+  &.color-3 {
+    background-color: #9240bb;
+  }
+
+  &.color-4 {
+    background-color: #4f72b7;
+  }
+
+  &.color-5 {
+    background-color: #0b97ac;
+  }
+
+  &.color-6 {
+    background-color: #22c4de;
+  }
+
+  &.color-7 {
+    background-color: #00b199;
+  }
+
+  &.color-8 {
+    background-color: #6db981;
+  }
+
+  &.color-9 {
+    background-color: #f26f54;
+  }
+
+  &.color-10 {
+    background-color: #f69332;
+  }
+
+  &.color-11 {
+    background-color: #f8e54f;
+  }
+}
