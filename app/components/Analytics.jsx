@@ -22,28 +22,57 @@ const Analytics = ({ user }) => (
         </Row>
       </section>
       <section>
-        <h3 className="section-head under">I own {user.own_repos} repositories</h3>
+        <h3 className="section-head under">
+          I own <span className="own-repo-count">{user.own_repos}</span> and forked{' '}
+          <span className="forked-repo-count">{user.public_repos - user.own_repos} </span>
+          repositories
+        </h3>
         <Row xs={12} sm={12} className="content">
           <Col xs={12} sm={12} md={2} className="card-wrap">
-            <div className="card">
+            <div className="card tag total">
               <Row>
                 <Col className="value">
-                  <h3>{user.commits}</h3>
+                  <h2>{user.commits}</h2>
                   <p className="name">Commits</p>
                 </Col>
               </Row>
+            </div>
+          </Col>
+          <Col xs={12} sm={12} md={2} className="card-wrap">
+            <div className="card tag owned">
               <Row>
                 <Col className="value">
-                  <h3>{user.stars}</h3>
+                  <h2>{user.stars}</h2>
                   <p className="name">Stars</p>
                 </Col>
               </Row>
+            </div>
+          </Col>
+          <Col xs={12} sm={12} md={2} className="card-wrap">
+            <div className="card tag owned">
               <Row>
                 <Col className="value">
-                  <h3>{user.forks}</h3>
+                  <h2>{user.forks}</h2>
                   <p className="name">Forks</p>
                 </Col>
               </Row>
+            </div>
+          </Col>
+          <Col xs={12} sm={12} md={2} className="card-wrap">
+            <div className="card tag owned">
+              <Row>
+                <Col className="value">
+                  <h2>{user.watchers}</h2>
+                  <p className="name">Watchers</p>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+        </Row>
+        <Row xs={12} sm={12} className="content">
+          <Col xs={12} sm={12} md={3} className="card-wrap">
+            <div className="card">
+              <Row />
             </div>
           </Col>
         </Row>

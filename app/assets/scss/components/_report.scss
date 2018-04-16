@@ -8,6 +8,38 @@
   margin-bottom: 20px;
 }
 
+.own-repo-count {
+  color: $yellow;
+}
+
+.forked-repo-count {
+  color: $violet;
+}
+
+.tag {
+  &:after {
+    position: absolute;
+    top: 15px;
+    right: -3px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: $secondary-dark;
+  }
+  &.owned:after {
+    content: 'Owned';
+    background: $yellow;
+  }
+  &.total:after {
+    content: 'Total';
+    background: $blue;
+  }
+  &.forked:after {
+    content: 'Forked';
+    background: $violet;
+  }
+}
+
 .user-bio {
   display: flex;
 
