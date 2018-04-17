@@ -153,7 +153,7 @@ const generateReport = data => {
   (data.repos || []).forEach(repo => {
     const score = repo.stars + repo.forks + repo.watchers;
 
-    if (score) {
+    if (score && !repo.isFork) {
       const popularLength = popularRepos.labels.length;
       if (popularLength <= 3) {
         popularRepos.labels.push(repo.full_name.split('/')[1].substr(0, 15));
