@@ -2,7 +2,6 @@ import React from 'react';
 import uuid from 'uuid/v1';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Doughnut, Bar, Radar } from 'react-chartjs-2';
-import { TwitterShareButton } from 'react-share';
 import Animate from './Animate';
 
 const legend = {
