@@ -59,6 +59,15 @@
   }
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -100vw 0;
+  }
+  100% {
+    background-position: 100vw 0;
+  }
+}
+
 @keyframes bounce {
   from,
   20%,
@@ -1331,6 +1340,39 @@
 .fadeIn {
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeInOut {
+  0% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0.25;
+  }
+}
+
+.fadeInOut {
+  -webkit-animation-name: fadeInOut;
+  animation-name: fadeInOut;
 }
 
 @-webkit-keyframes fadeInDown {
