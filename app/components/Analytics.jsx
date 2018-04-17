@@ -11,7 +11,7 @@ const legend = {
 
 const ifValid = (condition, result, error) => (condition ? result : error);
 
-const findColor = (languages, search = '') => languages.find(({ name }) => name === search).color;
+const findColor = (languages, search = '') => (languages.find(({ name }) => name === search) || {}).color || '#ef4e7b';
 
 const popularLang = (data, labels, languages) => {
   const mostIndex = data.reduce((most, now, index) => {
