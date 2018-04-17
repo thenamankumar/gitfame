@@ -29,7 +29,7 @@ h3 {
 }
 
 h4 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 30px;
   margin: 0;
@@ -145,4 +145,8 @@ input {
     transform-origin: center;
     transition: transform 0.4s ease-out;
   }
+}
+
+.text-right {
+  text-align: right;
 }

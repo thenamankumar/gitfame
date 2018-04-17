@@ -33,6 +33,7 @@
     "react-icons": "^2.2.7",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
+    "react-share": "^2.1.1",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "uuid": "^3.2.1"

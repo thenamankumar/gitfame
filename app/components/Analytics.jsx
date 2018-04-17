@@ -2,6 +2,7 @@ import React from 'react';
 import uuid from 'uuid/v1';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Doughnut, Bar, Radar } from 'react-chartjs-2';
+import { TwitterShareButton } from 'react-share';
 import Animate from './Animate';
 
 const legend = {
@@ -145,14 +146,25 @@ const Analytics = ({ user }) => (
                 <p className="bio">{user.bio}</p>
               </div>
             </Col>
+            <Col xs={12} sm={12} md={6}>
+              <Row className="right">
+                <Col xs={2} sm={2} className="text-center">
+                  <h2>{user.followers}</h2>
+                  <p className="name mid-text">Followers</p>
+                </Col>
+                <Col xs={2} sm={2} className="text-center">
+                  <h2>{user.following}</h2>
+                  <p className="name mid-text">Following</p>
+                </Col>
+                <Col xs={2} sm={2} className="text-center">
+                  <h2>{user.public_repos}</h2>
+                  <p className="name mid-text">Repos</p>
+                </Col>
+              </Row>
+            </Col>
           </Row>
         </section>
-        <section>
-          <h3 className="section-head under">
-            I own <span className="own-repo-count">{user.own_repos}</span> and forked{' '}
-            <span className="forked-repo-count">{user.public_repos - user.own_repos} </span>
-            repositories
-          </h3>
+        <section className="slim">
           <Row className="content">
             <Col xs={12} sm={12} md={2} className="card-wrap">
               <div className="card tag total">
@@ -215,6 +227,13 @@ const Analytics = ({ user }) => (
               </div>
             </Col>
           </Row>
+        </section>
+        <section>
+          <h3 className="section-head under">
+            I own <span className="own-repo-count">{user.own_repos}</span> and forked{' '}
+            <span className="forked-repo-count">{user.public_repos - user.own_repos} </span>
+            repositories
+          </h3>
           <Row className="content">
             <Col xs={12} sm={12} md={6} className="card-wrap">
               <div className="card tag total">
