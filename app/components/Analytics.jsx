@@ -349,7 +349,7 @@ const Analytics = ({ user }) => (
                 {ifValid(
                   user.reposPerLanguageByType.labels.length,
                   [
-                    <Row className="center">
+                    <Row key={uuid()} className="center">
                       <Col xs={7} sm={7}>
                         <Radar
                           width={250}
@@ -383,7 +383,7 @@ const Analytics = ({ user }) => (
                         </ul>
                       </Col>
                     </Row>,
-                    <Row className="center slim">
+                    <Row key={uuid()} className="center slim">
                       <p className="text-center mid-text">
                         {popularLang(
                           user.reposPerLanguageByType.datasets[0].data,
@@ -417,7 +417,7 @@ const Analytics = ({ user }) => (
                 {ifValid(
                   user.reposPerLanguageTotal.labels.length,
                   [
-                    <Row className="center">
+                    <Row key={uuid()} className="center">
                       <Col xs={7} sm={7}>
                         <Doughnut
                           width={250}
@@ -440,7 +440,7 @@ const Analytics = ({ user }) => (
                         </ul>
                       </Col>
                     </Row>,
-                    <Row className="slim center">
+                    <Row key={uuid()} className="slim center">
                       <p className="text-center mid-text">
                         <span
                           style={{
@@ -484,7 +484,7 @@ const Analytics = ({ user }) => (
                 {ifValid(
                   user.starsPerLanguageOwned.labels.length,
                   [
-                    <Row className="center">
+                    <Row key={uuid()} className="center">
                       <Col xs={7} sm={7}>
                         <Doughnut
                           width={250}
@@ -507,7 +507,7 @@ const Analytics = ({ user }) => (
                         </ul>
                       </Col>
                     </Row>,
-                    <Row className="slim center">
+                    <Row key={uuid()} className="slim center">
                       <p className="text-center mid-text">
                         Owned repos with language{' '}
                         <span
@@ -537,7 +537,7 @@ const Analytics = ({ user }) => (
                 {ifValid(
                   user.reposPerLanguageOwnedTotalMain.labels.length,
                   [
-                    <Row>
+                    <Row key={uuid()}>
                       <Col xs={6} sm={6} className="text-center">
                         <div className="bullet color-1" />
                         Sub Language
@@ -547,7 +547,7 @@ const Analytics = ({ user }) => (
                         Main Language
                       </Col>
                     </Row>,
-                    <Row className="center">
+                    <Row key={uuid()} className="center">
                       <Col xs={12} sm={12}>
                         <Bar
                           data={user.reposPerLanguageOwnedTotalMain}
@@ -556,7 +556,7 @@ const Analytics = ({ user }) => (
                         />
                       </Col>
                     </Row>,
-                    <Row className="center slim">
+                    <Row key={uuid()} className="center slim">
                       <p className="text-center mid-text">
                         {popularLang(
                           user.reposPerLanguageOwnedTotalMain.datasets[1].data,

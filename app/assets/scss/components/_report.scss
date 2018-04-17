@@ -80,6 +80,19 @@
       text-overflow: ellipsis;
     }
   }
+
+  @media (max-width: 575px) {
+    display: block;
+    text-align: center;
+
+    .user-pic-box {
+      margin: 0 auto 20px auto;
+    }
+
+    .user-details {
+      margin: 0 auto 20px auto;
+    }
+  }
 }
 
 .labels-list-wrap {
