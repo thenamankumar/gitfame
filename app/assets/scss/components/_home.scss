@@ -78,6 +78,21 @@
       &:hover {
         box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.49);
       }
+
+      @media (max-width: 575px) {
+        display: block;
+        background: none;
+        text-align: center;
+        .search-input {
+          display: block;
+          border-radius: 100px;
+          max-width: calc(100% - 4px);
+          width: calc(100% - 4px);
+        }
+        button {
+          margin: 20px auto;
+        }
+      }
     }
   }
 }
