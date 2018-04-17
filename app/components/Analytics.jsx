@@ -1,5 +1,6 @@
 import React from 'react';
 import uuid from 'uuid/v1';
+import { Helmet } from 'react-helmet';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Doughnut, Bar, Radar } from 'react-chartjs-2';
 import Animate from './Animate';
@@ -130,6 +131,15 @@ const barGraphOptionsStacked = {
 
 const Analytics = ({ user }) => (
   <React.Fragment>
+    <Helmet>
+      <title>{user.login} Github Contribution Analysis | GitFame</title>
+      <meta
+        name="description"
+        content={`${user.login} Github contribution analysis performed using Gitfame. ${user.bio}`}
+      />
+      <meta property="og:title" content={`${user.login} Github Contribution Analysis | GitFame`} />
+      <meta property="og:url" content={window.location.origin + window.location.pathname} />
+    </Helmet>
     <Animate name="fadeIn" timeout={1500}>
       <Grid className="animated slow">
         <section>
