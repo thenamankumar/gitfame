@@ -7,6 +7,7 @@ import generateReport from '../actions/generateReport';
 import compareStringLower from '../utils/compareStringLower';
 import ReportLoading from '../components/ReportLoading';
 import Analytics from '../components/Analytics';
+import ErrorPage from '../components/ErrorPage';
 
 class Report extends React.Component {
   async componentDidMount() {
@@ -56,7 +57,8 @@ class Report extends React.Component {
   render() {
     const { loading, user } = this.props;
 
-    return <React.Fragment>{loading ? <ReportLoading /> : <Analytics user={user} />}</React.Fragment>;
+    const ReportWrap = user.status === 200 ? <Analytics user={user} /> : <ErrorPage data={user} />;
+    return <React.Fragment>{loading ? <ReportLoading /> : ReportWrap}</React.Fragment>;
   }
 }
 

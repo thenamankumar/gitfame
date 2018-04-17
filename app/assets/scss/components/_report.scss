@@ -105,6 +105,14 @@
   }
 }
 
+.error-section {
+  margin-top: calc(50vh - 150px);
+  .error-icon {
+    font-size: 65px;
+    margin-bottom: 20px;
+  }
+}
+
 .bullet {
   width: 15px;
   height: 15px;

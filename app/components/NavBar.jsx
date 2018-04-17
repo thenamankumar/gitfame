@@ -24,7 +24,7 @@ const NavBar = ({ match: { params: { username } } }) => {
       <Row className="animated">
         <Col xs={12} sm={12} className="box">
           {logo}
-          <div className="githun-share">
+          <div className="github-star">
             <a
               className="github-button"
               href="https://github.com/hereisnaman/gitfame"
