@@ -13,6 +13,10 @@ const colors = [
 ];
 
 const generateReport = data => {
+  if (data.status !== 200) {
+    return data;
+  }
+
   let commitsForked = 0;
   let commitsOwned = 0;
   const commitsPerRepo = {

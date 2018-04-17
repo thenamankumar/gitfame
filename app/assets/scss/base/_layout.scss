@@ -41,6 +41,9 @@ body {
 
 .row {
   margin: 0;
+  &.center {
+    justify-content: center;
+  }
   &.right {
     justify-content: right;
   }
