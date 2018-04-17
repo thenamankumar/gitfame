@@ -82,13 +82,18 @@
   }
 }
 
-.labels-list {
-  padding-inline-start: 20px;
-  .labels-list-item {
-    overflow: hidden;
-    word-wrap: break-word;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.labels-list-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .labels-list {
+    padding-inline-start: 20px;
+    .labels-list-item {
+      overflow: hidden;
+      word-wrap: break-word;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 }
 

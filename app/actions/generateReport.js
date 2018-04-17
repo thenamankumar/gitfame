@@ -20,6 +20,7 @@ const generateReport = data => {
     datasets: [
       {
         data: [],
+        label: 'Commits',
         backgroundColor: colors,
         hoverBackgroundColor: colors,
       },
@@ -55,6 +56,19 @@ const generateReport = data => {
       {
         // total repos
         data: [],
+        label: 'Repos',
+        backgroundColor: colors,
+        hoverBackgroundColor: colors,
+      },
+    ],
+  };
+  const starsPerLanguageOwned = {
+    labels: [],
+    datasets: [
+      {
+        // total stars
+        data: [],
+        label: 'Stars',
         backgroundColor: colors,
         hoverBackgroundColor: colors,
       },
@@ -233,7 +247,6 @@ const generateReport = data => {
   (languageStat || []).forEach(lang => {
     const rplBtLength = reposPerLanguageByType.labels.length;
     const rplTLength = reposPerLanguageTotal.labels.length;
-    const rplOMLength = reposPerLanguageOwnedTotalMain.labels.length;
     if (rplBtLength <= 10) {
       reposPerLanguageByType.labels.push(lang.name);
       reposPerLanguageByType.datasets[0].data.push(lang.owned.repos);
@@ -244,11 +257,36 @@ const generateReport = data => {
       reposPerLanguageTotal.labels.push(lang.name);
       reposPerLanguageTotal.datasets[0].data.push(lang.total.repos);
     }
+  });
 
+  (languageStat || []).sort((l, r) => {
+    if (l.owned.repos < r.owned.repos) {
+      return 1;
+    }
+    return -1;
+  });
+
+  (languageStat || []).forEach(lang => {
+    const rplOMLength = reposPerLanguageOwnedTotalMain.labels.length;
     if (rplOMLength <= 8) {
       reposPerLanguageOwnedTotalMain.labels.push(lang.name);
       reposPerLanguageOwnedTotalMain.datasets[0].data.push(lang.owned.main.repos);
       reposPerLanguageOwnedTotalMain.datasets[1].data.push(lang.owned.repos - lang.owned.main.repos);
+    }
+  });
+
+  (languageStat || []).sort((l, r) => {
+    if (l.owned.stars < r.owned.stars) {
+      return 1;
+    }
+    return -1;
+  });
+
+  (languageStat || []).forEach(lang => {
+    const splTLength = starsPerLanguageOwned.labels.length;
+    if (splTLength <= 10) {
+      starsPerLanguageOwned.labels.push(lang.name);
+      starsPerLanguageOwned.datasets[0].data.push(lang.owned.stars);
     }
   });
 
@@ -303,6 +341,7 @@ const generateReport = data => {
     reposPerLanguageTotal,
     reposPerLanguageOwnedTotalMain,
     reposPerLanguageByType,
+    starsPerLanguageOwned,
   };
 };
 

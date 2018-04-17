@@ -222,6 +222,17 @@ const Analytics = ({ user }) => (
                   <h4 className="under">Commits by Repo</h4>
                 </Row>
                 <Row className="center">
+                  <p className="text-center mid-text">
+                    Most commits are done in{' '}
+                    <span
+                      style={{
+                        color: 'white',
+                      }}>
+                      {user.commitsPerRepo.labels[0]}
+                    </span>.
+                  </p>
+                </Row>
+                <Row className="center">
                   <Col xs={7} sm={7}>
                     <Doughnut
                       width={250}
@@ -233,7 +244,7 @@ const Analytics = ({ user }) => (
                       }}
                     />
                   </Col>
-                  <Col xs={5} sm={5}>
+                  <Col xs={5} sm={5} className="labels-list-wrap">
                     <ul className="labels-list">
                       {(user.commitsPerRepo.labels || []).map((label, index) => (
                         <li key={uuid()} className="labels-list-item">
@@ -314,7 +325,7 @@ const Analytics = ({ user }) => (
                       }}
                     />
                   </Col>
-                  <Col xs={5} sm={5}>
+                  <Col xs={5} sm={5} className="labels-list-wrap">
                     <ul className="labels-list">
                       <li className="labels-list-item">
                         <div className="bullet color-owned" />
@@ -346,7 +357,7 @@ const Analytics = ({ user }) => (
                       }}
                     />
                   </Col>
-                  <Col xs={5} sm={5}>
+                  <Col xs={5} sm={5} className="labels-list-wrap">
                     <ul className="labels-list">
                       {(user.reposPerLanguageTotal.labels || []).map((label, index) => (
                         <li key={uuid()} className="labels-list-item">
@@ -388,6 +399,48 @@ const Analytics = ({ user }) => (
             <Col xs={12} sm={12} md={6} className="card-wrap">
               <div className="card tag owned">
                 <Row>
+                  <h4 className="under">Stars by Language</h4>
+                </Row>
+                <Row className="center">
+                  <Col xs={7} sm={7}>
+                    <Doughnut
+                      width={250}
+                      height={250}
+                      data={user.starsPerLanguageOwned}
+                      legend={legend}
+                      options={{
+                        maintainAspectRatio: false,
+                      }}
+                    />
+                  </Col>
+                  <Col xs={5} sm={5} className="labels-list-wrap">
+                    <ul className="labels-list">
+                      {(user.starsPerLanguageOwned.labels || []).map((label, index) => (
+                        <li key={uuid()} className="labels-list-item">
+                          <div className={`bullet color-${index + 1}`} />
+                          {label}
+                        </li>
+                      ))}
+                    </ul>
+                  </Col>
+                </Row>
+                <Row className="slim center">
+                  <p className="text-center mid-text">
+                    Owned repos with language{' '}
+                    <span
+                      style={{
+                        color: findColor(user.languageStat, user.starsPerLanguageOwned.labels[0]),
+                      }}>
+                      {user.starsPerLanguageOwned.labels[0]}
+                    </span>{' '}
+                    have most stars.
+                  </p>
+                </Row>
+              </div>
+            </Col>
+            <Col xs={12} sm={12} md={6} className="card-wrap">
+              <div className="card tag owned">
+                <Row>
                   <h4 className="under">Repos Count By Sub vs Main Language</h4>
                 </Row>
                 <Row>
@@ -412,7 +465,7 @@ const Analytics = ({ user }) => (
                       user.reposPerLanguageOwnedTotalMain.labels,
                       user.languageStat,
                     )}{' '}
-                    is the main language for most repos.
+                    is the main language for most owned repos.
                   </p>
                 </Row>
               </div>

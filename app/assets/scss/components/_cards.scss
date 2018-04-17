@@ -6,7 +6,9 @@
     background-color: $secondary-mid;
     padding: 15px;
     height: 100%;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .row {
       margin-bottom: 30px;
 
