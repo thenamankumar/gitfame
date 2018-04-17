@@ -254,7 +254,7 @@ const generateReport = data => {
     return -1;
   });
 
-  const topLanguage = languageStat[0];
+  const topLanguage = languageStat[0] || {};
 
   (languageStat || []).forEach(lang => {
     const rplBtLength = reposPerLanguageByType.labels.length;
