@@ -9,6 +9,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    cursor: pointer;
+    transition: box-shadow 0.5s ease;
+
+    &:hover {
+      box-shadow: 0 7px 15px 0 rgba(0, 0, 0, 0.9);
+    }
     .row {
       margin-bottom: 30px;
 
