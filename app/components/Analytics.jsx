@@ -8,6 +8,26 @@ const legend = {
   display: false,
 };
 
+const findColor = (languages, search = '') => languages.find(({ name }) => name === search).color;
+
+const popularLang = (data, labels, languages) => {
+  const mostIndex = data.reduce((most, now, index) => {
+    if (now > data[most]) {
+      return index;
+    }
+    return most;
+  }, 0);
+
+  return (
+    <span
+      style={{
+        color: findColor(languages, labels[mostIndex]),
+      }}>
+      {labels[mostIndex]}
+    </span>
+  );
+};
+
 const barGraphOptions = {
   scales: {
     xAxes: [
@@ -50,6 +70,56 @@ const barGraphOptions = {
           fontSize: 12,
           beginAtZero: false,
         },
+      },
+    ],
+  },
+  maintainAspectRatio: false,
+};
+
+const barGraphOptionsStacked = {
+  scales: {
+    xAxes: [
+      {
+        gridLines: {
+          display: false,
+          color: 'white',
+        },
+        scaleLabel: {
+          display: false,
+          labelString: 'Repositories',
+          fontSize: 14,
+          fontColor: '#7887a7',
+          fontFamily: "'Arimo', sans-serif",
+        },
+        ticks: {
+          fontFamily: "'Arimo', sans-serif",
+          fontColor: 'white',
+          fontSize: 12,
+          beginAtZero: false,
+        },
+        stacked: true,
+      },
+    ],
+    yAxes: [
+      {
+        gridLines: {
+          display: false,
+          color: 'white',
+        },
+        scaleLabel: {
+          display: false,
+          labelString: 'Count',
+          fontSize: 14,
+          fontColor: '#7887a7',
+          fontFamily: "'Arimo', sans-serif",
+        },
+        ticks: {
+          fontFamily: "'Arimo', sans-serif",
+          fontColor: 'white',
+          fontSize: 12,
+          beginAtZero: false,
+        },
+        stacked: true,
       },
     ],
   },
@@ -149,7 +219,7 @@ const Analytics = ({ user }) => (
             <Col xs={12} sm={12} md={6} className="card-wrap">
               <div className="card tag total">
                 <Row>
-                  <h4 className="under">Commits by Repository</h4>
+                  <h4 className="under">Commits by Repo</h4>
                 </Row>
                 <Row className="center">
                   <Col xs={7} sm={7}>
@@ -177,27 +247,29 @@ const Analytics = ({ user }) => (
               </div>
             </Col>
             <Col xs={12} sm={12} md={6} className="card-wrap">
-              <div className="card tag total">
+              <div className="card tag owned">
                 <Row>
-                  <h4 className="under">Popular Repositories</h4>
+                  <h4 className="under">Popular Repos</h4>
                 </Row>
                 <Row>
-                  <Col xs={4} sm={4} className="text-center">
+                  <Col xs={6} sm={6} className="text-center">
                     <div className="bullet color-1" />
                     Stars
                   </Col>
-                  <Col xs={4} sm={4} className="text-center">
+                  <Col xs={6} sm={6} className="text-center">
                     <div className="bullet color-2" />
                     Forks
-                  </Col>
-                  <Col xs={4} sm={4} className="text-center">
-                    <div className="bullet color-3" />
-                    Watchers
                   </Col>
                 </Row>
                 <Row className="center">
                   <Col xs={12} sm={12}>
-                    <Bar width={250} height={250} data={user.popularRepos} legend={legend} options={barGraphOptions} />
+                    <Bar
+                      width={250}
+                      height={250}
+                      data={user.popularReposOwned}
+                      legend={legend}
+                      options={barGraphOptions}
+                    />
                   </Col>
                 </Row>
               </div>
@@ -219,14 +291,14 @@ const Analytics = ({ user }) => (
             <Col xs={12} sm={12} md={6} className="card-wrap">
               <div className="card tag total">
                 <Row>
-                  <h4 className="under">Repositories by Language</h4>
+                  <h4 className="under">Owned vs Forked Repos By Language</h4>
                 </Row>
                 <Row className="center">
                   <Col xs={7} sm={7}>
                     <Radar
                       width={250}
                       height={250}
-                      data={user.reposPerLanguage}
+                      data={user.reposPerLanguageByType}
                       legend={legend}
                       options={{
                         scale: {
@@ -254,6 +326,94 @@ const Analytics = ({ user }) => (
                       </li>
                     </ul>
                   </Col>
+                </Row>
+              </div>
+            </Col>
+            <Col xs={12} sm={12} md={6} className="card-wrap">
+              <div className="card tag total">
+                <Row>
+                  <h4 className="under">Repos Count by Language</h4>
+                </Row>
+                <Row className="center">
+                  <Col xs={7} sm={7}>
+                    <Doughnut
+                      width={250}
+                      height={250}
+                      data={user.reposPerLanguageTotal}
+                      legend={legend}
+                      options={{
+                        maintainAspectRatio: false,
+                      }}
+                    />
+                  </Col>
+                  <Col xs={5} sm={5}>
+                    <ul className="labels-list">
+                      {(user.reposPerLanguageTotal.labels || []).map((label, index) => (
+                        <li key={uuid()} className="labels-list-item">
+                          <div className={`bullet color-${index + 1}`} />
+                          {label}
+                        </li>
+                      ))}
+                    </ul>
+                  </Col>
+                </Row>
+                <Row className="slim center">
+                  <p className="text-center mid-text">
+                    <span
+                      style={{
+                        color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[0]),
+                      }}>
+                      {user.reposPerLanguageTotal.labels[0]}
+                    </span>{' '}
+                    is the most present language, followed by{' '}
+                    <span
+                      style={{
+                        color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[1]),
+                      }}>
+                      {user.reposPerLanguageTotal.labels[1] || ''}
+                    </span>{' '}
+                    and{' '}
+                    <span
+                      style={{
+                        color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[2]),
+                      }}>
+                      {user.reposPerLanguageTotal.labels[2] || ''}
+                    </span>.
+                  </p>
+                </Row>
+              </div>
+            </Col>
+          </Row>
+          <Row className="content">
+            <Col xs={12} sm={12} md={6} className="card-wrap">
+              <div className="card tag owned">
+                <Row>
+                  <h4 className="under">Repos Count By Sub vs Main Language</h4>
+                </Row>
+                <Row>
+                  <Col xs={6} sm={6} className="text-center">
+                    <div className="bullet color-1" />
+                    Sub Language
+                  </Col>
+                  <Col xs={6} sm={6} className="text-center">
+                    <div className="bullet color-2" />
+                    Main Language
+                  </Col>
+                </Row>
+                <Row className="center">
+                  <Col xs={12} sm={12}>
+                    <Bar data={user.reposPerLanguageOwnedTotalMain} legend={legend} options={barGraphOptionsStacked} />
+                  </Col>
+                </Row>
+                <Row className="center slim">
+                  <p className="text-center mid-text">
+                    {popularLang(
+                      user.reposPerLanguageOwnedTotalMain.datasets[1].data,
+                      user.reposPerLanguageOwnedTotalMain.labels,
+                      user.languageStat,
+                    )}{' '}
+                    is the main language for most repos.
+                  </p>
                 </Row>
               </div>
             </Col>

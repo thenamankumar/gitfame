@@ -25,7 +25,7 @@ const generateReport = data => {
       },
     ],
   };
-  const popularRepos = {
+  const popularReposOwned = {
     labels: [],
     datasets: [
       {
@@ -46,19 +46,44 @@ const generateReport = data => {
         hoverBackgroundColor: colors[1],
         hoverBorderColor: 'white',
       },
+    ],
+  };
+  const languageStat = [];
+  const reposPerLanguageTotal = {
+    labels: [],
+    datasets: [
+      {
+        // total repos
+        data: [],
+        backgroundColor: colors,
+        hoverBackgroundColor: colors,
+      },
+    ],
+  };
+  const reposPerLanguageOwnedTotalMain = {
+    labels: [],
+    datasets: [
       {
         data: [],
-        label: 'Watchers',
-        backgroundColor: colors[2],
+        label: 'Sub Language',
+        backgroundColor: colors[0],
         borderColor: 'white',
         borderWidth: 2,
-        hoverBackgroundColor: colors[2],
+        hoverBackgroundColor: colors[0],
+        hoverBorderColor: 'white',
+      },
+      {
+        data: [],
+        label: 'Main Language',
+        backgroundColor: colors[1],
+        borderColor: 'white',
+        borderWidth: 2,
+        hoverBackgroundColor: colors[1],
         hoverBorderColor: 'white',
       },
     ],
   };
-  const languageStat = [];
-  const reposPerLanguage = {
+  const reposPerLanguageByType = {
     labels: [],
     datasets: [
       {
@@ -104,6 +129,7 @@ const generateReport = data => {
       commitsOwned += repo.user_commits;
     }
 
+    // commits per repo analysis
     if (repo.user_commits) {
       const cprLength = commitsPerRepo.labels.length;
       if (cprLength < 10) {
@@ -117,30 +143,132 @@ const generateReport = data => {
       }
     }
 
-    (repo.languages.nodes || []).forEach(lang => {
+    // prepare language stats
+    (repo.languages.nodes || []).forEach((lang, index) => {
       const foundIndex = languageStat.findIndex(presentLang => presentLang.name === lang.name);
 
       if (foundIndex > -1) {
-        languageStat[foundIndex].commits += repo.user_commits;
-        languageStat[foundIndex].ownedCommits += repo.isFork ? 0 : repo.user_commits;
-        languageStat[foundIndex].forkedCommits += repo.isFork ? repo.user_commits : 0;
-        languageStat[foundIndex].repos += 1;
-        languageStat[foundIndex].ownedRepos += repo.isFork ? 0 : 1;
-        languageStat[foundIndex].forkedRepos += repo.isFork ? 1 : 0;
+        const foundLang = languageStat[foundIndex];
+        languageStat[foundIndex] = {
+          ...foundLang,
+          total: {
+            commits: foundLang.total.commits + repo.user_commits,
+            repos: foundLang.total.repos + 1,
+            stars: foundLang.total.stars + repo.stars,
+            main: {
+              repos: foundLang.total.main.repos + (!index ? 1 : 0),
+              commits: foundLang.total.main.commits + (!index ? repo.user_commits : 0),
+              stars: foundLang.total.main.stars + (!index ? repo.stars : 0),
+            },
+          },
+          owned: {
+            repos: foundLang.owned.repos + (repo.isFork ? 0 : 1),
+            commits: foundLang.owned.commits + (repo.isFork ? 0 : repo.user_commits),
+            stars: foundLang.owned.stars + (repo.isFork ? 0 : repo.stars),
+            main: {
+              repos: foundLang.owned.main.repos + (!repo.isFork && !index ? 1 : 0),
+              commits: foundLang.owned.main.commits + (!repo.isFork && !index ? repo.user_commits : 0),
+              stars: foundLang.owned.main.stars + (!repo.isFork && !index ? repo.stars : 0),
+            },
+          },
+          forked: {
+            repos: foundLang.forked.repos + (repo.isFork ? 1 : 0),
+            commits: foundLang.forked.commits + (repo.isFork ? repo.user_commits : 0),
+            stars: foundLang.forked.stars + (repo.isFork ? repo.stars : 0),
+            main: {
+              repos: foundLang.forked.main.repos + (repo.isFork && !index ? 1 : 0),
+              commits: foundLang.forked.main.commits + (repo.isFork && !index ? repo.user_commits : 0),
+              stars: foundLang.forked.main.stars + (repo.isFork && !index ? repo.stars : 0),
+            },
+          },
+        };
       } else {
         languageStat.push({
           name: lang.name,
           color: lang.color,
-          commits: repo.user_commits,
-          ownedCommits: repo.isFork ? 0 : repo.user_commits,
-          forkedCommits: repo.isFork ? repo.user_commits : 0,
-          repos: 1,
-          ownedRepos: repo.isFork ? 0 : 1,
-          forkedRepos: repo.isFork ? 1 : 0,
+          total: {
+            commits: repo.user_commits,
+            repos: 1,
+            stars: repo.stars,
+            main: {
+              repos: !index ? 1 : 0,
+              commits: !index ? repo.user_commits : 0,
+              stars: !index ? repo.stars : 0,
+            },
+          },
+          owned: {
+            repos: !repo.isFork ? 1 : 0,
+            commits: !repo.isFork ? repo.user_commits : 0,
+            stars: !repo.isFork ? repo.stars : 0,
+            main: {
+              repos: !repo.isFork && !index ? 1 : 0,
+              commits: !repo.isFork && !index ? repo.user_commits : 0,
+              stars: !repo.isFork && !index ? repo.stars : 0,
+            },
+          },
+          forked: {
+            repos: repo.isFork ? 1 : 0,
+            commits: repo.isFork ? repo.user_commits : 0,
+            stars: repo.isFork ? repo.stars : 0,
+            main: {
+              repos: repo.isFork && !index ? 1 : 0,
+              commits: repo.isFork && !index ? repo.user_commits : 0,
+              stars: repo.isFork && !index ? repo.stars : 0,
+            },
+          },
         });
       }
     });
   });
+
+  (languageStat || []).sort((l, r) => {
+    if (l.total.repos < r.total.repos) {
+      return 1;
+    }
+    return -1;
+  });
+
+  const topLanguage = languageStat[0];
+
+  (languageStat || []).forEach(lang => {
+    const rplBtLength = reposPerLanguageByType.labels.length;
+    const rplTLength = reposPerLanguageTotal.labels.length;
+    const rplOMLength = reposPerLanguageOwnedTotalMain.labels.length;
+    if (rplBtLength <= 10) {
+      reposPerLanguageByType.labels.push(lang.name);
+      reposPerLanguageByType.datasets[0].data.push(lang.owned.repos);
+      reposPerLanguageByType.datasets[1].data.push(lang.forked.repos);
+    }
+
+    if (rplTLength <= 10) {
+      reposPerLanguageTotal.labels.push(lang.name);
+      reposPerLanguageTotal.datasets[0].data.push(lang.total.repos);
+    }
+
+    if (rplOMLength <= 8) {
+      reposPerLanguageOwnedTotalMain.labels.push(lang.name);
+      reposPerLanguageOwnedTotalMain.datasets[0].data.push(lang.owned.main.repos);
+      reposPerLanguageOwnedTotalMain.datasets[1].data.push(lang.owned.repos - lang.owned.main.repos);
+    }
+  });
+
+  for (let i = 0; i < reposPerLanguageByType.labels.length; i += 1) {
+    for (let j = 1; j < reposPerLanguageByType.labels.length; j += 1) {
+      if (reposPerLanguageByType.labels[i] < reposPerLanguageByType.labels[j]) {
+        let temp = reposPerLanguageByType.labels[i];
+        reposPerLanguageByType.labels[i] = reposPerLanguageByType.labels[j];
+        reposPerLanguageByType.labels[j] = temp;
+
+        temp = reposPerLanguageByType.datasets[0].data[i];
+        reposPerLanguageByType.datasets[0].data[i] = reposPerLanguageByType.datasets[0].data[j];
+        reposPerLanguageByType.datasets[0].data[j] = temp;
+
+        temp = reposPerLanguageByType.datasets[1].data[i];
+        reposPerLanguageByType.datasets[1].data[i] = reposPerLanguageByType.datasets[1].data[j];
+        reposPerLanguageByType.datasets[1].data[j] = temp;
+      }
+    }
+  }
 
   // sort repos in desc stars + forks + watches
   (data.repos || []).sort((l, r) => {
@@ -150,34 +278,17 @@ const generateReport = data => {
     return -1;
   });
 
+  // popular owned repo analysis
   (data.repos || []).forEach(repo => {
     const score = repo.stars + repo.forks + repo.watchers;
 
     if (score && !repo.isFork) {
-      const popularLength = popularRepos.labels.length;
+      const popularLength = popularReposOwned.labels.length;
       if (popularLength <= 3) {
-        popularRepos.labels.push(repo.full_name.split('/')[1].substr(0, 15));
-        popularRepos.datasets[0].data.push(repo.stars);
-        popularRepos.datasets[1].data.push(repo.forks);
-        popularRepos.datasets[2].data.push(repo.watchers);
+        popularReposOwned.labels.push(repo.full_name.split('/')[1].substr(0, 15));
+        popularReposOwned.datasets[0].data.push(repo.stars);
+        popularReposOwned.datasets[1].data.push(repo.forks);
       }
-    }
-  });
-
-  (languageStat || []).sort((l, r) => {
-    if (l.repos < r.repos) {
-      return 1;
-    }
-    return -1;
-  });
-
-  const topLanguage = languageStat[0];
-
-  (languageStat || []).forEach((lang, index) => {
-    if (index < 10) {
-      reposPerLanguage.labels.push(lang.name);
-      reposPerLanguage.datasets[0].data.push(lang.ownedRepos);
-      reposPerLanguage.datasets[1].data.push(lang.forkedRepos);
     }
   });
 
@@ -186,10 +297,12 @@ const generateReport = data => {
     commitsForked,
     commitsOwned,
     commitsPerRepo,
-    popularRepos,
+    popularReposOwned,
     languageStat,
     topLanguage,
-    reposPerLanguage,
+    reposPerLanguageTotal,
+    reposPerLanguageOwnedTotalMain,
+    reposPerLanguageByType,
   };
 };
 
