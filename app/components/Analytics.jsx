@@ -262,7 +262,7 @@ const Analytics = ({ user }) => (
                 <Row>
                   <h4 className="under">Popular Repos</h4>
                 </Row>
-                <Row>
+                <Row className="center">
                   <Col xs={6} sm={6} className="text-center">
                     <div className="bullet color-1" />
                     Stars
@@ -337,6 +337,22 @@ const Analytics = ({ user }) => (
                       </li>
                     </ul>
                   </Col>
+                </Row>
+                <Row className="center slim">
+                  <p className="text-center mid-text">
+                    {popularLang(
+                      user.reposPerLanguageByType.datasets[0].data,
+                      user.reposPerLanguageByType.labels,
+                      user.languageStat,
+                    )}{' '}
+                    is most present among owned and{' '}
+                    {popularLang(
+                      user.reposPerLanguageByType.datasets[1].data,
+                      user.reposPerLanguageByType.labels,
+                      user.languageStat,
+                    )}{' '}
+                    among forked repos.
+                  </p>
                 </Row>
               </div>
             </Col>
