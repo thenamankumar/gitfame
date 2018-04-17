@@ -4,7 +4,11 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { TiArrowRight } from 'react-icons/lib/ti/';
 
 const NavBar = ({ match: { params: { username } } }) => {
-  const logo = <div className="logo-text animated">GITFAME</div>;
+  const logo = (
+    <Link as="div" to="/" className="logo-text animated no-under">
+      GITFAME
+    </Link>
+  );
   const menu = (
     <ul className="menu animated">
       <a href="https://github.com/hereisnaman/gitfame/" target="_blank" rel="noreferrer noopener" className="item">
