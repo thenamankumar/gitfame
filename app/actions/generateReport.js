@@ -150,14 +150,22 @@ const generateReport = data => {
     // commits per repo analysis
     if (repo.user_commits) {
       const cprLength = commitsPerRepo.labels.length;
+      let skip = 0;
       if (cprLength < 10) {
-        commitsPerRepo.labels.push(repo.full_name);
-        commitsPerRepo.datasets[0].data.push(repo.user_commits);
+        if (repo.user_commits) {
+          commitsPerRepo.labels.push(repo.full_name);
+          commitsPerRepo.datasets[0].data.push(repo.user_commits);
+        } else {
+          skip += repo.user_commits;
+        }
       } else if (cprLength === 10) {
         commitsPerRepo.labels[10] = 'Others';
         commitsPerRepo.datasets[0].data[10] = repo.user_commits;
+        commitsPerRepo.datasets[0].data[10] += skip;
+        skip = 0;
       } else {
-        commitsPerRepo.datasets[0].data[10] += repo.user_commits;
+        commitsPerRepo.datasets[0].data[10] += skip + repo.user_commits;
+        skip = 0;
       }
     }
 
@@ -251,13 +259,13 @@ const generateReport = data => {
   (languageStat || []).forEach(lang => {
     const rplBtLength = reposPerLanguageByType.labels.length;
     const rplTLength = reposPerLanguageTotal.labels.length;
-    if (rplBtLength <= 10) {
+    if (rplBtLength <= 10 && (lang.owned.repos || lang.forked.repos)) {
       reposPerLanguageByType.labels.push(lang.name);
       reposPerLanguageByType.datasets[0].data.push(lang.owned.repos);
       reposPerLanguageByType.datasets[1].data.push(lang.forked.repos);
     }
 
-    if (rplTLength <= 10) {
+    if (rplTLength <= 10 && lang.total.repos) {
       reposPerLanguageTotal.labels.push(lang.name);
       reposPerLanguageTotal.datasets[0].data.push(lang.total.repos);
     }
@@ -272,7 +280,7 @@ const generateReport = data => {
 
   (languageStat || []).forEach(lang => {
     const rplOMLength = reposPerLanguageOwnedTotalMain.labels.length;
-    if (rplOMLength <= 8) {
+    if (rplOMLength <= 8 && lang.owned.repos) {
       reposPerLanguageOwnedTotalMain.labels.push(lang.name);
       reposPerLanguageOwnedTotalMain.datasets[0].data.push(lang.owned.main.repos);
       reposPerLanguageOwnedTotalMain.datasets[1].data.push(lang.owned.repos - lang.owned.main.repos);
@@ -288,7 +296,7 @@ const generateReport = data => {
 
   (languageStat || []).forEach(lang => {
     const splTLength = starsPerLanguageOwned.labels.length;
-    if (splTLength <= 10) {
+    if (splTLength <= 10 && lang.owned.stars) {
       starsPerLanguageOwned.labels.push(lang.name);
       starsPerLanguageOwned.datasets[0].data.push(lang.owned.stars);
     }
@@ -326,7 +334,7 @@ const generateReport = data => {
 
     if (score && !repo.isFork) {
       const popularLength = popularReposOwned.labels.length;
-      if (popularLength <= 3) {
+      if (popularLength <= 3 && (repo.stars || repo.forks)) {
         popularReposOwned.labels.push(repo.full_name.split('/')[1].substr(0, 15));
         popularReposOwned.datasets[0].data.push(repo.stars);
         popularReposOwned.datasets[1].data.push(repo.forks);
