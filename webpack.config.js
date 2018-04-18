@@ -15,7 +15,7 @@ const config = {
     filename: 'bundle.js',
   },
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'eval',
   module: {
     rules: [
       {
