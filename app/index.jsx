@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 import './index.html';
 import './assets/scss/main.scss';
@@ -28,6 +29,7 @@ const App = () => (
 );
 
 if (process.env.NODE_ENV === 'production') {
+  ReactGA.initialize(process.env.GA_CODE);
   Raven.config(process.env.SENTRY_URL).install(); // eslint-disable-line
 }
 render(<App />, document.getElementById('app'));

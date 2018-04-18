@@ -1,6 +1,8 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import ReactGA from 'react-ga';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
+import { withRouter } from 'react-router-dom';
 
 import fetchUserData from '../actions/fetchUserData';
 import generateReport from '../actions/generateReport';
@@ -11,13 +13,21 @@ import ErrorPage from '../components/ErrorPage';
 
 class Report extends React.Component {
   async componentDidMount() {
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.pageview(window.location.pathname + window.location.search, null, this.props.match.params.username);
+    }
     return this.loadData(this.props);
   }
 
   async componentDidUpdate() {
     const { match: { params: { username } }, user } = this.props;
     // load data only if search changed
-    if (!compareStringLower(user.login, username)) return this.loadData(this.props);
+    if (!compareStringLower(user.login, username)) {
+      if (process.env.NODE_ENV === 'production') {
+        ReactGA.pageview(window.location.pathname + window.location.search, null, this.props.match.params.username);
+      }
+      return this.loadData(this.props);
+    }
   }
 
   componentWillUnmount() {
@@ -55,10 +65,20 @@ class Report extends React.Component {
   };
 
   render() {
-    const { loading, user } = this.props;
+    const { loading, user, match: { params: { username } } } = this.props;
 
     const ReportWrap = user.status === 200 ? <Analytics user={user} /> : <ErrorPage data={user} />;
-    return <React.Fragment>{loading ? <ReportLoading /> : ReportWrap}</React.Fragment>;
+    return (
+      <React.Fragment>
+        <Helmet>
+          <title>{username} Github Contribution Analysis | GitFame</title>
+          <meta name="description" content={`${username} Github contribution analysis performed using Gitfame.`} />
+          <meta property="og:title" content={`${username} Github Contribution Analysis | GitFame`} />
+          <meta property="og:url" content={window.location.origin + window.location.pathname} />
+        </Helmet>
+        {loading ? <ReportLoading /> : ReportWrap}
+      </React.Fragment>
+    );
   }
 }
 

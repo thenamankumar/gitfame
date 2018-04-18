@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import { Helmet } from 'react-helmet';
 import { withRouter } from 'react-router-dom';
 import { Grid, Row, Col } from 'react-bootstrap';
@@ -17,6 +18,12 @@ class Home extends React.Component {
     inputActive: false,
     usernameInput: '',
   };
+
+  componentDidMount() {
+    if (process.env.NODE_ENV === 'production') {
+      ReactGA.pageview(window.location.pathname + window.location.search, null, 'Home');
+    }
+  }
 
   handleInput = e => {
     e.preventDefault();
