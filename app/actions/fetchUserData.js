@@ -1,7 +1,7 @@
-const fetchUserData = async username => {
+const fetchUserData = async (username, fresh) => {
   let res;
   try {
-    res = await fetch(process.env.API_BASE + username, {
+    res = await fetch(process.env.API_BASE + username + (fresh ? '?fresh=true' : ''), {
       method: 'GET',
     });
   } catch (e) {
