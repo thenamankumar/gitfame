@@ -16,7 +16,7 @@ class NavBar extends React.Component {
     e.preventDefault();
     const { current: { value } } = this.inputRef;
 
-    if (!value || value.match(/[a-z]/i)) {
+    if (!value || /^[^/ ]*$/.test(value)) {
       this.setState({
         usernameInput: value,
       });
@@ -59,7 +59,7 @@ class NavBar extends React.Component {
           onInput={this.handleInput}
           onKeyDown={this.handleSubmit}
         />
-        <Link to={`/user/${usernameInput.toLowerCase()}`} className="no-under">
+        <Link to={`/user/${(usernameInput || '').toLowerCase()}`} className="no-under">
           <TiArrowRight className="back-icon" />
         </Link>
       </div>
