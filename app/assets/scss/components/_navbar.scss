@@ -27,8 +27,17 @@
   }
 
   .back-text {
-    font-size: 20px;
-    line-height: 30px;
+    .username-input {
+      font-size: 20px;
+      line-height: 20px;
+      width: 115px;
+      height: 20px;
+      padding: 0;
+      margin: 0;
+      border: none;
+      border-radius: 0;
+      cursor: auto;
+    }
     .back-icon {
       font-size: 30px;
     }
