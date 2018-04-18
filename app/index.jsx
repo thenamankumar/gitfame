@@ -27,4 +27,7 @@ const App = () => (
   </Provider>
 );
 
+if (process.env.NODE_ENV === 'production') {
+  Raven.config(process.env.SENTRY_URL).install(); // eslint-disable-line
+}
 render(<App />, document.getElementById('app'));
