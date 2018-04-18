@@ -62,7 +62,13 @@ class Report extends React.Component {
 
     if (window.location.pathname.split('/')[2] === username) {
       // dispatch action if current search is same
-      addUser(report);
+      if (fresh) {
+        if (report.status === 200) {
+          addUser(report);
+        }
+      } else {
+        addUser(report);
+      }
     } else if (report.status === 200) {
       // add user report to cache if search is changed
       addUserCache(report);
