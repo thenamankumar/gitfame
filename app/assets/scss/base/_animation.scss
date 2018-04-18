@@ -15,6 +15,10 @@
   animation-fill-mode: both;
   animation-delay: 0s;
 
+  &.delayed-5 {
+    animation-delay: 0.5s;
+  }
+
   &.slow {
     -webkit-animation-duration: 1.5s;
     animation-duration: 1.5s;

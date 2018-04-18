@@ -156,3 +156,13 @@ input {
 .text-right {
   text-align: right;
 }
+
+.text-center-sm {
+  @media (max-width: 575px) {
+    text-align: center;
+  }
+}
+
+.italic {
+  font-style: italic;
+}
