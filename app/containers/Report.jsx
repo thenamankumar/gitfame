@@ -94,7 +94,7 @@ class Report extends React.Component {
                 <section className="slim">
                   <Grid className="update-bar">
                     <Col xs={12} sm={12} className="card-wrap">
-                      <div className="card shadow">
+                      <div className="card shadow slim">
                         <Row className="slim">
                           <Col xs={12} sm={12} md={8} className="text-center-sm">
                             <h4 className="message italic under">
