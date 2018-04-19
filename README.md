@@ -1,13 +1,14 @@
 # GitFame
-> A Github Contributions Analyzer
+### A Github Contributions Analyzer
 ---
 [![Build Status](https://travis-ci.org/hereisnaman/gitfame.svg?branch=master)](https://travis-ci.org/hereisnaman/gitfame)
 [![PR](https://img.shields.io/badge/PR-Welcome-blue.svg)](https://github.com/hereisnaman/gitfame)
 [![PR](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/hereisnaman/gitfame)
 [![GitLicense](https://gitlicense.com/badge/hereisnaman/gitfame)](https://github.com/hereisnaman/gitfame)
 
-## Quick Start
+![demo](https://user-images.githubusercontent.com/22571395/38983607-59fcff80-43e2-11e8-8f21-fb39e90300c2.png)
 
+## Quick Start
 ``` bash
 # Install dependencies
 yarn
@@ -21,6 +22,8 @@ yarn build
 # Format code
 yarn format
 ```
+Run [backend](https://github.com/hereisnaman/gitfame-backend) along with this.
+
 ## App Info
 
 ### Author
