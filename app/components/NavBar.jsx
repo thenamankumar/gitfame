@@ -70,18 +70,6 @@ class NavBar extends React.Component {
         <Row className="animated">
           <Col xs={12} sm={12} className="box">
             {logo}
-            <div className="github-star">
-              <a
-                className="github-button"
-                href="https://github.com/hereisnaman/gitfame"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-icon="octicon-star"
-                data-show-count="true"
-                aria-label="Star hereisnaman/gitfame on GitHub">
-                Star
-              </a>
-            </div>
             {username && backBox}
             {!username && menu}
           </Col>

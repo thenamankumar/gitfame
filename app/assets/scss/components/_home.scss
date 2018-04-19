@@ -96,3 +96,16 @@
     }
   }
 }
+
+.github-star {
+  position: absolute;
+  top: 25px;
+  left: calc(50vw - 40px);
+  z-index: 999;
+}
+
+@media (max-width: 575px) {
+  .github-star {
+    display: none;
+  }
+}
