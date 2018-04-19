@@ -322,7 +322,7 @@ const generateReport = data => {
 
   // sort repos in desc stars + forks + watches
   (data.repos || []).sort((l, r) => {
-    if (l.stars + l.forks + l.watchers < r.stars + r.forks + r.watchers) {
+    if (l.stars + l.forks < r.stars + r.forks) {
       return 1;
     }
     return -1;
