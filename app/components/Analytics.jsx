@@ -11,21 +11,22 @@ const legend = {
 const ifValid = (condition, result, error) => (condition ? result : error);
 
 const findColor = (languages, search = '') => (languages.find(({ name }) => name === search) || {}).color || '#ef4e7b';
-
-const popularLang = (data, labels, languages) => {
-  const mostIndex = data.reduce((most, now, index) => {
+const mostIndex = data =>
+  data.reduce((most, now, index) => {
     if (now > data[most]) {
       return index;
     }
     return most;
   }, 0);
+const popularLang = (data, labels, languages) => {
+  const index = mostIndex(data);
 
   return (
     <span
       style={{
-        color: findColor(languages, labels[mostIndex]),
+        color: findColor(languages, labels[index]),
       }}>
-      {labels[mostIndex]}
+      {labels[index]}
     </span>
   );
 };
@@ -139,6 +140,42 @@ class Analytics extends React.Component {
 
   render() {
     const { user } = this.props;
+
+    const mostOwnedLang = mostIndex(user.reposPerLanguageByType.datasets[0].data);
+    const mostForkedLang = mostIndex(user.reposPerLanguageByType.datasets[1].data);
+
+    let ownedVsForkedResult;
+
+    if (mostOwnedLang === mostForkedLang) {
+      ownedVsForkedResult = (
+        <React.Fragment>
+          {popularLang(
+            user.reposPerLanguageByType.datasets[0].data,
+            user.reposPerLanguageByType.labels,
+            user.languageStat,
+          )}{' '}
+          is most present among both owned and forked repos.
+        </React.Fragment>
+      );
+    } else {
+      ownedVsForkedResult = (
+        <React.Fragment>
+          {popularLang(
+            user.reposPerLanguageByType.datasets[0].data,
+            user.reposPerLanguageByType.labels,
+            user.languageStat,
+          )}{' '}
+          is popular among owned and{' '}
+          {popularLang(
+            user.reposPerLanguageByType.datasets[1].data,
+            user.reposPerLanguageByType.labels,
+            user.languageStat,
+          )}{' '}
+          among forked repos.
+        </React.Fragment>
+      );
+    }
+
     return (
       <React.Fragment>
         <Animate name="fadeIn" timeout={1500}>
@@ -395,20 +432,7 @@ class Analytics extends React.Component {
                           </Col>
                         </Row>,
                         <Row key={uuid()} className="center slim">
-                          <p className="text-center mid-text">
-                            {popularLang(
-                              user.reposPerLanguageByType.datasets[0].data,
-                              user.reposPerLanguageByType.labels,
-                              user.languageStat,
-                            )}{' '}
-                            is most present among owned and{' '}
-                            {popularLang(
-                              user.reposPerLanguageByType.datasets[1].data,
-                              user.reposPerLanguageByType.labels,
-                              user.languageStat,
-                            )}{' '}
-                            among forked repos.
-                          </p>
+                          <p className="text-center mid-text">{ownedVsForkedResult}</p>
                         </Row>,
                       ],
                       [
@@ -459,20 +483,29 @@ class Analytics extends React.Component {
                               }}>
                               {user.reposPerLanguageTotal.labels[0]}
                             </span>{' '}
-                            is the most present language, followed by{' '}
-                            <span
-                              style={{
-                                color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[1]),
-                              }}>
-                              {user.reposPerLanguageTotal.labels[1] || ''}
-                            </span>{' '}
-                            and{' '}
-                            <span
-                              style={{
-                                color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[2]),
-                              }}>
-                              {user.reposPerLanguageTotal.labels[2] || ''}
-                            </span>.
+                            is the most present language,{user.reposPerLanguageTotal.labels[1] && (
+                              <React.Fragment>
+                                followed by{' '}
+                                <span
+                                  style={{
+                                    color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[1]),
+                                  }}>
+                                  {user.reposPerLanguageTotal.labels[1]}
+                                </span>
+                                {user.reposPerLanguageTotal.labels[2] && (
+                                  <React.Fragment>
+                                    {' '}
+                                    and{' '}
+                                    <span
+                                      style={{
+                                        color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[2]),
+                                      }}>
+                                      {user.reposPerLanguageTotal.labels[2]}
+                                    </span>
+                                  </React.Fragment>
+                                )}
+                              </React.Fragment>
+                            )}.
                           </p>
                         </Row>,
                       ],
