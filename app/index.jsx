@@ -17,6 +17,18 @@ const App = () => (
   <Provider store={store}>
     <Router>
       <div className="wrapper">
+        <div className="github-star">
+          <a
+            className="github-button"
+            href="https://github.com/hereisnaman/gitfame"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-icon="octicon-star"
+            data-show-count="true"
+            aria-label="Star hereisnaman/gitfame on GitHub">
+            Star
+          </a>
+        </div>
         <Route exact path="/" component={NavBar} />
         <Route exact path="/user/:username" component={NavBar} />
         <Route exact path="/" component={Home} />
