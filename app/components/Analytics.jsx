@@ -483,20 +483,29 @@ class Analytics extends React.Component {
                               }}>
                               {user.reposPerLanguageTotal.labels[0]}
                             </span>{' '}
-                            is the most present language, followed by{' '}
-                            <span
-                              style={{
-                                color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[1]),
-                              }}>
-                              {user.reposPerLanguageTotal.labels[1] || ''}
-                            </span>{' '}
-                            and{' '}
-                            <span
-                              style={{
-                                color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[2]),
-                              }}>
-                              {user.reposPerLanguageTotal.labels[2] || ''}
-                            </span>.
+                            is the most present language,{user.reposPerLanguageTotal.labels[1] && (
+                              <React.Fragment>
+                                followed by{' '}
+                                <span
+                                  style={{
+                                    color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[1]),
+                                  }}>
+                                  {user.reposPerLanguageTotal.labels[1]}
+                                </span>
+                                {user.reposPerLanguageTotal.labels[2] && (
+                                  <React.Fragment>
+                                    {' '}
+                                    and{' '}
+                                    <span
+                                      style={{
+                                        color: findColor(user.languageStat, user.reposPerLanguageTotal.labels[2]),
+                                      }}>
+                                      {user.reposPerLanguageTotal.labels[2]}
+                                    </span>
+                                  </React.Fragment>
+                                )}
+                              </React.Fragment>
+                            )}.
                           </p>
                         </Row>,
                       ],
