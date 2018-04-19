@@ -78,7 +78,7 @@ class Home extends React.Component {
           <img key="RecCurveOne-home-1" src={RecCurveOne} alt="background" className="home-rec-one animated" />
           <img key="RecCurveTwo-home-1" src={RecCurveTwo} alt="background" className="home-rec-two animated" />
         </Animate>
-        <Grid>
+        <Grid className="home-container">
           <Row className="content">
             <Col xs={12} sm={12} md={6} className="header">
               <Animate name="fadeIn" timeout={1600}>
