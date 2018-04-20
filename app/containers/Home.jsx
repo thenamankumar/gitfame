@@ -42,7 +42,7 @@ class Home extends React.Component {
     if (inputActive) {
       if (usernameInput) {
         const { history } = this.props;
-        history.push(`/user/${usernameInput}`);
+        history.push(`/user/${usernameInput.toLowerCase()}`);
         return;
       }
     }
@@ -52,11 +52,11 @@ class Home extends React.Component {
   };
 
   handleSubmit = e => {
-    if (e.keyCode === 13) {
+    const { history } = this.props;
+    const { usernameInput } = this.state;
+    if (e.keyCode === 13 && usernameInput) {
       e.preventDefault();
-      const { history } = this.props;
-      const { usernameInput } = this.state;
-      history.push(`/user/${usernameInput}`);
+      history.push(`/user/${usernameInput.toLowerCase()}`);
     }
   };
 
