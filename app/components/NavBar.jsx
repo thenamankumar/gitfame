@@ -12,6 +12,15 @@ class NavBar extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { match: { params: { username } } } = this.props;
+    if (nextProps.match.params.username !== username) {
+      this.setState({
+        usernameInput: nextProps.match.params.username,
+      });
+    }
+  }
+
   handleInput = e => {
     e.preventDefault();
     const { current: { value } } = this.inputRef;
