@@ -43,7 +43,7 @@ class NavBar extends React.Component {
       e.preventDefault();
       const { history } = this.props;
       const { usernameInput } = this.state;
-      history.push(`/user/${usernameInput.toLowerCase()}`);
+      history.push(`/user/${(usernameInput || '').toLowerCase()}`);
     }
   };
 
