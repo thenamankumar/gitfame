@@ -27,7 +27,9 @@ class Home extends React.Component {
 
   handleInput = e => {
     e.preventDefault();
-    const { current: { value } } = this.inputRef;
+    const {
+      current: { value },
+    } = this.inputRef;
 
     if (!value || /^[^/ ]*$/.test(value)) {
       this.setState({

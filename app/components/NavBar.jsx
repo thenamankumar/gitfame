@@ -13,7 +13,11 @@ class NavBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { match: { params: { username } } } = this.props;
+    const {
+      match: {
+        params: { username },
+      },
+    } = this.props;
     if (nextProps.match.params.username !== username) {
       this.setState({
         usernameInput: nextProps.match.params.username,
@@ -23,7 +27,9 @@ class NavBar extends React.Component {
 
   handleInput = e => {
     e.preventDefault();
-    const { current: { value } } = this.inputRef;
+    const {
+      current: { value },
+    } = this.inputRef;
 
     if (!value || /^[^/ ]*$/.test(value)) {
       this.setState({
@@ -42,7 +48,11 @@ class NavBar extends React.Component {
   };
 
   render() {
-    const { match: { params: { username } } } = this.props;
+    const {
+      match: {
+        params: { username },
+      },
+    } = this.props;
     const { usernameInput } = this.state;
     const logo = (
       <Link as="div" to="/" className="logo-text animated no-under">
