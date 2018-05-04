@@ -16,12 +16,12 @@ const report = (state = { loading: true, updating: false, user: {}, cache: [] },
         loading: false,
         updating: false,
         user: action.data,
-        cache: [...state.cache.filter(cacheReport => cacheReport.login !== action.data.login), action.data],
+        cache: [...state.cache.filter(cacheReport => cacheReport.username !== action.data.username), action.data],
       };
     case 'addUserCache':
       return {
         ...state,
-        cache: [...state.cache.filter(cacheReport => cacheReport.login !== action.data.login), action.data],
+        cache: [...state.cache.filter(cacheReport => cacheReport.username !== action.data.username), action.data],
       };
     case 'resetUser':
       return {

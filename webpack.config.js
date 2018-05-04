@@ -73,7 +73,7 @@ const config = {
     contentBase: BUILD_DIR,
     watchContentBase: true,
     historyApiFallback: true,
-    port: 4000,
+    port: 3000,
     hot: true,
   },
 };

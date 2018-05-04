@@ -17,8 +17,13 @@ const generateReport = data => {
     return data;
   }
 
+  let commits = 0;
+  let stars = 0;
+  let forks = 0;
+  let watchers = 0;
   let commitsForked = 0;
   let commitsOwned = 0;
+  let ownRepos = 0;
   const commitsPerRepo = {
     labels: [],
     datasets: [
@@ -133,7 +138,7 @@ const generateReport = data => {
 
   // sort repos in desc commits
   (data.repos || []).sort((l, r) => {
-    if (l.user_commits < r.user_commits) {
+    if (l.userCommits < r.userCommits) {
       return 1;
     }
     return -1;
@@ -142,35 +147,40 @@ const generateReport = data => {
   (data.repos || []).forEach(repo => {
     // total commits owned / forked
     if (repo.isFork) {
-      commitsForked += repo.user_commits;
+      commitsForked += repo.userCommits;
     } else {
-      commitsOwned += repo.user_commits;
+      commitsOwned += repo.userCommits;
+      ownRepos += 1;
+      stars += repo.stars;
+      forks += repo.forks;
+      watchers += repo.watchers;
     }
+    commits += repo.userCommits;
 
     // commits per repo analysis
-    if (repo.user_commits) {
+    if (repo.userCommits) {
       const cprLength = commitsPerRepo.labels.length;
       let skip = 0;
       if (cprLength < 10) {
-        if (repo.user_commits) {
-          commitsPerRepo.labels.push(repo.full_name);
-          commitsPerRepo.datasets[0].data.push(repo.user_commits);
+        if (repo.userCommits) {
+          commitsPerRepo.labels.push(repo.fullName);
+          commitsPerRepo.datasets[0].data.push(repo.userCommits);
         } else {
-          skip += repo.user_commits;
+          skip += repo.userCommits;
         }
       } else if (cprLength === 10) {
         commitsPerRepo.labels[10] = 'Others';
-        commitsPerRepo.datasets[0].data[10] = repo.user_commits;
+        commitsPerRepo.datasets[0].data[10] = repo.userCommits;
         commitsPerRepo.datasets[0].data[10] += skip;
         skip = 0;
       } else {
-        commitsPerRepo.datasets[0].data[10] += skip + repo.user_commits;
+        commitsPerRepo.datasets[0].data[10] += skip + repo.userCommits;
         skip = 0;
       }
     }
 
     // prepare language stats
-    (repo.languages.nodes || []).forEach((lang, index) => {
+    (repo.languages || []).forEach((lang, index) => {
       const foundIndex = languageStat.findIndex(presentLang => presentLang.name === lang.name);
 
       if (foundIndex > -1) {
@@ -178,32 +188,32 @@ const generateReport = data => {
         languageStat[foundIndex] = {
           ...foundLang,
           total: {
-            commits: foundLang.total.commits + repo.user_commits,
+            commits: foundLang.total.commits + repo.userCommits,
             repos: foundLang.total.repos + 1,
             stars: foundLang.total.stars + repo.stars,
             main: {
               repos: foundLang.total.main.repos + (!index ? 1 : 0),
-              commits: foundLang.total.main.commits + (!index ? repo.user_commits : 0),
+              commits: foundLang.total.main.commits + (!index ? repo.userCommits : 0),
               stars: foundLang.total.main.stars + (!index ? repo.stars : 0),
             },
           },
           owned: {
             repos: foundLang.owned.repos + (repo.isFork ? 0 : 1),
-            commits: foundLang.owned.commits + (repo.isFork ? 0 : repo.user_commits),
+            commits: foundLang.owned.commits + (repo.isFork ? 0 : repo.userCommits),
             stars: foundLang.owned.stars + (repo.isFork ? 0 : repo.stars),
             main: {
               repos: foundLang.owned.main.repos + (!repo.isFork && !index ? 1 : 0),
-              commits: foundLang.owned.main.commits + (!repo.isFork && !index ? repo.user_commits : 0),
+              commits: foundLang.owned.main.commits + (!repo.isFork && !index ? repo.userCommits : 0),
               stars: foundLang.owned.main.stars + (!repo.isFork && !index ? repo.stars : 0),
             },
           },
           forked: {
             repos: foundLang.forked.repos + (repo.isFork ? 1 : 0),
-            commits: foundLang.forked.commits + (repo.isFork ? repo.user_commits : 0),
+            commits: foundLang.forked.commits + (repo.isFork ? repo.userCommits : 0),
             stars: foundLang.forked.stars + (repo.isFork ? repo.stars : 0),
             main: {
               repos: foundLang.forked.main.repos + (repo.isFork && !index ? 1 : 0),
-              commits: foundLang.forked.main.commits + (repo.isFork && !index ? repo.user_commits : 0),
+              commits: foundLang.forked.main.commits + (repo.isFork && !index ? repo.userCommits : 0),
               stars: foundLang.forked.main.stars + (repo.isFork && !index ? repo.stars : 0),
             },
           },
@@ -213,32 +223,32 @@ const generateReport = data => {
           name: lang.name,
           color: lang.color,
           total: {
-            commits: repo.user_commits,
+            commits: repo.userCommits,
             repos: 1,
             stars: repo.stars,
             main: {
               repos: !index ? 1 : 0,
-              commits: !index ? repo.user_commits : 0,
+              commits: !index ? repo.userCommits : 0,
               stars: !index ? repo.stars : 0,
             },
           },
           owned: {
             repos: !repo.isFork ? 1 : 0,
-            commits: !repo.isFork ? repo.user_commits : 0,
+            commits: !repo.isFork ? repo.userCommits : 0,
             stars: !repo.isFork ? repo.stars : 0,
             main: {
               repos: !repo.isFork && !index ? 1 : 0,
-              commits: !repo.isFork && !index ? repo.user_commits : 0,
+              commits: !repo.isFork && !index ? repo.userCommits : 0,
               stars: !repo.isFork && !index ? repo.stars : 0,
             },
           },
           forked: {
             repos: repo.isFork ? 1 : 0,
-            commits: repo.isFork ? repo.user_commits : 0,
+            commits: repo.isFork ? repo.userCommits : 0,
             stars: repo.isFork ? repo.stars : 0,
             main: {
               repos: repo.isFork && !index ? 1 : 0,
-              commits: repo.isFork && !index ? repo.user_commits : 0,
+              commits: repo.isFork && !index ? repo.userCommits : 0,
               stars: repo.isFork && !index ? repo.stars : 0,
             },
           },
@@ -335,7 +345,7 @@ const generateReport = data => {
     if (score && !repo.isFork) {
       const popularLength = popularReposOwned.labels.length;
       if (popularLength <= 3 && (repo.stars || repo.forks)) {
-        popularReposOwned.labels.push(repo.full_name.split('/')[1].substr(0, 15));
+        popularReposOwned.labels.push(repo.fullName.split('/')[1].substr(0, 15));
         popularReposOwned.datasets[0].data.push(repo.stars);
         popularReposOwned.datasets[1].data.push(repo.forks);
       }
@@ -344,16 +354,22 @@ const generateReport = data => {
 
   return {
     ...data,
+    commits,
     commitsForked,
     commitsOwned,
     commitsPerRepo,
-    popularReposOwned,
+    forks,
     languageStat,
+    ownRepos,
+    popularReposOwned,
+    publicRepos: (data.repos || []).length,
+    stars,
     topLanguage,
-    reposPerLanguageTotal,
-    reposPerLanguageOwnedTotalMain,
     reposPerLanguageByType,
+    reposPerLanguageOwnedTotalMain,
+    reposPerLanguageTotal,
     starsPerLanguageOwned,
+    watchers,
   };
 };
 

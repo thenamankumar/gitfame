@@ -134,7 +134,9 @@ class Analytics extends React.Component {
     const { user } = this.props;
 
     return (
-      nextProps.user.status !== user.status || nextProps.user.login !== user.login || nextProps.user.time !== user.time
+      nextProps.user.status !== user.status ||
+      nextProps.user.username !== user.username ||
+      nextProps.user.time !== user.time
     );
   }
 
@@ -185,12 +187,12 @@ class Analytics extends React.Component {
                 <Col xs={12} sm={12} md={6} className="user-bio">
                   <div className="user-pic-box">
                     <div className="user-pic-bg">
-                      <img src={user.avatar_url} alt={`Github user ${user.login} pic`} className="user-pic" />
+                      <img src={user.pic} alt={`Github user ${user.username} pic`} className="user-pic" />
                     </div>
                   </div>
                   <div className="user-details">
-                    <a href={user.html_url} target="_blank">
-                      <h2 className="user-name">{user.login}</h2>
+                    <a href={user.url} target="_blank">
+                      <h2 className="user-name">{user.username}</h2>
                     </a>
                     <p className="bio">{user.bio}</p>
                   </div>
@@ -206,7 +208,7 @@ class Analytics extends React.Component {
                       <p className="name mid-text">Following</p>
                     </Col>
                     <Col xs={2} sm={2} className="text-center">
-                      <h2>{user.public_repos}</h2>
+                      <h2>{user.publicRepos}</h2>
                       <p className="name mid-text">Repos</p>
                     </Col>
                   </Row>
@@ -279,8 +281,8 @@ class Analytics extends React.Component {
             </section>
             <section>
               <h3 className="section-head under">
-                I own <span className="own-repo-count">{user.own_repos}</span> and forked{' '}
-                <span className="forked-repo-count">{user.public_repos - user.own_repos} </span>
+                I own <span className="own-repo-count">{user.ownRepos}</span> and forked{' '}
+                <span className="forked-repo-count">{user.publicRepos - user.ownRepos} </span>
                 repositories
               </h3>
               <Row className="content">

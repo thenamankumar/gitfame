@@ -21,9 +21,14 @@ class Report extends React.Component {
   }
 
   async componentDidUpdate() {
-    const { match: { params: { username } }, user } = this.props;
+    const {
+      match: {
+        params: { username },
+      },
+      user,
+    } = this.props;
     // load data only if search changed
-    if (!compareStringLower(user.login, username)) {
+    if (!compareStringLower(user.username, username)) {
       if (process.env.NODE_ENV === 'production') {
         ReactGA.pageview(window.location.pathname + window.location.search, null, this.props.match.params.username);
       }
@@ -38,7 +43,16 @@ class Report extends React.Component {
   }
 
   loadData = async (
-    { match: { params: { username } }, cache, setUpdating, addUser, addUserCache, resetUser },
+    {
+      match: {
+        params: { username },
+      },
+      cache,
+      setUpdating,
+      addUser,
+      addUserCache,
+      resetUser,
+    },
     fresh,
   ) => {
     // fetch latest
@@ -55,7 +69,7 @@ class Report extends React.Component {
     };
 
     // find user report in cache
-    const reportCache = () => cache.find(({ login }) => login === username);
+    const reportCache = () => cache.find(user => user.username === username);
 
     // fetch new data if cache report not latest
     const report = fresh ? await fetchLatest(username) : reportCache() || (await fetchLatest(username));
@@ -76,7 +90,14 @@ class Report extends React.Component {
   };
 
   render() {
-    const { loading, updating, user, match: { params: { username } } } = this.props;
+    const {
+      loading,
+      updating,
+      user,
+      match: {
+        params: { username },
+      },
+    } = this.props;
 
     return (
       <React.Fragment>
