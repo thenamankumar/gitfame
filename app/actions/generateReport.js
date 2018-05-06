@@ -12,6 +12,7 @@ const colors = [
   '#f8e54f',
 ];
 
+const fullName = repo => `${repo.owner}/${repo.name}`;
 const generateReport = data => {
   if (data.status !== 200) {
     return data;
@@ -163,7 +164,7 @@ const generateReport = data => {
       let skip = 0;
       if (cprLength < 10) {
         if (repo.userCommits) {
-          commitsPerRepo.labels.push(repo.fullName);
+          commitsPerRepo.labels.push(fullName(repo));
           commitsPerRepo.datasets[0].data.push(repo.userCommits);
         } else {
           skip += repo.userCommits;
@@ -345,7 +346,11 @@ const generateReport = data => {
     if (score && !repo.isFork) {
       const popularLength = popularReposOwned.labels.length;
       if (popularLength <= 3 && (repo.stars || repo.forks)) {
-        popularReposOwned.labels.push(repo.fullName.split('/')[1].substr(0, 15));
+        popularReposOwned.labels.push(
+          fullName(repo)
+            .split('/')[1]
+            .substr(0, 15),
+        );
         popularReposOwned.datasets[0].data.push(repo.stars);
         popularReposOwned.datasets[1].data.push(repo.forks);
       }
