@@ -26,6 +26,7 @@ const userPayload = (username, fresh) => ({
           watchers
         }
         status
+        time
         uid
         url
         username
