@@ -179,6 +179,31 @@ const generateReport = data => {
     return -1;
   });
 
+  // compile pinned repos data
+
+  const pinnedReposData = (data.pinnedRepositories || []).reduce((acm, pinnedRepo) => {
+    const repo = data.repos.find(
+      ({ name, owner }) =>
+        (name || '').toLowerCase() === (pinnedRepo.name || '').toLowerCase() &&
+        (owner || '').toLowerCase() === (pinnedRepo.owner || '').toLowerCase(),
+    );
+
+    if (repo) {
+      acm.push({
+        ...pinnedRepo,
+        mainLanguage: (repo.languages || [])[0],
+        stars: repo.stars,
+        forks: repo.forks,
+        watchers: repo.watchers,
+        url: repo.url,
+        userCommits: repo.userCommits,
+        isFork: repo.isFork,
+      });
+    }
+
+    return acm;
+  }, []);
+
   (data.repos || []).forEach(repo => {
     // total commits owned / forked
     if (repo.isFork) {
@@ -401,6 +426,7 @@ const generateReport = data => {
     forks,
     languageStat,
     ownRepos,
+    pinnedReposData,
     popularReposOwned,
     prsOpened: data.pullRequests.length,
     prsForkedAvgMergeTime,

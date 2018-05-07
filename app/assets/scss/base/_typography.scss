@@ -145,6 +145,17 @@ input {
     transform-origin: center;
     transition: transform 0.4s ease-out;
   }
+
+  a {
+    font-size: inherit;
+    &:after {
+      display: none;
+    }
+    &:hover:after {
+      display: none;
+      transform: scale(0);
+    }
+  }
 }
 
 .no-under {
@@ -165,4 +176,8 @@ input {
 
 .italic {
   font-style: italic;
+}
+
+.mt-10 {
+  margin-top: 10px;
 }

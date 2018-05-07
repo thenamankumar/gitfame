@@ -130,6 +130,58 @@ const barGraphOptionsStacked = {
   maintainAspectRatio: false,
 };
 
+const renderPinnedRepos = repos => {
+  const row1 = [];
+  const row2 = [];
+  (repos || []).forEach((repo, index) => {
+    console.log(repo.url);
+    const card = (
+      <Col xs={12} sm={12} md={4} className="card-wrap" key={uuid()}>
+        <div className={`card tag ${repo.isFork ? 'forked' : 'owned'}`}>
+          <Row className="center mt-10">
+            <h4 className="under wrap-title">
+              <a href={repo.url} target="_blank">
+                {repo.owner}/{repo.name}{' '}
+              </a>
+            </h4>
+          </Row>
+          <Row className="center slim-mid">
+            <Col xs={4} sm={4} className="value">
+              <h2>{repo.userCommits}</h2>
+              <p className="name">Commits</p>
+            </Col>
+            <Col xs={4} sm={4} className="value">
+              <h2>{repo.stars}</h2>
+              <p className="name">Stars</p>
+            </Col>
+            <Col xs={4} sm={4} className="value">
+              <h2>{repo.forks}</h2>
+              <p className="name">Forks</p>
+            </Col>
+          </Row>
+          <Row className="center slim">
+            <p className="mid-text">
+              The main language is <span style={{ color: repo.mainLanguage.color }}>{repo.mainLanguage.name}</span>
+            </p>
+          </Row>
+        </div>
+      </Col>
+    );
+    if (index < 3) {
+      row1.push(card);
+    } else {
+      row2.push(card);
+    }
+  });
+
+  return (
+    <React.Fragment>
+      {row1.length && <Row className="content">{row1}</Row>}
+      {row2.length && <Row className="content">{row2}</Row>}
+    </React.Fragment>
+  );
+};
+
 class Analytics extends React.Component {
   shouldComponentUpdate(nextProps) {
     const { user } = this.props;
@@ -284,7 +336,7 @@ class Analytics extends React.Component {
               </Row>
               <Row className="content">
                 <Col xs={12} sm={12} md={2} className="card-wrap">
-                  <div className="card tag forked">
+                  <div className="card tag total">
                     <Row className="center slim">
                       <Col className="value">
                         <h2>{user.issues || 0}</h2>
@@ -345,7 +397,7 @@ class Analytics extends React.Component {
                     <Row className="center slim">
                       <Col className="value">
                         <h2>{(user.prsForkedCommits / user.prsForked).toFixed(0)}</h2>
-                        <p className="name">Avg Commits/PR</p>
+                        <p className="name">Avg Commits / PR</p>
                       </Col>
                     </Row>
                   </div>
@@ -452,6 +504,12 @@ class Analytics extends React.Component {
                 </Col>
               </Row>
             </section>
+            {user.pinnedReposData.length && (
+              <section>
+                <h3 className="section-head under">My great works</h3>
+                {renderPinnedRepos(user.pinnedReposData)}
+              </section>
+            )}
             <section>
               <h3 className="section-head under">
                 I work on{' '}

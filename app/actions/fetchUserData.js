@@ -10,6 +10,10 @@ const userPayload = (username, fresh) => ({
         issues
         name
         pic
+        pinnedRepositories {
+          name
+          owner
+        }
         profileCreatedAt
         pullRequests {
           title

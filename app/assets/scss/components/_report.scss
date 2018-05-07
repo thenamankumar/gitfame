@@ -241,3 +241,10 @@
     }
   }
 }
+
+.wrap-title {
+  overflow: hidden;
+  word-wrap: break-word;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
