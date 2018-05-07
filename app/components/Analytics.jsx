@@ -504,11 +504,13 @@ class Analytics extends React.Component {
                 </Col>
               </Row>
             </section>
-            {user.pinnedReposData.length && (
+            {user.pinnedReposData.length ? (
               <section>
                 <h3 className="section-head under">My great works</h3>
                 {renderPinnedRepos(user.pinnedReposData)}
               </section>
+            ) : (
+              ''
             )}
             <section>
               <h3 className="section-head under">
