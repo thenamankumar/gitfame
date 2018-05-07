@@ -2,6 +2,7 @@ import React from 'react';
 import uuid from 'uuid/v1';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Doughnut, Bar, Radar } from 'react-chartjs-2';
+import { TiHeart } from 'react-icons/lib/ti';
 import Animate from './Animate';
 
 const legend = {
@@ -215,7 +216,10 @@ class Analytics extends React.Component {
                 </Col>
               </Row>
             </section>
-            <section className="slim">
+            <section>
+              <h3 className="section-head under">
+                I <TiHeart className="heart" /> open source
+              </h3>
               <Row className="content">
                 <Col xs={12} sm={12} md={2} className="card-wrap">
                   <div className="card tag total">

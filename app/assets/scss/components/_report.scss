@@ -6,6 +6,10 @@
 
 .section-head {
   margin-bottom: 20px;
+  .heart {
+    color: $primary-mid;
+    font-size: 30px;
+  }
 }
 
 .own-repo-count {

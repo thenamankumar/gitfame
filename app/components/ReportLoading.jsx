@@ -37,7 +37,72 @@ const ReportLoading = () => (
             </Col>
           </Row>
         </section>
-        <section className="slim">
+        <section>
+          <div className="section-head">
+            <div className="shape s-h3 w-300" />
+          </div>
+          <Row className="content">
+            <Col xs={12} sm={12} md={2} className="card-wrap">
+              <div className="card">
+                <Row className="center slim">
+                  <Col xs={12} sm={12} className="pad-15">
+                    <div className="shape s-h2" />
+                    <div className="shape s-p" />
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+            <Col xs={12} sm={12} md={2} className="card-wrap">
+              <div className="card">
+                <Row className="center slim">
+                  <Col xs={12} sm={12} className="pad-15">
+                    <div className="shape s-h2" />
+                    <div className="shape s-p" />
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+            <Col xs={12} sm={12} md={2} className="card-wrap">
+              <div className="card">
+                <Row className="center slim">
+                  <Col xs={12} sm={12} className="pad-15">
+                    <div className="shape s-h2" />
+                    <div className="shape s-p" />
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+            <Col xs={12} sm={12} md={2} className="card-wrap">
+              <div className="card">
+                <Row className="center slim">
+                  <Col xs={12} sm={12} className="pad-15">
+                    <div className="shape s-h2" />
+                    <div className="shape s-p" />
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+            <Col xs={12} sm={12} md={2} className="card-wrap">
+              <div className="card">
+                <Row className="center slim">
+                  <Col xs={12} sm={12} className="pad-15">
+                    <div className="shape s-h2" />
+                    <div className="shape s-p" />
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+            <Col xs={12} sm={12} md={2} className="card-wrap">
+              <div className="card">
+                <Row className="center slim">
+                  <Col xs={12} sm={12} className="pad-15">
+                    <div className="shape s-h2" />
+                    <div className="shape s-p" />
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+          </Row>
           <Row className="content">
             <Col xs={12} sm={12} md={2} className="card-wrap">
               <div className="card">
