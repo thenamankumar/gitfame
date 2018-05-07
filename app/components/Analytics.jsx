@@ -134,7 +134,6 @@ const renderPinnedRepos = repos => {
   const row1 = [];
   const row2 = [];
   (repos || []).forEach((repo, index) => {
-    console.log(repo.url);
     const card = (
       <Col xs={12} sm={12} md={4} className="card-wrap" key={uuid()}>
         <div className={`card tag ${repo.isFork ? 'forked' : 'owned'}`}>
