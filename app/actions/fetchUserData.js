@@ -7,6 +7,7 @@ const userPayload = (username, fresh) => ({
         bio
         followers
         following
+        issues
         name
         pic
         profileCreatedAt
@@ -14,6 +15,7 @@ const userPayload = (username, fresh) => ({
           title
           openedAt
           closed
+          commits
           merged
           mergedAt
           isFork
@@ -26,8 +28,6 @@ const userPayload = (username, fresh) => ({
             color
           }
           name
-          pullRequestsClosed
-          pullRequestsMerged
           owner
           size
           stars

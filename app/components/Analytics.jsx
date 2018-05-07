@@ -278,6 +278,75 @@ class Analytics extends React.Component {
                   </div>
                 </Col>
               </Row>
+              <Row className="content">
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>{user.issues || 0}</h2>
+                        <p className="name">Issues Opened</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>{user.prsForked}</h2>
+                        <p className="name">PRs Opened</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>{user.prsForkedMerged}</h2>
+                        <p className="name">PRs Merged</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>{user.prsForkedClosed}</h2>
+                        <p className="name">PRs Closed</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>
+                          {// eslint-disable-next-line
+                          user.prsForkedAvgMergeTime < 60
+                            ? `${Math.round(user.prsForkedAvgMergeTime)} M`
+                            : user.prsForkedAvgMergeTime < 60 * 24
+                              ? `${Math.round(user.prsForkedAvgMergeTime / 60)} H`
+                              : `${Math.round(user.prsForkedAvgMergeTime / (60 * 24))} D`}
+                        </h2>
+                        <p className="name">Avg Merge Time</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>{(user.prsForkedCommits / user.prsForked).toFixed(0)}</h2>
+                        <p className="name">Avg Commits/PR</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+              </Row>
             </section>
             <section>
               <h3 className="section-head under">

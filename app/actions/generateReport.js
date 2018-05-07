@@ -25,6 +25,15 @@ const generateReport = data => {
   let commitsForked = 0;
   let commitsOwned = 0;
   let ownRepos = 0;
+  let prsForkedAvgMergeTime = 0;
+  let prsForkedMerged = 0;
+  let prsOwnedMerged = 0;
+  let prsForkedClosed = 0;
+  let prsOwnedClosed = 0;
+  let prsForked = 0;
+  let prsOwned = 0;
+  let prsForkedCommits = 0;
+  let prsOwnedReceived = 0;
   const commitsPerRepo = {
     labels: [],
     datasets: [
@@ -137,6 +146,31 @@ const generateReport = data => {
     ],
   };
 
+  // compile pull requests data
+  (data.pullRequests || []).forEach(pr => {
+    if (pr.isFork) {
+      // forked
+      if (pr.merged) {
+        prsForkedMerged += 1;
+        prsForkedAvgMergeTime += new Date(pr.mergedAt) - new Date(pr.openedAt);
+      } else if (pr.closed) {
+        prsForkedClosed += 1;
+      }
+      prsForked += 1;
+      prsForkedCommits += pr.commits;
+    } else {
+      // owned
+      if (pr.merged) {
+        prsOwnedMerged += 1;
+      } else if (pr.closed) {
+        prsOwnedClosed += 1;
+      }
+      prsOwned += 1;
+    }
+  });
+
+  prsForkedAvgMergeTime /= prsForkedMerged * 60 * 1000;
+
   // sort repos in desc commits
   (data.repos || []).sort((l, r) => {
     if (l.userCommits < r.userCommits) {
@@ -155,6 +189,7 @@ const generateReport = data => {
       stars += repo.stars;
       forks += repo.forks;
       watchers += repo.watchers;
+      prsOwnedReceived += repo.pullRequests;
     }
     commits += repo.userCommits;
 
@@ -367,6 +402,16 @@ const generateReport = data => {
     languageStat,
     ownRepos,
     popularReposOwned,
+    prsOpened: data.pullRequests.length,
+    prsForkedAvgMergeTime,
+    prsForkedMerged,
+    prsOwnedMerged,
+    prsForkedClosed,
+    prsOwnedClosed,
+    prsForked,
+    prsOwned,
+    prsOwnedReceived,
+    prsForkedCommits,
     publicRepos: (data.repos || []).length,
     stars,
     topLanguage,
