@@ -2,6 +2,7 @@ import React from 'react';
 import uuid from 'uuid/v1';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Doughnut, Bar, Radar } from 'react-chartjs-2';
+import { TiHeart } from 'react-icons/lib/ti';
 import Animate from './Animate';
 
 const legend = {
@@ -129,6 +130,57 @@ const barGraphOptionsStacked = {
   maintainAspectRatio: false,
 };
 
+const renderPinnedRepos = repos => {
+  const row1 = [];
+  const row2 = [];
+  (repos || []).forEach((repo, index) => {
+    const card = (
+      <Col xs={12} sm={12} md={4} className="card-wrap" key={uuid()}>
+        <div className={`card tag ${repo.isFork ? 'forked' : 'owned'}`}>
+          <Row className="center mt-10">
+            <h4 className="under wrap-title">
+              <a href={repo.url} target="_blank">
+                {repo.owner}/{repo.name}{' '}
+              </a>
+            </h4>
+          </Row>
+          <Row className="center slim-mid">
+            <Col xs={4} sm={4} className="value">
+              <h2>{repo.userCommits}</h2>
+              <p className="name">Commits</p>
+            </Col>
+            <Col xs={4} sm={4} className="value">
+              <h2>{repo.stars}</h2>
+              <p className="name">Stars</p>
+            </Col>
+            <Col xs={4} sm={4} className="value">
+              <h2>{repo.forks}</h2>
+              <p className="name">Forks</p>
+            </Col>
+          </Row>
+          <Row className="center slim">
+            <p className="mid-text">
+              The main language is <span style={{ color: repo.mainLanguage.color }}>{repo.mainLanguage.name}</span>
+            </p>
+          </Row>
+        </div>
+      </Col>
+    );
+    if (index < 3) {
+      row1.push(card);
+    } else {
+      row2.push(card);
+    }
+  });
+
+  return (
+    <React.Fragment>
+      {row1.length && <Row className="content">{row1}</Row>}
+      {row2.length && <Row className="content">{row2}</Row>}
+    </React.Fragment>
+  );
+};
+
 class Analytics extends React.Component {
   shouldComponentUpdate(nextProps) {
     const { user } = this.props;
@@ -215,7 +267,10 @@ class Analytics extends React.Component {
                 </Col>
               </Row>
             </section>
-            <section className="slim">
+            <section>
+              <h3 className="section-head under">
+                I <TiHeart className="heart" /> open source
+              </h3>
               <Row className="content">
                 <Col xs={12} sm={12} md={2} className="card-wrap">
                   <div className="card tag total">
@@ -273,6 +328,75 @@ class Analytics extends React.Component {
                       <Col className="value">
                         <h2>{user.watchers}</h2>
                         <p className="name">Watchers</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+              </Row>
+              <Row className="content">
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag total">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>{user.issues || 0}</h2>
+                        <p className="name">Issues Opened</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>{user.prsForked}</h2>
+                        <p className="name">PRs Opened</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>{user.prsForkedMerged}</h2>
+                        <p className="name">PRs Merged</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>{user.prsForkedClosed}</h2>
+                        <p className="name">PRs Closed</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>
+                          {// eslint-disable-next-line
+                          user.prsForkedAvgMergeTime < 60
+                            ? `${Math.round(user.prsForkedAvgMergeTime)} M`
+                            : user.prsForkedAvgMergeTime < 60 * 24
+                              ? `${Math.round(user.prsForkedAvgMergeTime / 60)} H`
+                              : `${Math.round(user.prsForkedAvgMergeTime / (60 * 24))} D`}
+                        </h2>
+                        <p className="name">Avg Merge Time</p>
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+                <Col xs={12} sm={12} md={2} className="card-wrap">
+                  <div className="card tag forked">
+                    <Row className="center slim">
+                      <Col className="value">
+                        <h2>{(user.prsForkedCommits / user.prsForked).toFixed(0)}</h2>
+                        <p className="name">Avg Commits / PR</p>
                       </Col>
                     </Row>
                   </div>
@@ -379,6 +503,14 @@ class Analytics extends React.Component {
                 </Col>
               </Row>
             </section>
+            {user.pinnedReposData.length ? (
+              <section>
+                <h3 className="section-head under">My great works</h3>
+                {renderPinnedRepos(user.pinnedReposData)}
+              </section>
+            ) : (
+              ''
+            )}
             <section>
               <h3 className="section-head under">
                 I work on{' '}

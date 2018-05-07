@@ -7,18 +7,32 @@ const userPayload = (username, fresh) => ({
         bio
         followers
         following
+        issues
         name
         pic
+        pinnedRepositories {
+          name
+          owner
+        }
         profileCreatedAt
+        pullRequests {
+          title
+          openedAt
+          closed
+          commits
+          merged
+          mergedAt
+          isFork
+        }
         repos {
-          branch
           forks
-          fullName
           isFork
           languages {
             name
             color
           }
+          name
+          owner
           size
           stars
           url

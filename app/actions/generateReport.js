@@ -12,6 +12,7 @@ const colors = [
   '#f8e54f',
 ];
 
+const fullName = repo => `${repo.owner}/${repo.name}`;
 const generateReport = data => {
   if (data.status !== 200) {
     return data;
@@ -24,6 +25,15 @@ const generateReport = data => {
   let commitsForked = 0;
   let commitsOwned = 0;
   let ownRepos = 0;
+  let prsForkedAvgMergeTime = 0;
+  let prsForkedMerged = 0;
+  let prsOwnedMerged = 0;
+  let prsForkedClosed = 0;
+  let prsOwnedClosed = 0;
+  let prsForked = 0;
+  let prsOwned = 0;
+  let prsForkedCommits = 0;
+  let prsOwnedReceived = 0;
   const commitsPerRepo = {
     labels: [],
     datasets: [
@@ -136,6 +146,31 @@ const generateReport = data => {
     ],
   };
 
+  // compile pull requests data
+  (data.pullRequests || []).forEach(pr => {
+    if (pr.isFork) {
+      // forked
+      if (pr.merged) {
+        prsForkedMerged += 1;
+        prsForkedAvgMergeTime += new Date(pr.mergedAt) - new Date(pr.openedAt);
+      } else if (pr.closed) {
+        prsForkedClosed += 1;
+      }
+      prsForked += 1;
+      prsForkedCommits += pr.commits;
+    } else {
+      // owned
+      if (pr.merged) {
+        prsOwnedMerged += 1;
+      } else if (pr.closed) {
+        prsOwnedClosed += 1;
+      }
+      prsOwned += 1;
+    }
+  });
+
+  prsForkedAvgMergeTime /= prsForkedMerged * 60 * 1000;
+
   // sort repos in desc commits
   (data.repos || []).sort((l, r) => {
     if (l.userCommits < r.userCommits) {
@@ -143,6 +178,31 @@ const generateReport = data => {
     }
     return -1;
   });
+
+  // compile pinned repos data
+
+  const pinnedReposData = (data.pinnedRepositories || []).reduce((acm, pinnedRepo) => {
+    const repo = data.repos.find(
+      ({ name, owner }) =>
+        (name || '').toLowerCase() === (pinnedRepo.name || '').toLowerCase() &&
+        (owner || '').toLowerCase() === (pinnedRepo.owner || '').toLowerCase(),
+    );
+
+    if (repo) {
+      acm.push({
+        ...pinnedRepo,
+        mainLanguage: (repo.languages || [])[0],
+        stars: repo.stars,
+        forks: repo.forks,
+        watchers: repo.watchers,
+        url: repo.url,
+        userCommits: repo.userCommits,
+        isFork: repo.isFork,
+      });
+    }
+
+    return acm;
+  }, []);
 
   (data.repos || []).forEach(repo => {
     // total commits owned / forked
@@ -154,6 +214,7 @@ const generateReport = data => {
       stars += repo.stars;
       forks += repo.forks;
       watchers += repo.watchers;
+      prsOwnedReceived += repo.pullRequests;
     }
     commits += repo.userCommits;
 
@@ -163,7 +224,7 @@ const generateReport = data => {
       let skip = 0;
       if (cprLength < 10) {
         if (repo.userCommits) {
-          commitsPerRepo.labels.push(repo.fullName);
+          commitsPerRepo.labels.push(fullName(repo));
           commitsPerRepo.datasets[0].data.push(repo.userCommits);
         } else {
           skip += repo.userCommits;
@@ -345,7 +406,11 @@ const generateReport = data => {
     if (score && !repo.isFork) {
       const popularLength = popularReposOwned.labels.length;
       if (popularLength <= 3 && (repo.stars || repo.forks)) {
-        popularReposOwned.labels.push(repo.fullName.split('/')[1].substr(0, 15));
+        popularReposOwned.labels.push(
+          fullName(repo)
+            .split('/')[1]
+            .substr(0, 15),
+        );
         popularReposOwned.datasets[0].data.push(repo.stars);
         popularReposOwned.datasets[1].data.push(repo.forks);
       }
@@ -361,7 +426,18 @@ const generateReport = data => {
     forks,
     languageStat,
     ownRepos,
+    pinnedReposData,
     popularReposOwned,
+    prsOpened: data.pullRequests.length,
+    prsForkedAvgMergeTime,
+    prsForkedMerged,
+    prsOwnedMerged,
+    prsForkedClosed,
+    prsOwnedClosed,
+    prsForked,
+    prsOwned,
+    prsOwnedReceived,
+    prsForkedCommits,
     publicRepos: (data.repos || []).length,
     stars,
     topLanguage,
