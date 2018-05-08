@@ -1,6 +1,8 @@
 # GitFame
 ### A Github Contributions Analyzer
 ---
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/hereisnaman/gitfame.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/hereisnaman/gitfame.svg?branch=master)](https://travis-ci.org/hereisnaman/gitfame)
 [![PR](https://img.shields.io/badge/PR-Welcome-blue.svg)](https://github.com/hereisnaman/gitfame)
 [![PR](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/hereisnaman/gitfame)
