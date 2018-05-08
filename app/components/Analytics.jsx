@@ -158,12 +158,16 @@ const renderPinnedRepos = repos => {
               <p className="name">Forks</p>
             </Col>
           </Row>
-          <Row className="center slim">
-            <p className="mid-text">
-              The main language is{' '}
-              <span style={{ color: (repo.mainLanguage || {}).color || 'white' }}>{repo.mainLanguage.name}</span>
-            </p>
-          </Row>
+          {repo.mainLanguage ? (
+            <Row className="center slim">
+              <p className="mid-text">
+                The main language is{' '}
+                <span style={{ color: repo.mainLanguage.color || 'white' }}>{repo.mainLanguage.name}</span>
+              </p>
+            </Row>
+          ) : (
+            ''
+          )}
         </div>
       </Col>
     );
