@@ -385,11 +385,13 @@ class Analytics extends React.Component {
                       <Col className="value">
                         <h2>
                           {// eslint-disable-next-line
-                          user.prsForkedAvgMergeTime < 60
-                            ? `${Math.round(user.prsForkedAvgMergeTime)} M`
-                            : user.prsForkedAvgMergeTime < 60 * 24
-                              ? `${Math.round(user.prsForkedAvgMergeTime / 60)} H`
-                              : `${Math.round(user.prsForkedAvgMergeTime / (60 * 24))} D`}
+                          user.prsForkedAvgMergeTime // eslint-disable-next-line
+                            ? user.prsForkedAvgMergeTime < 60
+                              ? `${Math.round(user.prsForkedAvgMergeTime)} M`
+                              : user.prsForkedAvgMergeTime < 60 * 24
+                                ? `${Math.round(user.prsForkedAvgMergeTime / 60)} H`
+                                : `${Math.round(user.prsForkedAvgMergeTime / (60 * 24))} D`
+                            : 'N / A'}
                         </h2>
                         <p className="name">Avg Merge Time</p>
                       </Col>
@@ -400,7 +402,7 @@ class Analytics extends React.Component {
                   <div className="card tag forked">
                     <Row className="center slim">
                       <Col className="value">
-                        <h2>{(user.prsForkedCommits / user.prsForked).toFixed(0)}</h2>
+                        <h2>{(user.prsForkedCommits / user.prsForked || 0).toFixed(0)}</h2>
                         <p className="name">Avg Commits / PR</p>
                       </Col>
                     </Row>
