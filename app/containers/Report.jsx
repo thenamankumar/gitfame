@@ -99,6 +99,8 @@ class Report extends React.Component {
       },
     } = this.props;
 
+    const lastUpdateTime = new Date(user.time);
+
     return (
       <React.Fragment>
         <Helmet>
@@ -124,11 +126,7 @@ class Report extends React.Component {
                                 style={{
                                   color: '#ef4e7b',
                                 }}>
-                                {user.time
-                                  .split('T')[0]
-                                  .split('-')
-                                  .reverse()
-                                  .join('-')}
+                                {`${lastUpdateTime.getDate()}-${lastUpdateTime.getMonth()}-${lastUpdateTime.getFullYear()}`}
                               </span>, you can generate an updated report.
                             </h4>
                           </Col>
