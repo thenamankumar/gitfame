@@ -27,7 +27,6 @@ class Capture extends Component {
       h.setState({
         img: imgURI,
       });
-      console.log(this.state.img);
       this.toggleModal();
     });
   }
