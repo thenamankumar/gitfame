@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
 import html2canvas from 'html2canvas';
+import IoAndroidCamera from 'react-icons/lib/io/android-camera';
 import ShareScreen from './ShareScreen';
 
 class Capture extends Component {
@@ -32,18 +32,11 @@ class Capture extends Component {
   }
 
   render() {
-    const style = {
-      position: 'fixed',
-      right: '5%',
-      bottom: '5%',
-      zIndex: 100,
-      background: '#000',
-    };
     return (
       <div>
-        <Button style={style} onClick={this.takeScreenshot}>
-          Capture
-        </Button>
+        <button onClick={this.takeScreenshot} className="circle-btn capture-btn">
+          <IoAndroidCamera />
+        </button>
         <ShareScreen show={this.state.isOpen} onClose={this.toggleModal} data={this.state.img} />
       </div>
     );
