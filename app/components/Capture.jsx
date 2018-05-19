@@ -12,6 +12,7 @@ class Capture extends Component {
     };
     this.takeScreenshot = this.takeScreenshot.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.saveAs = this.saveAs.bind(this);
   }
 
   toggleModal = () => {
@@ -31,13 +32,19 @@ class Capture extends Component {
     });
   }
 
+  saveAs() {
+    const file = new Blob(this.state.img, { type: 'image/png' });
+    const fileURL = URL.createObjectURL(file);
+    window.open(fileURL);
+  }
+
   render() {
     return (
       <div>
         <button onClick={this.takeScreenshot} className="circle-btn capture-btn">
           <IoAndroidCamera />
         </button>
-        <ShareScreen show={this.state.isOpen} onClose={this.toggleModal} data={this.state.img} />
+        <ShareScreen show={this.state.isOpen} onClose={this.toggleModal} data={this.state.img} download={this.saveAs} />
       </div>
     );
   }

@@ -34,9 +34,9 @@ const App = () => (
         <Route exact path="/user/:username" component={NavBar} />
         <Route exact path="/" component={Home} />
         <Route exact path="/user/:username" component={Report} />
+        <Route exact path="/user/:username" component={Capture} />
         <Route exact path="/" component={Footer} />
         <Route exact path="/user/:username" component={Footer} />
-        <Capture />
       </div>
     </Router>
   </Provider>

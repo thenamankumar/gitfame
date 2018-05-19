@@ -1,5 +1,8 @@
 import React from 'react';
 import IoAndroidClose from 'react-icons/lib/io/android-close';
+import FaFacebookOfficial from 'react-icons/lib/fa/facebook-official';
+import FaTwitter from 'react-icons/lib/fa/twitter';
+import FaDownload from 'react-icons/lib/fa/download';
 
 const ShareScreen = props => {
   if (!props.show) {
@@ -19,9 +22,15 @@ const ShareScreen = props => {
         <p>Share it with your friends.</p>
         <br />
         <div>
-          <button className="share-btn twitter">Twitter</button>
-          <button className="share-btn fb">Facebook</button>
-          <button className="share-btn download">Download</button>
+          <button className="share-btn twitter">
+            <FaTwitter /> Share on Twitter
+          </button>
+          <button className="share-btn fb">
+            <FaFacebookOfficial /> Share on Facebook
+          </button>
+          <button className="share-btn download" onClick={props.download}>
+            <FaDownload />
+          </button>
         </div>
       </div>
     </div>
