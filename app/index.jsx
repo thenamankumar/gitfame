@@ -12,6 +12,7 @@ import NavBar from './components/NavBar';
 import Home from './containers/Home';
 import Report from './containers/Report';
 import Footer from './components/Footer';
+import Capture from './components/Capture';
 
 const App = () => (
   <Provider store={store}>
@@ -33,6 +34,7 @@ const App = () => (
         <Route exact path="/user/:username" component={NavBar} />
         <Route exact path="/" component={Home} />
         <Route exact path="/user/:username" component={Report} />
+        <Route exact path="/user/:username" component={Capture} />
         <Route exact path="/" component={Footer} />
         <Route exact path="/user/:username" component={Footer} />
       </div>

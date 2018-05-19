@@ -102,65 +102,67 @@ class Report extends React.Component {
     const lastUpdateTime = new Date(user.time);
 
     return (
-      <React.Fragment>
-        <Helmet>
-          <title>{username} Github Contribution Analysis | GitFame</title>
-          <meta name="description" content={`${username} Github contribution analysis performed using Gitfame.`} />
-          <meta property="og:title" content={`${username} Github Contribution Analysis | GitFame`} />
-          <meta property="og:url" content={window.location.origin + window.location.pathname} />
-        </Helmet>
-        {loading && <ReportLoading />}
-        {!loading &&
-          user.status === 200 && (
-            <React.Fragment>
-              {new Date() - new Date(user.time) > 24 * 60 * 60 * 1000 && (
-                <section className="slim">
-                  <Grid className="update-bar">
-                    <Col xs={12} sm={12} className="card-wrap">
-                      <div className="card shadow slim">
-                        <Row className="slim">
-                          <Col xs={12} sm={12} md={8} className="text-center-sm">
-                            <h4 className="message italic under">
-                              The data was last fetched on{' '}
-                              <span
-                                style={{
-                                  color: '#ef4e7b',
+      <div id="Reports">
+        <React.Fragment>
+          <Helmet>
+            <title>{username} Github Contribution Analysis | GitFame</title>
+            <meta name="description" content={`${username} Github contribution analysis performed using Gitfame.`} />
+            <meta property="og:title" content={`${username} Github Contribution Analysis | GitFame`} />
+            <meta property="og:url" content={window.location.origin + window.location.pathname} />
+          </Helmet>
+          {loading && <ReportLoading />}
+          {!loading &&
+            user.status === 200 && (
+              <React.Fragment>
+                {new Date() - new Date(user.time) > 24 * 60 * 60 * 1000 && (
+                  <section className="slim">
+                    <Grid className="update-bar">
+                      <Col xs={12} sm={12} className="card-wrap">
+                        <div className="card shadow slim">
+                          <Row className="slim">
+                            <Col xs={12} sm={12} md={8} className="text-center-sm">
+                              <h4 className="message italic under">
+                                The data was last fetched on{' '}
+                                <span
+                                  style={{
+                                    color: '#ef4e7b',
+                                  }}>
+                                  {`${lastUpdateTime.getDate()}-${lastUpdateTime.getMonth()}-${lastUpdateTime.getFullYear()}`}
+                                </span>, you can generate an updated report.
+                              </h4>
+                            </Col>
+                            <Col xs={12} sm={12} md={4} className="text-right text-center-sm">
+                              <button
+                                className="btn-dark update-btn"
+                                onClick={e => {
+                                  e.preventDefault();
+                                  this.loadData(this.props, true);
                                 }}>
-                                {`${lastUpdateTime.getDate()}-${lastUpdateTime.getMonth()}-${lastUpdateTime.getFullYear()}`}
-                              </span>, you can generate an updated report.
-                            </h4>
-                          </Col>
-                          <Col xs={12} sm={12} md={4} className="text-right text-center-sm">
-                            <button
-                              className="btn-dark update-btn"
-                              onClick={e => {
-                                e.preventDefault();
-                                this.loadData(this.props, true);
-                              }}>
-                              {!updating && 'Update Now'}
-                              {updating && (
-                                <div className="loading-msg">
-                                  <div className="lds-ring">
-                                    <div />
-                                    <div />
-                                    <div />
-                                    <div />
+                                {!updating && 'Update Now'}
+                                {updating && (
+                                  <div className="loading-msg">
+                                    <div className="lds-ring">
+                                      <div />
+                                      <div />
+                                      <div />
+                                      <div />
+                                    </div>
                                   </div>
-                                </div>
-                              )}
-                            </button>
-                          </Col>
-                        </Row>
-                      </div>
-                    </Col>
-                  </Grid>
-                </section>
-              )}
-              <Analytics user={user} />
-            </React.Fragment>
-          )}
-        {!loading && user.status !== 200 && <ErrorPage data={user} />}
-      </React.Fragment>
+                                )}
+                              </button>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Col>
+                    </Grid>
+                  </section>
+                )}
+                <Analytics user={user} />
+              </React.Fragment>
+            )}
+          {!loading && user.status !== 200 && <ErrorPage data={user} />}
+        </React.Fragment>
+      </div>
     );
   }
 }

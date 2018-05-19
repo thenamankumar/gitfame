@@ -27,6 +27,7 @@
     "copy-webpack-plugin": "^4.5.1",
     "dotenv-webpack": "^1.5.5",
     "graphql-request": "^1.5.2",
+    "html2canvas": "^1.0.0-alpha.12",
     "react": "^16.3.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-bootstrap": "^0.32.1",
