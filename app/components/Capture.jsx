@@ -23,8 +23,9 @@ class Capture extends Component {
   takeScreenshot() {
     const h = this;
     const wrapper = document.getElementById('Reports');
-    html2canvas(wrapper).then(canvas => {
-      const imgURI = canvas.toDataURL();
+    const opt = { useCORS: true };
+    html2canvas(wrapper, opt).then(canvas => {
+      const imgURI = canvas.toDataURL('');
       h.setState({
         img: imgURI,
       });
