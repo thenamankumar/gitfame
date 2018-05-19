@@ -12,7 +12,6 @@ class Capture extends Component {
     };
     this.takeScreenshot = this.takeScreenshot.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
-    this.saveAs = this.saveAs.bind(this);
   }
 
   toggleModal = () => {
@@ -23,19 +22,14 @@ class Capture extends Component {
 
   takeScreenshot() {
     const h = this;
-    html2canvas(document.body).then(canvas => {
+    const wrapper = document.getElementById('Reports');
+    html2canvas(wrapper).then(canvas => {
       const imgURI = canvas.toDataURL();
       h.setState({
         img: imgURI,
       });
       this.toggleModal();
     });
-  }
-
-  saveAs() {
-    const file = new Blob(this.state.img, { type: 'image/png' });
-    const fileURL = URL.createObjectURL(file);
-    window.open(fileURL);
   }
 
   render() {
