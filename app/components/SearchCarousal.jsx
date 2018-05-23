@@ -137,13 +137,11 @@ class SearchCarousal extends Component {
   }
 
   goToPrev() {
-    console.log(-1);
     this.state.currentIndex -= 1;
     this.reRenderStyles(-1);
   }
 
   goToNext() {
-    console.log(1);
     this.reRenderStyles(1);
     this.state.currentIndex += 1;
   }
