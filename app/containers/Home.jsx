@@ -3,15 +3,19 @@ import ReactGA from 'react-ga';
 import { Helmet } from 'react-helmet';
 import { withRouter } from 'react-router-dom';
 import { Grid, Row, Col } from 'react-bootstrap';
-
+import { connect } from 'react-redux';
 import Animate from '../components/Animate';
+import SearchCarousel from '../components/SearchCarousel';
 import RecCurveOne from '../assets/svg/RecCurveOne.svg';
 import RecCurveTwo from '../assets/svg/RecCurveTwo.svg';
+
+import fetchLatestUsers from '../actions/fetchLatestUsers';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.inputRef = React.createRef();
+    this.goToReport = this.goToReport.bind(this);
   }
 
   state = {
@@ -19,9 +23,14 @@ class Home extends React.Component {
     usernameInput: '',
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     if (process.env.NODE_ENV === 'production') {
       ReactGA.pageview(window.location.pathname + window.location.search, null, 'Home');
+    }
+
+    const data = await fetchLatestUsers();
+    if (data.status !== 500) {
+      this.props.getLatestUsers(Object.values(data));
     }
   }
 
@@ -38,13 +47,17 @@ class Home extends React.Component {
     }
   };
 
+  goToReport(username) {
+    const { history } = this.props;
+    history.push(`/user/${(username || '').toLowerCase()}`);
+  }
+
   handleActionButton = e => {
     e.preventDefault();
     const { inputActive, usernameInput } = this.state;
     if (inputActive) {
       if (usernameInput) {
-        const { history } = this.props;
-        history.push(`/user/${(usernameInput || '').toLowerCase()}`);
+        this.goToReport(usernameInput);
         return;
       }
     }
@@ -54,17 +67,15 @@ class Home extends React.Component {
   };
 
   handleSubmit = e => {
-    const { history } = this.props;
     const { usernameInput } = this.state;
     if (e.keyCode === 13 && usernameInput) {
       e.preventDefault();
-      history.push(`/user/${(usernameInput || '').toLowerCase()}`);
+      this.goToReport(usernameInput);
     }
   };
 
   render() {
     const { inputActive, usernameInput } = this.state;
-
     return (
       <React.Fragment>
         <Helmet>
@@ -107,9 +118,26 @@ class Home extends React.Component {
             </Col>
           </Row>
         </Grid>
+        {this.props.latestUsers &&
+          this.props.latestUsers.length && (
+            <SearchCarousel latestUsers={this.props.latestUsers} goToReport={this.goToReport} />
+          )}
       </React.Fragment>
     );
   }
 }
 
-export default withRouter(Home);
+const mapStateToProps = store => ({
+  latestUsers: store.home.latestUsers,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getLatestUsers: data => {
+    dispatch({
+      type: 'getLatestUsers',
+      data,
+    });
+  },
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

@@ -9,6 +9,9 @@ const initialState = {
     user: {},
     cache: [],
   },
+  home: {
+    latestUsers: [],
+  },
 };
 const store = createStore(Reducer, initialState, applyMiddleware(Thunk));
 
