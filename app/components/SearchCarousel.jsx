@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import uuid from 'uuid/v1';
 
-const Card = ({ user: { username, pic, followers, issues, pullRequests, repos, bio }, idx, goToReport }) => (
+const LatestSearchCard = ({
+  user: { username, pic, followers, issues, pullRequests, repos, bio },
+  idx,
+  goToReport,
+}) => (
   <div
     className="latest-card"
     id={`card-${idx}`}
@@ -11,7 +15,7 @@ const Card = ({ user: { username, pic, followers, issues, pullRequests, repos, b
     role="button">
     <img src={pic} width="80" className="card-avatar" alt="avatar-pic" />
     <div className="latest-card-heading">&nbsp;&nbsp;{username}</div>
-    <div className="latest-card-text-imp">{bio || ' '}</div>
+    <div className="latest-card-text-imp">&nbsp;{bio}</div>
     <div className="latest-card-text">
       <b>{issues}</b> Issues opened
     </div>
@@ -27,7 +31,7 @@ const Card = ({ user: { username, pic, followers, issues, pullRequests, repos, b
   </div>
 );
 
-class SearchCarousal extends Component {
+class SearchCarousel extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -153,7 +157,9 @@ class SearchCarousal extends Component {
       <div className="latest-search-carousal">
         <h2>Latest User Searches: </h2>
         <div className="latest-card-stack">
-          {latestUsers.map((user, idx) => <Card key={uuid()} goToReport={goToReport} user={user} idx={idx} />)}
+          {latestUsers.map((user, idx) => (
+            <LatestSearchCard key={uuid()} goToReport={goToReport} user={user} idx={idx} />
+          ))}
         </div>
         <div className="latest-card-stack-btn">
           <span className="prev" onClick={this.goToPrev} onKeyPress={this.goToPrev} tabIndex={0} role="button">
@@ -169,4 +175,4 @@ class SearchCarousal extends Component {
   }
 }
 
-export default SearchCarousal;
+export default SearchCarousel;

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Animate from '../components/Animate';
-import SearchCarousal from '../components/SearchCarousal';
+import SearchCarousel from '../components/SearchCarousel';
 import RecCurveOne from '../assets/svg/RecCurveOne.svg';
 import RecCurveTwo from '../assets/svg/RecCurveTwo.svg';
 
@@ -120,7 +120,7 @@ class Home extends React.Component {
         </Grid>
         {this.props.latestUsers &&
           this.props.latestUsers.length && (
-            <SearchCarousal latestUsers={this.props.latestUsers} goToReport={this.goToReport} />
+            <SearchCarousel latestUsers={this.props.latestUsers} goToReport={this.goToReport} />
           )}
       </React.Fragment>
     );
