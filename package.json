@@ -23,7 +23,7 @@
     "apollo-fetch": "^0.7.0",
     "chart.js": "^2.7.2",
     "clean-webpack-plugin": "^0.1.19",
-    "compression-webpack-plugin": "^1.1.11",
+    "compression-webpack-plugin": "^2.0.0",
     "copy-webpack-plugin": "^4.5.1",
     "dotenv-webpack": "^1.5.5",
     "graphql-request": "^1.5.2",
